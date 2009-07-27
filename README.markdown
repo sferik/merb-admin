@@ -1,54 +1,30 @@
-MerbAdmin
-=========
+# MerbAdmin
 
-A slice for the Merb framework.
+MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers.
 
-------------------------------------------------------------------------------
-   
+## Get it
 
-To see all available tasks for MerbAdmin run:
+    $ gem install sferik-merb-admin -s http://gems.github.com
 
-rake -T slices:merb_admin
+Alternatively, you build the gem yourself:
 
-------------------------------------------------------------------------------
+    $ git clone git://github.com/sferik/merb-admin.git
+    $ cd merb-admin
+    $ rake install
 
-Instructions for installation:
+## Install it
 
-file: config/init.rb
+In your app, add the following dependency to `config/dependencies.rb`
 
-# add the slice as a regular dependency
+    dependency "merb-admin", merb_gems_version
 
-dependency 'merb-admin'
+Add the following route to `config/router.rb`
 
-# if needed, configure which slices to load and in which order
+    slice(:merb_admin)
 
-Merb::Plugins.config[:merb_slices] = { :queue => ["MerbAdmin", ...] }
+Then run the following rake task:
 
-# optionally configure the plugins in a before_app_loads callback
-
-Merb::BootLoader.before_app_loads do
-  
-  Merb::Slices::config[:merb_admin][:option] = value
-  
-end
-
-file: config/router.rb
-
-# example: /merb_admin/:controller/:action/:id
-
-add_slice(:MerbAdmin)
-
-# example: /:lang/:controller/:action/:id
-
-add_slice(:MerbAdmin, :path => ':lang')
-
-# example: /:controller/:action/:id
-
-slice(:MerbAdmin)
-
-Normally you should also run the following rake task:
-
-rake slices:merb_admin:install
+    $ rake slices:merb_admin:install
 
 ------------------------------------------------------------------------------
 
