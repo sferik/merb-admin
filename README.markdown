@@ -4,13 +4,13 @@ MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to
 
 ## Get it
 
-    $ gem install sferik-merb-admin -s http://gems.github.com
+    sudo gem install sferik-merb-admin -s http://gems.github.com
 
 Alternatively, you build the gem yourself:
 
-    $ git clone git://github.com/sferik/merb-admin.git
-    $ cd merb-admin
-    $ rake install
+    git clone git://github.com/sferik/merb-admin.git
+    cd merb-admin
+    sudo rake install
 
 ## Install it
 
@@ -24,7 +24,17 @@ Add the following route to `config/router.rb`
 
 Then run the following rake task:
 
-    $ rake slices:merb_admin:install
+    rake slices:merb_admin:install
+
+## WARNING
+
+Merb-admit does not currently implement any authentication! Do not deploy to production without writing an authentication strategy.
+
+## Acknowledgements
+
+Many thanks to [Wilson Miner](http://www.wilsonminer.com/) for contributing the JavaScript and CSS from the [Django](http://www.djangoproject.com/) admin site.
+
+Also, thanks to [beer](http://www.anchorbrewing.com/).
 
 ------------------------------------------------------------------------------
 
