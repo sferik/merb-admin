@@ -1,0 +1,8 @@
+              <div class="form-row page">
+                <div>
+                  <%= text_field property.name, :class => "vDateField", :label => property.field.capitalize.gsub('_', ' ') %>
+                  <p class="help">
+                    <%= !property.nullable? ? "Required." : "Optional." %>
+                  </p>
+                </div>
+              </div>

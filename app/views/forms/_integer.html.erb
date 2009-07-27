@@ -1,0 +1,12 @@
+              <div class="form-row page">
+                <div>
+                  <% if property.type.respond_to?(:flag_map) #Enum or Flag type %>
+                  <%= select(property.name, :collection => property.type.flag_map.map{|x| [x[1], x[1].to_s.capitalize.gsub('_', ' ')]}.sort{|a, b| a[1] <=> b[1]}, :label => property.field.capitalize.gsub('_', ' ')) %>
+                  <% else %>
+                  <%= text_field property.name, :maxlength => property.length, :label => property.field.capitalize.gsub('_', ' ') %>
+                  <% end %>
+                  <p class="help">
+                    <%= !property.nullable? || property.serial? ? "Required." : "Optional." %>
+                  </p>
+                </div>
+              </div>

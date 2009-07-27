@@ -1,0 +1,8 @@
+              <div class="form-row page">
+                <div>
+                  <%= text_field property.name, :maxlength => property.length, :label => property.field.capitalize.gsub('_', ' ') %>
+                  <p class="help">
+                    <%= !property.nullable? || property.serial? ? "Required." : "Optional." %>
+                  </p>
+                </div>
+              </div>

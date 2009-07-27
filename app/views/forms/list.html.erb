@@ -1,0 +1,37 @@
+        <div id="content-main">
+          <ul class="object-tools">
+            <li>
+              <a href="<%= slice_url(:admin_new, :model_name => @model_name.snake_case) %>" class="addlink">Add <%=h @model_name.snake_case.gsub('_', ' ') %></a>
+            </li>
+          </ul>
+          <div class="module filtered" id="changelist">
+            <table cellspacing="0">
+              <thead>
+                <tr>
+                  <% @properties.map{|p| p.field}.each do |property_name| %>
+                  <th>
+                    <%= property_name.capitalize.gsub('_', ' ') %>
+                  </th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @instances.each_with_index do |instance, index| %>
+                <tr class="row<%= index % 2 == 0 ? '1' : '2' %>">
+                  <% @properties.map{|p| p.field}.each do |property_name| %>
+                  <td>
+                    <a href="<%= slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => eval("instance.id")) %>">
+                      <%= eval("instance.#{property_name}").to_s.truncate(50) %>
+                    </a>
+                  </td>
+                  <% end %>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <p class="paginator">
+              <%= @instances.length %> <%= @instances.length == 1 ? @model_name.snake_case.gsub('_', ' ') : @model_name.snake_case.gsub('_', ' ').pluralize %>
+            </p>
+          </div>
+        </div>
+        <br class="clear" />

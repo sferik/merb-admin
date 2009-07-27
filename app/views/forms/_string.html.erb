@@ -1,0 +1,16 @@
+              <div class="form-row page">
+                <div>
+                  <% case property.type.to_s %>
+                  <% when "DataMapper::Types::Text" %>
+                    <%= text_area property.name, :cols => 80, :label => property.field.capitalize.gsub('_', ' ') %>
+                    <p class="help">
+                      <%= property.nullable? ? "Required." : "Optional." %>
+                    </p>
+                  <% else %>
+                    <%= text_field property.name, :size => [50, property.length].min, :maxlength => property.length, :label => property.field.capitalize.gsub('_', ' ') %>
+                    <p class="help">
+                      <%= !property.nullable? ? "Required." : "Optional." %> <%= property.length %> <%= property.length == 1 ? "character." : "characters or fewer." %>
+                    </p>
+                  <% end %>
+                </div>
+              </div>

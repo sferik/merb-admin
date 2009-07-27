@@ -1,0 +1,14 @@
+        <div id="content-main">
+          <div class="module">
+            <table summary="Models available in the application.">
+              <caption><a href="<%= slice_url(:admin_dashboard) %>" class="section">Models</a></caption>
+              <% @models.map{|m| m.to_s}.each do |model_name| %>
+              <tr>
+                <th scope="row"><a href="<%= slice_url(:admin_list, :model_name => model_name.snake_case) %>"><%=h model_name.pluralize %></a></th>
+                <td><a href="<%= slice_url(:admin_new, :model_name => model_name.snake_case) %>" class="addlink">Add</a></td>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+        <br class="clear" />
