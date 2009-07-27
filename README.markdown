@@ -32,7 +32,7 @@ Start your server.  If everything worked correctly, it should log the messages:
     ~ Loaded slice 'MerbAdmin' ...
     ~ Activating slice 'MerbAdmin' ...
 
-Now you should be able to administer your site at [http://localhost:4000/admin].
+Now you should be able to administer your site at [http://localhost:4000/admin](http://localhost:4000/admin).
 
 Please report any problems you encounter to <sferik@gmail.com>.
 
