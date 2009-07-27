@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://twitter.com/sferik}
   s.post_install_message = %q{********************************************************************************
 
-  WARNING: Merb-admit does not currently implement any authentication!
+  WARNING: MerbAdmin does not currently implement any authentication!
   Do not deploy to production without writing an authentication strategy.
 
 ********************************************************************************

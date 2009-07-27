@@ -38,7 +38,7 @@ Please report any problems you encounter to <sferik@gmail.com>.
 
 ## WARNING
 
-Merb-admit does not currently implement any authentication! Do not deploy to production without writing an authentication strategy.
+MerbAdmin does not currently implement any authentication! Do not deploy to production without writing an authentication strategy.
 
 ## Acknowledgements
 

@@ -29,7 +29,7 @@ spec = Gem::Specification.new do |s|
   s.post_install_message = <<-POST_INSTALL_MESSAGE
 #{"*" * 80}
 
-  WARNING: Merb-admit does not currently implement any authentication!
+  WARNING: MerbAdmin does not currently implement any authentication!
   Do not deploy to production without writing an authentication strategy.
 
 #{"*" * 80}
