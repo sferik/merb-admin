@@ -26,6 +26,16 @@ Then run the following rake task:
 
     rake slices:merb_admin:install
 
+## Run it
+
+Start your server.  If everything worked correctly, it should log the messages:
+    ~ Loaded slice 'MerbAdmin' ...
+    ~ Activating slice 'MerbAdmin' ...
+
+Now you should be able to administer your site at `http://localhost:4000/admin`
+
+Please report any problems you encounter to <sferik@gmail.com>.
+
 ## WARNING
 
 Merb-admit does not currently implement any authentication! Do not deploy to production without writing an authentication strategy.
