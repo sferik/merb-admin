@@ -1,6 +1,8 @@
 # MerbAdmin
 
-MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers.
+**MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers.**
+
+It currently implements the features listed [http://sferik.tadalist.com/lists/1352791/public](here).
 
 ## Get it
 
