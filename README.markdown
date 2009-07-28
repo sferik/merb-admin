@@ -42,31 +42,6 @@ MerbAdmin does not currently implement any authentication! Do not deploy to prod
 
 ## Acknowledgements
 
-Many thanks to [Wilson Miner](http://www.wilsonminer.com/) for contributing the JavaScript and CSS from the [Django](http://www.djangoproject.com/) admin site.
+Many thanks to [Wilson Miner](http://www.wilsonminer.com/) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com/).
 
 Also, thanks to [beer](http://www.anchorbrewing.com/).
-
-------------------------------------------------------------------------------
-
-You can put your application-level overrides in:
-
-host-app/slices/merb-admin/app - controllers, models, views ...
-
-Templates are located in this order:
-
-1. host-app/slices/merb-admin/app/views/*
-2. gems/merb-admin/app/views/*
-3. host-app/app/views/*
-
-You can use the host application's layout by configuring the
-merb-admin slice in a before_app_loads block:
-
-Merb::Slices.config[:merb_admin] = { :layout => :application }
-
-By default :merb_admin is used. If you need to override
-stylesheets or javascripts, just specify your own files in your layout
-instead/in addition to the ones supplied (if any) in 
-host-app/public/slices/merb-admin.
-
-In any case don't edit those files directly as they may be clobbered any time
-rake merb_admin:install is run.
