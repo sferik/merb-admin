@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{merb-admin}
-  s.version = "1.0.12"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Erik Michaels-Ober"]
-  s.date = %q{2009-07-27}
+  s.date = %q{2009-07-28}
   s.description = %q{MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers.}
   s.email = %q{sferik@gmail.com}
   s.extra_rdoc_files = ["README.markdown", "LICENSE"]
@@ -29,11 +29,17 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<merb-slices>, ["= 1.0.12"])
+      s.add_runtime_dependency(%q<merb-slices>, [">= 1.0.12"])
+      s.add_runtime_dependency(%q<merb_datamapper>, [">= 1.0.12"])
+      s.add_runtime_dependency(%q<dm-core>, [">= 0.9.11"])
     else
-      s.add_dependency(%q<merb-slices>, ["= 1.0.12"])
+      s.add_dependency(%q<merb-slices>, [">= 1.0.12"])
+      s.add_dependency(%q<merb_datamapper>, [">= 1.0.12"])
+      s.add_dependency(%q<dm-core>, [">= 0.9.11"])
     end
   else
-    s.add_dependency(%q<merb-slices>, ["= 1.0.12"])
+    s.add_dependency(%q<merb-slices>, [">= 1.0.12"])
+    s.add_dependency(%q<merb_datamapper>, [">= 1.0.12"])
+    s.add_dependency(%q<dm-core>, [">= 0.9.11"])
   end
 end

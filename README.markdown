@@ -18,11 +18,11 @@ Alternatively, you build the gem yourself:
 
 In your app, add the following dependency to `config/dependencies.rb`
 
-    dependency "merb-admin", merb_gems_version
+    dependency "merb-admin"
 
 Add the following route to `config/router.rb`
 
-    slice(:merb_admin)
+    slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "", :default_routes => false)
 
 Then run the following rake task:
 
