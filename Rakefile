@@ -11,8 +11,8 @@ GEM_NAME = "merb-admin"
 AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
 HOMEPAGE = "http://twitter.com/sferik"
-SUMMARY = "MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers."
-GEM_VERSION = "0.1.0"
+SUMMARY = "MerbAdmin is a merb slice that provides an easy-to-use interface for managing your data."
+GEM_VERSION = "0.1.1"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = "merb"
@@ -34,8 +34,8 @@ spec = Gem::Specification.new do |s|
   s.post_install_message = <<-POST_INSTALL_MESSAGE
 #{"*" * 80}
 
-  WARNING: MerbAdmin does not currently implement any authentication!
-  Do not deploy to production without writing an authentication strategy.
+  WARNING: MerbAdmin does not implement any authorization scheme.
+  Make sure to apply authorization logic before deploying to production!
 
 #{"*" * 80}
 POST_INSTALL_MESSAGE

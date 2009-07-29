@@ -1,14 +1,12 @@
 # MerbAdmin
 
-**MerbAdmin is a Merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers.**
+**MerbAdmin is a merb slice that provides an easy-to-use interface for managing your data.**
 
-It currently implements the features listed [here](http://sferik.tadalist.com/lists/1352791/public).
+It currently has the features listed [here](http://sferik.tadalist.com/lists/1352791/public).
 
 ## Get it
 
-    sudo gem install sferik-merb-admin -s http://gems.github.com
-
-Alternatively, you build the gem yourself:
+At your command prompt, type:
 
     git clone git://github.com/sferik/merb-admin.git
     cd merb-admin
@@ -20,17 +18,20 @@ In your app, add the following dependency to `config/dependencies.rb`
 
     dependency "merb-admin"
 
-Add the following route to `config/router.rb`
+...add the following route to `config/router.rb`
 
     slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "", :default_routes => false)
 
-Then run the following rake task:
+...and then run the following rake task:
 
     rake slices:merb_admin:install
 
 ## Run it
 
-Start your server.  If everything worked correctly, it should log the messages:
+Start your server:
+    merb
+
+If everything worked correctly, it should log the messages:
     ~ Loaded slice 'MerbAdmin' ...
     ~ Activating slice 'MerbAdmin' ...
 
@@ -40,7 +41,7 @@ Please report any problems you encounter to <sferik@gmail.com>.
 
 ## WARNING
 
-MerbAdmin does not currently implement any authentication! Do not deploy to production without writing an authentication strategy.
+MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!
 
 ## Acknowledgements
 
