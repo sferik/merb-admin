@@ -1,4 +1,7 @@
         <div id="content-main">
+        <ul class="object-tools">
+          <li><a href="<%= "/#{@model_name.snake_case}/#{@instance.id}" %>" target="_blank" class="viewsitelink">View on site</a></li>
+        </ul>
         <%= form_for(@instance, :action => slice_url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id)) do %>
           <div>
             <fieldset class="module aligned">
