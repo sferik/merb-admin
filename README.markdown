@@ -24,7 +24,7 @@ In your app, add the following dependency to `config/dependencies.rb`
 
 ...and then run the following rake task:
 
-    rake slices:merb_admin:install
+    rake slices:merb-admin:install
 
 ## Run it
 
