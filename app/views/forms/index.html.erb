@@ -6,6 +6,7 @@
               <tr>
                 <th scope="row"><a href="<%= slice_url(:admin_list, :model_name => model_name.snake_case) %>"><%=h model_name.pluralize %></a></th>
                 <td><a href="<%= slice_url(:admin_new, :model_name => model_name.snake_case) %>" class="addlink">Add</a></td>
+                <td><a href="<%= slice_url(:admin_list, :model_name => model_name.snake_case) %>" class="changelink">Edit</a></td>
               </tr>
               <% end %>
             </table>
