@@ -1,3 +1,4 @@
+require 'builder'
 module Merb
   module MerbAdmin
     module FormsHelper
@@ -15,6 +16,13 @@ module Merb
       # :inner_window setting a value of nil.
       #
       # * Options
+      # :left_cut_label => <em>text_for_cut</em>::
+      #    Used when the page numbers need to be cut off to prevent the set of
+      #    pagination links from being too long.
+      #    Defaults to '&hellip;'
+      # :right_cut_label => <em>text_for_cut</em>::
+      #    Same as :left_cut_label but for the right side of numbers.
+      #    Defaults to '&hellip;'
       # :outer_window => <em>number_of_pages</em>::
       #    Sets the number of pages to include in the outer 'window'
       #    Defaults to 2
@@ -30,6 +38,8 @@ module Merb
       #    Defaults to ''
       def paginate(current_page, page_count, options = {})
         options.reverse_merge!({
+          :left_cut_label  => '&hellip;',
+          :right_cut_label => '&hellip;',
           :outer_window    => 2,
           :inner_window    => 7,
           :page_param      => 'page',
@@ -57,18 +67,18 @@ module Merb
           # Ex: 1 2 [3] 4 5 6 7 8 9 ... 20
           when -infinity .. (options[:inner_window] / 2) + 3
             pages[:all][options[:outer_window], options[:inner_window]] +
-              ["&hellip;"]
+              [options[:right_cut_label]]
           # allow the inner 'window' to shift left when close to the right edge
           # Ex: 1 2 ... 12 13 14 15 16 [17] 18 19 20
           when (page_count - (options[:inner_window] / 2.0).ceil) - 1 .. infinity
-            ["&hellip;"] +
+            [options[:left_cut_label]] +
               pages[:all][page_count - options[:inner_window] - options[:outer_window], options[:inner_window]]
           # Display the unshifed window
           # ex: 1 2 ... 5 6 7 [8] 9 10 11 ... 19 20
           else
-            ["&hellip;"] +
+            [options[:left_cut_label]] +
               pages[:all][current_page - (options[:inner_window] / 2) - 1, options[:inner_window]] +
-              ["&hellip;"]
+              [options[:right_cut_label]]
           end
         end
 
@@ -80,11 +90,11 @@ module Merb
             when String
               b << page_number
             when current_page
-              b << "<span class=\"this-page\">#{page_number}</span>"
+              b << Builder::XmlMarkup.new.span(page_number, :class => "this-page")
             when page_count
-              b << "<a class=\"end\" href=\"#{url}=#{page_number}\">#{page_number}</a>"
+              b << Builder::XmlMarkup.new.a(page_number, :class => "end", :href => "#{url}=#{page_number}")
             else
-              b << "<a href=\"#{url}=#{page_number}\">#{page_number}</a>"
+              b << Builder::XmlMarkup.new.a(page_number, :href => "#{url}=#{page_number}")
             end
           end
         end
