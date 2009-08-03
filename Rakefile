@@ -12,7 +12,7 @@ AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
 HOMEPAGE = "http://twitter.com/sferik"
 SUMMARY = "MerbAdmin is a merb slice that provides an easy-to-use interface for managing your data."
-GEM_VERSION = "0.1.2"
+GEM_VERSION = "0.1.3"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = "merb"
@@ -28,7 +28,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   s.add_dependency("merb-slices", ">= #{Merb::VERSION}")
   s.add_dependency("merb_datamapper", ">= #{Merb::VERSION}")
-  s.add_dependency("dm-core", ">= 0.9.11")
+  s.add_dependency("dm-core", ">= 0.10.0")
   s.require_path = "lib"
   s.files = %w(LICENSE README.markdown Rakefile) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
   s.post_install_message = <<-POST_INSTALL_MESSAGE
