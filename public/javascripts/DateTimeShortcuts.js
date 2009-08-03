@@ -11,7 +11,7 @@ var DateTimeShortcuts = {
     calendarLinkName: 'calendarlink',// name of the link that is used to toggle
     clockDivName: 'clockbox',        // name of clock <div> that gets toggled
     clockLinkName: 'clocklink',      // name of the link that is used to toggle
-    admin_media_prefix: '/slices/merb-admin/',
+    admin_media_prefix: '',
     init: function() {
         // Deduce admin_media_prefix by looking at the <script>s in the
         // current document and finding the URL of *this* module.
@@ -109,11 +109,11 @@ var DateTimeShortcuts = {
     
         // Show the clock box
         clock_box.style.display = 'block';
-        addEvent(window, 'click', function() { DateTimeShortcuts.dismissClock(num); return true; });
+        addEvent(window.document, 'click', function() { DateTimeShortcuts.dismissClock(num); return true; });
     },
     dismissClock: function(num) {
        document.getElementById(DateTimeShortcuts.clockDivName + num).style.display = 'none';
-       window.onclick = null;
+       window.document.onclick = null;
     },
     handleClockQuicklink: function(num, val) {
        DateTimeShortcuts.clockInputs[num].value = val;
@@ -224,10 +224,11 @@ var DateTimeShortcuts = {
         cal_box.style.top = findPosY(cal_link) - 75 + 'px';
     
         cal_box.style.display = 'block';
-        addEvent(window, 'click', function() { DateTimeShortcuts.dismissCalendar(num); return true; });
+        addEvent(window.document, 'click', function() { DateTimeShortcuts.dismissCalendar(num); return true; });
     },
     dismissCalendar: function(num) {
         document.getElementById(DateTimeShortcuts.calendarDivName1+num).style.display = 'none';
+        window.document.onclick = null;
     },
     drawPrev: function(num) {
         DateTimeShortcuts.calendars[num].drawPreviousMonth();

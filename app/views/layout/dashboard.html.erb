@@ -4,19 +4,27 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="robots" content="NONE,NOARCHIVE" />
     <title>MerbAdmin</title>
+    <link href="<%= public_path_for :stylesheet, 'base.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" />
     <link href="<%= public_path_for :stylesheet, 'dashboard.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" />
+    <!--[if lte IE 7]><link href="<%= public_path_for :stylesheet, 'ie.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" /><![endif]-->
   </head>
   <body class="admin-slice dashboard">
     <div id="container">
       <div id="header">
         <div id="branding">
-          <h1 id="site-name">MerbAdmin</h1>
+          <h1 id="site-name">
+            MerbAdmin
+          </h1>
         </div>
-        <div id="user-tools">Welcome, <strong><%= %></strong>. <a href="<%= %>">Log out</a></div>
+        <div id="user-tools">
+          Welcome, <strong><%= %></strong>. <a href="<%= %>">Log out</a>
+        </div>
       </div>
       <%= partial 'layout/message' %>
       <div id="content" class="colMS">
-        <h1>Site administration</h1>
+        <h1>
+          Site administration
+        </h1>
 <%= catch_content :for_layout -%>
       </div>
       <div id="footer"></div>

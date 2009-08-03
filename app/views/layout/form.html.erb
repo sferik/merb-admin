@@ -4,22 +4,30 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="robots" content="NONE,NOARCHIVE" />
     <title>MerbAdmin</title>
+    <link href="<%= public_path_for :stylesheet, 'base.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" />
     <link href="<%= public_path_for :stylesheet, 'forms.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" />
+    <!--[if lte IE 7]><link href="<%= public_path_for :stylesheet, 'ie.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all" /><![endif]-->
     <script src="<%= public_path_for :javascript, 'i18n.js' %>" type="text/javascript" charset="utf-8"></script>
     <script src="<%= public_path_for :javascript, 'core.js' %>" type="text/javascript" charset="utf-8"></script>
     <script src="<%= public_path_for :javascript, 'RelatedObjectLookups.js' %>" type="text/javascript" charset="utf-8"></script>
-    <script src="<%= public_path_for :javascript, 'calendar.js' %>" type="text/javascript" charset="utf-8"></script>
-    <script src="<%= public_path_for :javascript, 'DateTimeShortcuts.js' %>" type="text/javascript" charset="utf-8"></script>
+    <script src="<%= public_path_for :javascript, 'getElementsBySelector.js' %>" type="text/javascript" charset="utf-8"></script>
+    <script src="<%= public_path_for :javascript, 'actions.js' %>" type="text/javascript" charset="utf-8"></script>
     <script src="<%= public_path_for :javascript, 'SelectBox.js' %>" type="text/javascript" charset="utf-8"></script>
     <script src="<%= public_path_for :javascript, 'SelectFilter2.js' %>" type="text/javascript" charset="utf-8"></script>
+    <script src="<%= public_path_for :javascript, 'calendar.js' %>" type="text/javascript" charset="utf-8"></script>
+    <script src="<%= public_path_for :javascript, 'DateTimeShortcuts.js' %>" type="text/javascript" charset="utf-8"></script>
   </head>
   <body class="admin-slice change-form">
     <div id="container">
       <div id="header">
         <div id="branding">
-          <h1 id="site-name">MerbAdmin</h1>
+          <h1 id="site-name">
+            MerbAdmin
+          </h1>
         </div>
-        <div id="user-tools">Welcome, <strong><%= %></strong>. <a href="<%= %>">Log out</a></div>
+        <div id="user-tools">
+          Welcome, <strong><%= %></strong>. <a href="<%= %>">Log out</a>
+        </div>
       </div>
       <div class="breadcrumbs">
         <a href="<%= url(:admin_dashboard) %>">Home</a> &rsaquo;
@@ -28,7 +36,9 @@
       </div>
       <%= partial 'layout/message' %>
       <div id="content" class="colM">
-        <h1><%=h action_name.capitalize %> <%=h @model_name.snake_case.gsub('_', ' ') %></h1>
+        <h1>
+          <%=h action_name.capitalize %> <%=h @model_name.snake_case.gsub('_', ' ') %>
+        </h1>
 <%= catch_content :for_layout -%>
       </div>
       <div id="footer"></div>
