@@ -1,0 +1,102 @@
+module Merb
+  module MerbAdmin
+    module FormsHelper
+      # Given a page count and the current page, we generate a set of pagination
+      # links.
+      # 
+      # * We use an inner and outer window into a list of links. For a set of 
+      # 20 pages with the current page being 10:
+      # outer_window:
+      #   1 2  ..... 19 20
+      # inner_window
+      #   5 6 7 8 9 10 11 12 13 14
+      #
+      # This is totally adjustable, or can be turned off by giving the 
+      # :inner_window setting a value of nil.
+      #
+      # * Options
+      # :outer_window => <em>number_of_pages</em>::
+      #    Sets the number of pages to include in the outer 'window'
+      #    Defaults to 2
+      # :inner_window => <em>number_of_pages</em>::
+      #    Sets the number of pags to include in the inner 'window'
+      #    Defaults to 7
+      # :page_param => <em>name_of_page_paramiter</em>
+      #    Sets the name of the paramiter the paginator uses to return what
+      #    page is being requested.
+      #    Defaults to 'page'
+      # :url => <em>url_for_links</em>
+      #    Provides the base url to use in the page navigation links.
+      #    Defaults to ''
+      def paginate(current_page, page_count, options = {})
+        options.reverse_merge!({
+          :outer_window    => 2,
+          :inner_window    => 7,
+          :page_param      => 'page',
+          :url             => ''
+        })
+        url = options.delete :url
+        url << (url.include?('?') ? '&' : '?') << options[:page_param]
+
+        pages = { 
+          :all => (1..page_count).to_a, 
+          :left => [], 
+          :center => [], 
+          :right => [] 
+        }
+
+        # Only worry about using our 'windows' if the page count is less then 
+        # our windows combined.
+        if options[:inner_window].nil? || ((options[:outer_window] * 2) + options[:inner_window] + 2) >= page_count
+          pages[:center] = pages[:all]
+        else
+          pages[:left] = pages[:all][0, options[:outer_window]]
+          pages[:right] = pages[:all][page_count - options[:outer_window], options[:outer_window]]
+          pages[:center] = case current_page
+          # allow the inner 'window' to shift to right when close to the left edge
+          # Ex: 1 2 [3] 4 5 6 7 8 9 ... 20
+          when -infinity .. (options[:inner_window] / 2) + 3
+            pages[:all][options[:outer_window], options[:inner_window]] +
+              ["&hellip;"]
+          # allow the inner 'window' to shift left when close to the right edge
+          # Ex: 1 2 ... 12 13 14 15 16 [17] 18 19 20
+          when (page_count - (options[:inner_window] / 2.0).ceil) - 1 .. infinity
+            ["&hellip;"] +
+              pages[:all][page_count - options[:inner_window] - options[:outer_window], options[:inner_window]]
+          # Display the unshifed window
+          # ex: 1 2 ... 5 6 7 [8] 9 10 11 ... 19 20
+          else
+            ["&hellip;"] +
+              pages[:all][current_page - (options[:inner_window] / 2) - 1, options[:inner_window]] +
+              ["&hellip;"]
+          end
+        end
+
+        b = []
+
+        [pages[:left], pages[:center], pages[:right]].each do |p|
+          p.each do |page_number|
+            case page_number
+            when String
+              b << page_number
+            when current_page
+              b << "<span class=\"this-page\">#{page_number}</span>"
+            when page_count
+              b << "<a class=\"end\" href=\"#{url}=#{page_number}\">#{page_number}</a>"
+            else
+              b << "<a href=\"#{url}=#{page_number}\">#{page_number}</a>"
+            end
+          end
+        end
+
+        b.join(" ")
+      end
+
+      private
+
+      def infinity
+        1.0 / 0
+      end
+    end
+  end
+end

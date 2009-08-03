@@ -2,12 +2,17 @@ class MerbAdmin::Forms < MerbAdmin::Application
   layout :form
 
   def index
-    @models = DataMapper::Model.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s} - [Merb::DataMapperSessionStore]
+    @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s} - [Merb::DataMapperSessionStore]
     render(:layout => "dashboard")
   end
 
   def list
-    @instances = @model.all
+    if @model.respond_to?(:paginated) && !params[:all]
+      @current_page = (params[:page] || 1).to_i
+      @page_count, @instances = @model.paginated(:page => @current_page, :per_page => 100)
+    else
+      @instances = @model.all.reverse
+    end
     render(:layout => "list")
   end
 
