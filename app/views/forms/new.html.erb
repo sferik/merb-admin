@@ -9,7 +9,9 @@
               <% end %>
             </fieldset>
             <div class="submit-row" >
-              <%= submit "Create", :class => "default" %>
+              <%= submit "Save", :class => "default", :name => "_save" %>
+              <%= submit "Save and add another", :name => "_add_another" %>
+              <%= submit "Save and continue editing", :name => "_continue" %>
             </div>
           </div>
         <% end =%>

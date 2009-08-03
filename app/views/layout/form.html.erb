@@ -38,7 +38,7 @@
         <a href="<%= url(:admin_list, :model_name => @model_name.snake_case) %>"><%=h @model_name.pluralize %></a> &rsaquo;
         <%= page_name %>
       </div>
-      <%= partial 'layout/message' %>
+<%= partial 'layout/message' -%>
       <div id="content" class="colM">
         <h1>
           <%= page_name %>

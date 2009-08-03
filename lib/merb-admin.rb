@@ -22,7 +22,7 @@ if defined?(Merb::Plugins)
     
     # Slice metadata
     self.description = "MerbAdmin is a merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers."
-    self.version = "0.1.4"
+    self.version = "0.1.5"
     self.author = "Erik Michaels-Ober"
     
     # Stub classes loaded hook - runs before LoadClasses BootLoader
@@ -44,29 +44,37 @@ if defined?(Merb::Plugins)
     
     def self.setup_router(scope)
 
-      scope.match("/admin(/index)(.:format)", :method => :get).
+      scope.match("/admin(/index)", :method => :get).
         to(:controller => "forms", :action => "index").
         name(:admin_dashboard)
 
-      scope.match("/admin/:model_name(/index)(.:format)", :method => :get).
+      scope.match("/admin/:model_name(/index)", :method => :get).
         to(:controller => "forms", :action => "list").
         name(:admin_list)
 
-      scope.match("/admin/:model_name/new(.:format)", :method => :get).
+      scope.match("/admin/:model_name/new", :method => :get).
         to(:controller => "forms", :action => "new").
         name(:admin_new)
 
-      scope.match("/admin/:model_name/:id(.:format)", :method => :get).
+      scope.match("/admin/:model_name/:id/edit", :method => :get).
         to(:controller => "forms", :action => "edit").
         name(:admin_edit)
 
-      scope.match("/admin/:model_name(.:format)", :method => :post).
+      scope.match("/admin/:model_name", :method => :post).
         to(:controller => "forms", :action => "create").
         name(:admin_create)
 
-      scope.match("/admin/:model_name/:id(.:format)", :method => :put).
+      scope.match("/admin/:model_name/:id", :method => :put).
         to(:controller => "forms", :action => "update").
         name(:admin_update)
+
+      scope.match("/admin/:model_name/:id/delete", :method => :get).
+        to(:controller => "forms", :action => "delete").
+        name(:admin_delete)
+
+      scope.match("/admin/:model_name/:id(.:format)", :method => :delete).
+        to(:controller => "forms", :action => "destroy").
+        name(:admin_destroy)
 
     end
     

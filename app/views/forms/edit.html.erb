@@ -9,7 +9,10 @@
               <% end %>
             </fieldset>
             <div class="submit-row" >
-              <%= submit "Update", :class => "default" %>
+              <%= submit "Save", :class => "default", :name => "_save" %>
+              <p class="deletelink-box"><a href="<%= slice_url(:admin_delete, :model_name => @model_name.snake_case, :id => @instance.id) %>" class="deletelink">Delete</a></p>
+              <%= submit "Save and add another", :name => "_add_another" %>
+              <%= submit "Save and continue editing", :name => "_continue" %>
             </div>
           </div>
         <% end =%>

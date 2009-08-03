@@ -1,0 +1,12 @@
+        <p>Are you sure you want to delete the <%= @model_name.snake_case.gsub('_', ' ') %>? All of the following related items will be deleted:</p>
+        <ul>
+          <li>
+            <a href="<%= slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => @instance.id) %>"><%= @model_name %></a>
+          </li>
+        </ul>
+        <%= form_for(@instance, :action => slice_url(:admin_destroy, :model_name => @model_name.snake_case, :id => @instance.id), :method => :delete) do %>
+          <div>
+            <%= submit "Yes, I'm sure" %>
+          </div>
+        <% end =%>
+
