@@ -19,15 +19,15 @@ spec = Gem::Specification.new do |s|
   s.name = GEM_NAME
   s.version = GEM_VERSION
   s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
+  s.has_rdoc = false
   s.extra_rdoc_files = ["README.markdown", "LICENSE"]
   s.summary = SUMMARY
   s.description = s.summary
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency("merb-slices", ">= #{Merb::VERSION}")
-  s.add_dependency("merb_datamapper", ">= #{Merb::VERSION}")
+  s.add_dependency("merb-slices", Merb::VERSION)
+  s.add_dependency("merb_datamapper", Merb::VERSION)
   s.add_dependency("dm-core", ">= 0.9.11")
   s.require_path = "lib"
   s.files = %w(LICENSE README.markdown Rakefile) + Dir.glob("{lib,spec,app,public,stubs}/**/*")

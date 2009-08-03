@@ -14,15 +14,15 @@ At the command prompt, type:
 
 ## Install it
 
-In your app, add the following dependency to `config/dependencies.rb`
+In your app, add the following dependency to `config/dependencies.rb`:
 
     dependency "merb-admin", "0.1.5"
 
-...add the following route to `config/router.rb`
+Add the following route to `config/router.rb`:
 
     slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "", :default_routes => false)
 
-...and then run the following rake task:
+Then, run the following rake task:
 
     rake slices:merb-admin:install
 
@@ -33,6 +33,14 @@ You can configuring the merb-admin slice in a before_app_loads block:
     Merb::BootLoader.before_app_loads do
       Merb::Slices::config[:merb_admin][:app_name] = "My App"
     end
+
+If you have a database table with more than 200 rows, you're going to want to enable pagination. MerbAdmin uses [dm-is-paginated](http://github.com/lholden/dm-is-paginated) for pagination.  Add the following dependency to `config/dependencies.rb`:
+
+    dependency "dm-is-paginated", "0.0.1"
+
+Then, inside any model where you want pagination, call:
+
+    is_paginated
 
 ## Run it
 
@@ -50,6 +58,6 @@ MerbAdmin does not implement any authorization scheme. Make sure to apply author
 
 ## Acknowledgements
 
-Many thanks to [Wilson Miner](http://www.wilsonminer.com/) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com/).
+Many thanks to [Wilson Miner](http://www.wilsonminer.com) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com).
 
-Also, thanks to [beer](http://www.anchorbrewing.com/).
+Also, thanks to [beer](http://www.anchorbrewing.com).
