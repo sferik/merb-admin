@@ -3,16 +3,19 @@ class MerbAdmin::Forms < MerbAdmin::Application
 
   def index
     @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s}
+    # remove DataMapperSessionStore because it's included by default
     @models -= [Merb::DataMapperSessionStore] if Merb.const_defined?(:DataMapperSessionStore)
     render(:layout => "dashboard")
   end
 
   def list
-    if @model.respond_to?(:paginated) && !params[:all]
+    if params[:all]
+      @instances = @model.all(:limit => 200).reverse
+    else
+      # monkey patch pagination
+      @model.class_eval("is_paginated") unless @model.respond_to?(:paginated)
       @current_page = (params[:page] || 1).to_i
       @page_count, @instances = @model.paginated(:page => @current_page, :per_page => 100)
-    else
-      @instances = @model.all.reverse
     end
     render(:layout => "list")
   end

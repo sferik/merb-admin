@@ -16,7 +16,7 @@ At the command prompt, type:
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "merb-admin", "0.1.6"
+    dependency "merb-admin", "0.1.7"
 
 Add the following route to `config/router.rb`:
 
@@ -33,14 +33,6 @@ You can configuring the merb-admin slice in a before_app_loads block:
     Merb::BootLoader.before_app_loads do
       Merb::Slices::config[:merb_admin][:app_name] = "My App"
     end
-
-If you have a database table with more than 200 rows, you're going to want to enable pagination. MerbAdmin uses [dm-is-paginated](http://github.com/lholden/dm-is-paginated) for pagination.  Add the following dependency to `config/dependencies.rb`:
-
-    dependency "dm-is-paginated", "0.0.1"
-
-Then, inside any model where you want pagination, call:
-
-    is_paginated
 
 ## Run it
 
