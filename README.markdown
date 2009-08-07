@@ -8,6 +8,10 @@ It currently offers the features listed [here](http://sferik.tadalist.com/lists/
 
 At the command prompt, type:
 
+    sudo gem install sferik-merb-admin -s http://gems.github.com
+
+Alternatively, you build the gem yourself:
+
     git clone git://github.com/sferik/merb-admin.git
     cd merb-admin
     sudo rake install
