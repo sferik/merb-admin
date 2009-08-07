@@ -10,17 +10,11 @@ At the command prompt, type:
 
     sudo gem install sferik-merb-admin -s http://gems.github.com
 
-Alternatively, you build the gem yourself:
-
-    git clone git://github.com/sferik/merb-admin.git
-    cd merb-admin
-    sudo rake install
-
 ## Install it
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "merb-admin", "0.1.7"
+    dependency "sferik-merb-admin", "0.1.7", :require_as => "merb-admin"
 
 Add the following route to `config/router.rb`:
 
