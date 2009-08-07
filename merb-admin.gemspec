@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{merb-admin}
-  s.version = "0.1.5"
+  s.version = "0.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Erik Michaels-Ober"]
-  s.date = %q{2009-08-02}
+  s.date = %q{2009-08-06}
   s.description = %q{MerbAdmin is a merb slice that provides an easy-to-use interface for managing your data.}
   s.email = %q{sferik@gmail.com}
   s.extra_rdoc_files = ["README.markdown", "LICENSE"]

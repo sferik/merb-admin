@@ -2,7 +2,8 @@ class MerbAdmin::Forms < MerbAdmin::Application
   layout :form
 
   def index
-    @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s} - [Merb::DataMapperSessionStore]
+    @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s}
+    @models -= [Merb::DataMapperSessionStore] if Merb.const_defined?(:DataMapperSessionStore)
     render(:layout => "dashboard")
   end
 
