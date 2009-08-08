@@ -30,12 +30,12 @@
           </h1>
         </div>
         <div id="user-tools">
-          Welcome, <strong><%= %></strong>. <a href="<%= %>">Log out</a>
+          <!-- Welcome, <strong></strong>. <a href="">Log out</a> -->
         </div>
       </div>
       <div class="breadcrumbs">
-        <a href="<%= url(:admin_dashboard) %>">Home</a> &rsaquo;
-        <a href="<%= url(:admin_list, :model_name => @model_name.snake_case) %>"><%=h @model_name.pluralize %></a> &rsaquo;
+        <%= link_to("Home", url(:admin_dashboard)) %> &rsaquo;
+        <%= link_to(@model_name.pluralize, url(:admin_list, :model_name => @model_name.snake_case)) %> &rsaquo;
         <%= page_name %>
       </div>
 <%= partial 'layout/message' -%>

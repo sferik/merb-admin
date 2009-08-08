@@ -1,7 +1,7 @@
         <div id="content-main">
           <ul class="object-tools">
             <li>
-              <a href="<%= slice_url(:admin_new, :model_name => @model_name.snake_case) %>" class="addlink">Add <%=h @model_name.snake_case.gsub('_', ' ') %></a>
+              <%= link_to("Add #{@model_name.snake_case.gsub('_', ' ')}", slice_url(:admin_new, :model_name => @model_name.snake_case), :class => "addlink") %>
             </li>
           </ul>
           <div class="module filtered" id="changelist">
@@ -81,7 +81,7 @@
             <% end %>
               <%= @model.count %> <%= @model.count == 1 ? @model_name.snake_case.gsub('_', ' ') : @model_name.snake_case.gsub('_', ' ').pluralize %>
             <% if @page_count.to_i == 2 %>
-              <a href="<%= slice_url(:admin_list, :model_name => @model_name.snake_case, :all => true) %>" class="showall">Show all</a>
+              <%= link_to("Show all", slice_url(:admin_list, :model_name => @model_name.snake_case, :all => true), :class => "showall") %>
             <% end %>
             </p>
           </div>

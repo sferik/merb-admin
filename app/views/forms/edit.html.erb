@@ -1,6 +1,8 @@
         <div id="content-main">
         <ul class="object-tools">
-          <li><a href="<%= "/#{@model_name.snake_case}/#{@instance.id}" %>" target="_blank" class="viewsitelink">View on site</a></li>
+          <li>
+            <%= link_to("View on site", "/#{@model_name.snake_case}/#{@instance.id}", :target => "_blank", :class => "viewsitelink") %>
+          </li>
         </ul>
         <%= form_for(@instance, :action => slice_url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id)) do %>
           <div>
@@ -13,7 +15,9 @@
             </fieldset>
             <div class="submit-row" >
               <%= submit "Save", :class => "default", :name => "_save" %>
-              <p class="deletelink-box"><a href="<%= slice_url(:admin_delete, :model_name => @model_name.snake_case, :id => @instance.id) %>" class="deletelink">Delete</a></p>
+              <p class="deletelink-box">
+                <%= link_to("Delete", slice_url(:admin_delete, :model_name => @model_name.snake_case, :id => @instance.id), :class => "deletelink") %>
+              </p>
               <%= submit "Save and add another", :name => "_add_another" %>
               <%= submit "Save and continue editing", :name => "_continue" %>
             </div>

@@ -1,12 +1,20 @@
         <div id="content-main">
           <div class="module">
             <table summary="Models available in the application.">
-              <caption><a href="<%= slice_url(:admin_dashboard) %>" class="section">Models</a></caption>
+              <caption>
+                <%= link_to("Models", slice_url(:admin_dashboard), :class => "section") %>
+              </caption>
               <% @models.map{|m| m.to_s}.each do |model_name| %>
               <tr>
-                <th scope="row"><a href="<%= slice_url(:admin_list, :model_name => model_name.snake_case) %>"><%=h model_name.pluralize %></a></th>
-                <td><a href="<%= slice_url(:admin_new, :model_name => model_name.snake_case) %>" class="addlink">Add</a></td>
-                <td><a href="<%= slice_url(:admin_list, :model_name => model_name.snake_case) %>" class="changelink">Edit</a></td>
+                <th scope="row">
+                  <%= link_to(model_name.pluralize, slice_url(:admin_list, :model_name => model_name.snake_case)) %>
+                </th>
+                <td>
+                  <%= link_to("Add", slice_url(:admin_new, :model_name => model_name.snake_case), :class => "addlink") %>
+                </td>
+                <td>
+                  <%= link_to("Edit", slice_url(:admin_list, :model_name => model_name.snake_case), :class => "changelink") %>
+                </td>
               </tr>
               <% end %>
             </table>
