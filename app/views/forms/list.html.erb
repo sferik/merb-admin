@@ -5,6 +5,27 @@
             </li>
           </ul>
           <div class="module filtered" id="changelist">
+            <div id="changelist-filter">
+              <h2>Filter</h2>
+              <% params = request.params.except(:action, :controller, :model_name) %>
+              <% @properties.each do |property| %>
+              <% case property.primitive.to_s %>
+              <% when "TrueClass" %>
+              <h3>By <%= property.field.gsub('_', ' ') %></h3>
+              <ul>
+                <li<%= params[:filter].nil? || params[:filter][property.name].blank? ? ' class="selected"' : nil %>>
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property.name})) %>">All</a>
+                </li>
+                <li<%= params[:filter] && params[:filter][property.name] == "true" ? ' class="selected"' : nil %>>
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => true}))) %>">Yes</a>
+                </li>
+                <li<%= params[:filter] && params[:filter][property.name] == "false" ? ' class="selected"' : nil %>>
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => false}))) %>">No</a>
+                </li>
+              </ul>
+              <% end %>
+              <% end %>
+            </div>
             <table cellspacing="0">
               <thead>
                 <tr>
@@ -55,9 +76,13 @@
               </tbody>
             </table>
             <p class="paginator">
-              <%= paginate(@current_page, @page_count, :url => slice_url(:admin_list, :model_name => @model_name.snake_case)) if @page_count.to_i > 1 %>
+            <% if @page_count.to_i > 1 %>
+              <%= paginate(@current_page, @page_count, :url => slice_url(:admin_list, :model_name => @model_name.snake_case)) %>
+            <% end %>
               <%= @model.count %> <%= @model.count == 1 ? @model_name.snake_case.gsub('_', ' ') : @model_name.snake_case.gsub('_', ' ').pluralize %>
-              <%= "<a href=\"#{slice_url(:admin_list, :model_name => @model_name.snake_case, :all => true)}\" class=\"showall\">Show all</a>" if @page_count.to_i == 2 %>
+            <% if @page_count.to_i == 2 %>
+              <a href="<%= slice_url(:admin_list, :model_name => @model_name.snake_case, :all => true) %>" class="showall">Show all</a>
+            <% end %>
             </p>
           </div>
         </div>

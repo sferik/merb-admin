@@ -2,6 +2,7 @@ require 'builder'
 module Merb
   module MerbAdmin
     module FormsHelper
+
       # Given a page count and the current page, we generate a set of pagination
       # links.
       # 
@@ -107,6 +108,7 @@ module Merb
       def infinity
         1.0 / 0
       end
+
     end
   end
 end

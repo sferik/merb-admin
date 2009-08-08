@@ -9,13 +9,28 @@ class MerbAdmin::Forms < MerbAdmin::Application
   end
 
   def list
+    options = {}
+    filters = params[:filter] || {}
+    filters.each_pair do |key, value|
+      case @model.properties[key].primitive.to_s
+      when "TrueClass"
+        options.merge!(key.to_sym => (value == "true" ? true : false))
+      end
+    end
     if params[:all]
-      @instances = @model.all(:limit => 200).reverse
+      options = {
+        :limit => 200,
+      }.merge(options)
+      @instances = @model.all(options).reverse
     else
       # monkey patch pagination
       @model.class_eval("is_paginated") unless @model.respond_to?(:paginated)
       @current_page = (params[:page] || 1).to_i
-      @page_count, @instances = @model.paginated(:page => @current_page, :per_page => 100)
+      options = {
+        :page => @current_page,
+        :per_page => 100,
+      }.merge(options)
+      @page_count, @instances = @model.paginated(options)
     end
     render(:layout => "list")
   end
