@@ -12,9 +12,10 @@ class MerbAdmin::Forms < MerbAdmin::Application
     options = {}
     filters = params[:filter] || {}
     filters.each_pair do |key, value|
-      case @model.properties[key].primitive.to_s
-      when "TrueClass"
+      if @model.properties[key].primitive.to_s == "TrueClass"
         options.merge!(key.to_sym => (value == "true" ? true : false))
+      elsif @model.properties[key].primitive.to_s == "Integer" && @model.properties[key].type.respond_to?(:flag_map)
+        options.merge!(key.to_sym => value.to_sym)
       end
     end
     if params[:all]
