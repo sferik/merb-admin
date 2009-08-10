@@ -1,3 +1,4 @@
+<% params = request.params.except(:action, :controller, :model_name) %>
         <div id="content-main">
           <ul class="object-tools">
             <li>
@@ -7,7 +8,6 @@
           <div class="module filtered" id="changelist">
             <div id="changelist-filter">
               <h2>Filter</h2>
-              <% params = request.params.except(:action, :controller, :model_name) %>
               <% @properties.each do |property| %>
               <% if property.primitive.to_s == "TrueClass" %>
               <h3>By <%= property.field.gsub('_', ' ') %></h3>
@@ -87,13 +87,13 @@
               </tbody>
             </table>
             <p class="paginator">
-            <% if @page_count.to_i > 1 %>
-              <%= paginate(@current_page, @page_count, :url => slice_url(:admin_list, :model_name => @model_name.snake_case)) %>
-            <% end %>
-              <%= @model.count %> <%= @model.count == 1 ? @model_name.snake_case.gsub('_', ' ') : @model_name.snake_case.gsub('_', ' ').pluralize %>
-            <% if @page_count.to_i == 2 %>
-              <%= link_to("Show all", slice_url(:admin_list, :model_name => @model_name.snake_case, :all => true), :class => "showall") %>
-            <% end %>
+              <% if @page_count.to_i > 1 %>
+              <%= paginate(@current_page, @page_count, :url => '?' + Merb::Parse.params_to_query_string(params)) %>
+              <% end %>
+              <%= @record_count %> <%= @record_count == 1 ? @model_name.snake_case.gsub('_', ' ') : @model_name.snake_case.gsub('_', ' ').pluralize %>
+              <% if @page_count.to_i == 2 %>
+              <%= link_to("Show all", '?' + Merb::Parse.params_to_query_string(params.merge(:all => true)), :class => "showall") %>
+              <% end %>
             </p>
           </div>
         </div>

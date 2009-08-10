@@ -32,7 +32,10 @@ class MerbAdmin::Forms < MerbAdmin::Application
         :per_page => 100,
       }.merge(options)
       @page_count, @instances = @model.paginated(options)
+      options.delete(:page)
+      options.delete(:per_page)
     end
+    @record_count = @model.count(options)
     render(:layout => "list")
   end
 
