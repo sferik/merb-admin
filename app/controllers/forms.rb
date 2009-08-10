@@ -24,6 +24,17 @@ class MerbAdmin::Forms < MerbAdmin::Application
       }.merge(options)
       @instances = @model.all(options).reverse
     else
+      if params[:query]
+        condition_statement = []
+        conditions = []
+        @properties.each do |property|
+          next unless property.primitive.to_s == "String"
+          condition_statement << "#{property.field} LIKE ?"
+          conditions << "%#{params[:query]}%"
+        end
+        conditions.unshift(condition_statement.join(" OR "))
+        options.merge!(:conditions => conditions) unless conditions == [""]
+      end
       # monkey patch pagination
       @model.class_eval("is_paginated") unless @model.respond_to?(:paginated)
       @current_page = (params[:page] || 1).to_i

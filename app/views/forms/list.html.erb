@@ -6,6 +6,24 @@
             </li>
           </ul>
           <div class="module filtered" id="changelist">
+            <div id="toolbar">
+              <form id="changelist-search" action="" method="get">
+              <div>
+                <label for="searchbar"><img src="<%= image_path("icon_searchbox.png") %>" alt="Search" /></label>
+                <input type="text" size="40" name="query" value="" id="searchbar" />
+                <input type="submit" value="Search" />
+                <% if params[:query] || params[:filter] %>
+                <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<a href="?"><%= @model.count %> total</a>)</span>
+                <% end %>
+                <% if params[:filter] %>
+                <% params[:filter].each do |name, value| %>
+                <input type="hidden" name="filter[<%= name %>]" value="<%= value %>"/>
+                <% end %>
+                <% end %>
+              </div>
+              </form>
+            </div>
+            <script type="text/javascript">document.getElementById("searchbar").focus();</script>
             <div id="changelist-filter">
               <h2>Filter</h2>
               <% @properties.each do |property| %>
