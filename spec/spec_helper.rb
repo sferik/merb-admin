@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'merb-core'
 require 'merb-slices'
+require 'merb-helpers'
+require 'merb-assets'
 require 'spec'
 
 # Add merb-admin.rb to the search path
