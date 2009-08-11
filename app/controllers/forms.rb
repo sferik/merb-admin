@@ -13,33 +13,32 @@ class MerbAdmin::Forms < MerbAdmin::Application
     filters = params[:filter] || {}
     filters.each_pair do |key, value|
       if @model.properties[key].primitive.to_s == "TrueClass"
-        options.merge!(key.to_sym => (value == "true" ? true : false))
+        options.merge!(key.to_sym => (value == "true"))
       elsif @model.properties[key].primitive.to_s == "Integer" && @model.properties[key].type.respond_to?(:flag_map)
         options.merge!(key.to_sym => value.to_sym)
       end
     end
-    if params[:all]
+    if params[:query]
+      condition_statement = []
+      conditions = []
+      @properties.each do |property|
+        next unless property.type.to_s == "String"
+        condition_statement << "#{property.field} LIKE ?"
+        conditions << "%#{params[:query]}%"
+      end
+      conditions.unshift(condition_statement.join(" OR "))
+      options.merge!(:conditions => conditions) unless conditions == [""]
+    end
+    if params[:sort]
+      order = "[:#{params[:sort]}.#{params[:sort_reverse] ? 'desc' : 'asc'}]"
+      options.merge!(:order => eval(order))
+    end
+    if !MerbAdmin[:paginate] || params[:all]
       options = {
         :limit => 200,
       }.merge(options)
       @instances = @model.all(options).reverse
     else
-      if params[:query]
-        condition_statement = []
-        conditions = []
-        @properties.each do |property|
-          next unless property.primitive.to_s == "String"
-          condition_statement << "#{property.field} LIKE ?"
-          conditions << "%#{params[:query]}%"
-        end
-        conditions.unshift(condition_statement.join(" OR "))
-        options.merge!(:conditions => conditions) unless conditions == [""]
-      end
-      if params[:sort]
-        order = "[:#{params[:sort]}.#{params[:sort_reverse] ? 'desc' : 'asc'}]"
-        options.merge!(:order => eval(order))
-      end
-
       # monkey patch pagination
       @model.class_eval("is_paginated") unless @model.respond_to?(:paginated)
       @current_page = (params[:page] || 1).to_i

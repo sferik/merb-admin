@@ -26,8 +26,8 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency("merb-slices", Merb::VERSION)
-  s.add_dependency("merb_datamapper", Merb::VERSION)
+  s.add_dependency("merb-slices", ">= 1.0.12")
+  s.add_dependency("merb_datamapper", ">= 1.0.12")
   s.add_dependency("dm-core", ">= 0.9.11")
   s.add_dependency("dm-is-paginated", ">= 0.0.1")
   s.require_path = "lib"

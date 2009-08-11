@@ -30,6 +30,7 @@ You can configuring the merb-admin slice in a before_app_loads block:
 
     Merb::BootLoader.before_app_loads do
       Merb::Slices::config[:merb_admin][:app_name] = "My App"
+      Merb::Slices::config[:merb_admin][:paginate] = true
     end
 
 ## Run it
