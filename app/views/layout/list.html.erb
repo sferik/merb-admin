@@ -32,7 +32,7 @@
         <%= link_to("Home", url(:admin_dashboard)) %> &rsaquo;
         <%=h @model_name.pluralize %>
       </div>
-<%= partial('layout/message') -%>
+<%= partial('layout/message', :message => message) unless message.blank? -%>
       <div id="content" class="flex">
         <h1>
           <%= page_name %>
