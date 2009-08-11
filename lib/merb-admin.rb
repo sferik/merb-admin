@@ -22,7 +22,7 @@ if defined?(Merb::Plugins)
     
     # Slice metadata
     self.description = "MerbAdmin is a merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers."
-    self.version = "0.2.4"
+    self.version = "0.2.5"
     self.author = "Erik Michaels-Ober"
     
     # Stub classes loaded hook - runs before LoadClasses BootLoader
