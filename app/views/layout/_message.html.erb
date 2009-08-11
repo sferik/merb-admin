@@ -1,7 +1,7 @@
 <% if message && message[:error] %>
-<ul class="errorlist">
-  <li><%=h message[:error] %></li>
-</ul>
+<p class="errornote">
+  <%=h message[:error] %>
+</p>
 <% end %>
 <% if message && message[:notice] %>
 <ul class="messagelist">
