@@ -5,7 +5,7 @@
               <h2><%= @model_name %> info</h2>
               <% @properties.each do |property| %>
                 <% next if [:id, :created_at, :created_on, :updated_at, :updated_on].include?(property.name) %>
-<%= partial property.primitive.to_s.snake_case, :property => property -%>
+<%= partial(property.primitive.to_s.snake_case, :property => property) -%>
               <% end %>
             </fieldset>
             <div class="submit-row" >

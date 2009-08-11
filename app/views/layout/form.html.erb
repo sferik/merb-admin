@@ -38,12 +38,12 @@
         <%= link_to(@model_name.pluralize, url(:admin_list, :model_name => @model_name.snake_case)) %> &rsaquo;
         <%= page_name %>
       </div>
-<%= partial 'layout/message' -%>
+<%= partial('layout/message', :message => message) unless message.blank? -%>
       <div id="content" class="colM">
         <h1>
           <%= page_name %>
         </h1>
-<%= catch_content :for_layout -%>
+<%= catch_content(:for_layout) -%>
       </div>
       <div id="footer"></div>
     </div>

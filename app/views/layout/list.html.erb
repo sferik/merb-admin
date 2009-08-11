@@ -32,12 +32,12 @@
         <%= link_to("Home", url(:admin_dashboard)) %> &rsaquo;
         <%=h @model_name.pluralize %>
       </div>
-<%= partial 'layout/message' -%>
+<%= partial('layout/message') -%>
       <div id="content" class="flex">
         <h1>
           <%= page_name %>
         </h1>
-<%= catch_content :for_layout -%>
+<%= catch_content(:for_layout) -%>
       </div>
       <div id="footer"></div>
     </div>
