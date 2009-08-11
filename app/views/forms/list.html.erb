@@ -30,24 +30,24 @@
               <% if property.primitive.to_s == "TrueClass" %>
               <h3>By <%= property.field.gsub('_', ' ') %></h3>
               <ul>
-                <li<%= params[:filter].nil? || params[:filter][property.name].blank? ? ' class="selected"' : nil %>>
+                <li class="<%= params[:filter].nil? || params[:filter][property.name].blank? ? "selected" : nil %>">
                   <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property.name})) %>">All</a>
                 </li>
-                <li<%= params[:filter] && params[:filter][property.name] == "true" ? ' class="selected"' : nil %>>
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => true}))) %>">Yes</a>
+                <li class="<%= params[:filter] && params[:filter][property.name] == "true" ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => "true"}))) %>">Yes</a>
                 </li>
-                <li<%= params[:filter] && params[:filter][property.name] == "false" ? ' class="selected"' : nil %>>
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => false}))) %>">No</a>
+                <li class="<%= params[:filter] && params[:filter][property.name] == "false" ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => "false"}))) %>">No</a>
                 </li>
               </ul>
               <% elsif property.primitive.to_s == "Integer" && property.type.respond_to?(:flag_map) %>
               <h3>By <%= property.field.gsub('_', ' ') %></h3>
               <ul>
-                <li<%= params[:filter].nil? || params[:filter][property.name].blank? ? ' class="selected"' : nil %>>
+                <li class="<%= params[:filter].nil? || params[:filter][property.name].blank? ? "selected" : nil %>">
                   <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property.name})) %>">All</a>
                 </li>
                 <% property.type.flag_map.each do |value, name| %>
-                <li<%= params[:filter] && params[:filter][property.name] == name.to_s ? ' class="selected"' : nil %>>
+                <li class="<%= params[:filter] && params[:filter][property.name] == name.to_s ? "selected" : nil %>">
                   <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => name}))) %>"><%= name.to_s.capitalize.gsub('_', ' ')%></a>
                 </li>
                 <% end %>
@@ -59,8 +59,8 @@
               <thead>
                 <tr>
                   <% @properties.each do |property| %>
-                  <th>
-                    <%= property.field.capitalize.gsub('_', ' ') %>
+                  <th class="<%= params[:sort] == property.field ? params[:sort_reverse] ? 'sorted descending' : 'sorted ascending' : nil %>">
+                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property.field).reject{|key, value| key.to_sym == :sort_reverse}.merge(params[:sort] == property.field && params[:sort_reverse] != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property.field.capitalize.gsub('_', ' ') %></a>
                   </th>
                   <% end %>
                 </tr>

@@ -35,6 +35,11 @@ class MerbAdmin::Forms < MerbAdmin::Application
         conditions.unshift(condition_statement.join(" OR "))
         options.merge!(:conditions => conditions) unless conditions == [""]
       end
+      if params[:sort]
+        order = "[:#{params[:sort]}.#{params[:sort_reverse] ? 'desc' : 'asc'}]"
+        options.merge!(:order => eval(order))
+      end
+
       # monkey patch pagination
       @model.class_eval("is_paginated") unless @model.respond_to?(:paginated)
       @current_page = (params[:page] || 1).to_i
