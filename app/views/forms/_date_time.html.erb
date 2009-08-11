@@ -1,6 +1,7 @@
+<% value = eval("@instance.#{property.field}") %>
               <div class="form-row page">
                 <div>
-                  <%= text_field(property.name, :class => "vDateField", :label => property.field.capitalize.gsub('_', ' '), :value => eval("@instance.#{property.field}").strftime("%Y-%m-%d %H:%M:%S")) %>
+                  <%= text_field(property.name, :class => "vDateField", :label => property.field.capitalize.gsub('_', ' '), :value => value.respond_to?(:strftime) ? value.strftime("%Y-%m-%d %H:%M:%S") ? nil) %>
                   <p class="help">
                     <%= !property.nullable? ? "Required." : "Optional." %>
                   </p>

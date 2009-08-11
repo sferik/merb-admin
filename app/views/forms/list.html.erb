@@ -79,11 +79,14 @@
                       <img alt="False" src="<%= image_path("icon-no.gif") %>"/>
                       <% end %>
                       <% when "DateTime" %>
-                      <%= eval("instance.#{property.field}").strftime("%b. %d, %Y, %I:%M%p") %>
+                        <% value = eval("instance.#{property.field}") %>
+                      <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y, %I:%M%p") : nil %>
                       <% when "Date" %>
-                      <%= eval("instance.#{property.field}").strftime("%b. %d, %Y") %>
+                        <% value = eval("instance.#{property.field}") %>
+                      <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y") : nil %>
                       <% when "Time" %>
-                      <%= eval("instance.#{property.field}").strftime("%I:%M%p") %>
+                        <% value = eval("instance.#{property.field}") %>
+                      <%= value.respond_to?(:strftime) ? value.strftime("%I:%M%p") : nil %>
                       <% when "Integer" %>
                       <% if property.type.respond_to?(:flag_map) #Enum or Flag type %>
                       <%= eval("instance.#{property.field}").to_s.capitalize.gsub('_', ' ') %>
