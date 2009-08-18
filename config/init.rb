@@ -19,7 +19,6 @@
 # differs by the fact that seamlessly integrates into a so called 'host'
 # application, which in turn can override or finetune the slice implementation
 # code and views.
-#
 
 use_orm :datamapper
 use_test :rspec
@@ -27,8 +26,8 @@ use_template_engine :erb
 
 Merb::Config.use do |c|
 
-  # When running a slice standalone, you're usually developing it,
-  # so enable template reloading by default.
+  c[:exception_details] = true
   c[:reload_templates] = true
+  c[:reload_classes] = true
 
 end

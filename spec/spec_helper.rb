@@ -25,8 +25,8 @@ Merb.start_environment(
   :session_store => 'memory'
 )
 
-# DataMapper.setup(:default, 'sqlite3::memory:')
-DataMapper.setup(:default, 'sqlite3:sample_test.db')
+# DataMapper.setup(:default, 'sqlite3::memory:') && DataMapper.auto_migrate!
+DataMapper.setup(:default, 'sqlite3:test.db')
 
 module Merb
   module Test
