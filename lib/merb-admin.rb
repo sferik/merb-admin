@@ -7,7 +7,7 @@ if defined?(Merb::Plugins)
 
   # Register the Slice for the current host application
   Merb::Slices::register(__FILE__)
-  
+
   # Slice configuration - set this in a before_app_loads callback.
   # By default a Slice uses its own layout, so you can swicht to 
   # the main application layout or no layout at all if needed.
@@ -19,32 +19,30 @@ if defined?(Merb::Plugins)
   
   # All Slice code is expected to be namespaced inside a module
   module MerbAdmin
-    
+
     # Slice metadata
     self.description = "MerbAdmin is a merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers."
-    self.version = "0.2.5"
+    self.version = "0.2.6"
     self.author = "Erik Michaels-Ober"
-    
+
     # Stub classes loaded hook - runs before LoadClasses BootLoader
     # right after a slice's classes have been loaded internally.
     def self.loaded
-      require "dm-is-paginated"
     end
-    
+
     # Initialization hook - runs before AfterAppLoads BootLoader
     def self.init
     end
-    
+
     # Activation hook - runs after AfterAppLoads BootLoader
     def self.activate
     end
-    
+
     # Deactivation hook - triggered by Merb::Slices.deactivate(MerbAdmin)
     def self.deactivate
     end
-    
-    def self.setup_router(scope)
 
+    def self.setup_router(scope)
       scope.match("/admin(/index)", :method => :get).
         to(:controller => "forms", :action => "index").
         name(:admin_dashboard)
@@ -76,11 +74,10 @@ if defined?(Merb::Plugins)
       scope.match("/admin/:model_name/:id(.:format)", :method => :delete).
         to(:controller => "forms", :action => "destroy").
         name(:admin_destroy)
-
     end
-    
+
   end
-  
+
   # Setup the slice layout for MerbAdmin
   #
   # Use MerbAdmin.push_path and MerbAdmin.push_app_path
@@ -94,8 +91,8 @@ if defined?(Merb::Plugins)
   #
   # Or just call setup_default_structure! to setup a basic Merb MVC structure.
   MerbAdmin.setup_default_structure!
-  
+
   # Add dependencies for other MerbAdmin classes below. Example:
   # dependency "merb-admin/other"
-  
+
 end

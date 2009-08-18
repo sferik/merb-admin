@@ -11,8 +11,8 @@ GEM_NAME = "merb-admin"
 AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
 HOMEPAGE = "http://twitter.com/sferik"
-SUMMARY = "MerbAdmin is a merb slice that provides an easy-to-use interface for managing your data."
-GEM_VERSION = "0.2.5"
+SUMMARY = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
+GEM_VERSION = "0.2.6"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = "merb"

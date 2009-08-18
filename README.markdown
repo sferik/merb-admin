@@ -1,6 +1,6 @@
 # MerbAdmin
 
-**MerbAdmin is a merb slice that provides an easy-to-use interface for managing your data.**
+**MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.**
 
 It currently offers the features listed [here](http://sferik.tadalist.com/lists/1352791/public).
 
@@ -14,7 +14,7 @@ At the command prompt, type:
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "sferik-merb-admin", "0.2.5", :require_as => "merb-admin"
+    dependency "sferik-merb-admin", "0.2.6", :require_as => "merb-admin"
 
 Add the following route to `config/router.rb`:
 
