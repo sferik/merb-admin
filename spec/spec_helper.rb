@@ -3,7 +3,9 @@ require 'merb-core'
 require 'merb-slices'
 require 'merb-helpers'
 require 'merb-assets'
+require 'merb-action-args'
 require 'spec'
+require 'spec/fixtures'
 
 # Add merb-admin.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true
@@ -19,8 +21,12 @@ Merb.start_environment(
   :testing => true, 
   :adapter => 'runner', 
   :environment => ENV['MERB_ENV'] || 'test',
+  :merb_root => Merb.root,
   :session_store => 'memory'
 )
+
+# DataMapper.setup(:default, 'sqlite3::memory:')
+DataMapper.setup(:default, 'sqlite3:sample_test.db')
 
 module Merb
   module Test
@@ -51,10 +57,10 @@ end
 #
 Merb::Test.add_helpers do
   def mount_slice
-    Merb::Router.prepare { add_slice(:MerbAdmin) } if standalone?
+    if standalone?
+      Merb::Router.reset!
+      Merb::Router.prepare { add_slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "", :default_routes => false) }
+    end
   end
 
-  def dismount_slice
-    Merb::Router.reset! if standalone?
-  end
 end

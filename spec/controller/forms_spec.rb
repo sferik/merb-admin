@@ -4,10 +4,9 @@ describe  "MerbAdmin::Forms (controller)" do
 
   before(:each) do
     mount_slice
-  end
-
-  after(:each) do
-    dismount_slice
+    @model_name = 'Player'
+    @model = eval(@model_name)
+    @model.all.destroy!
   end
 
   it "should have access to the slice module" do
@@ -19,7 +18,45 @@ describe  "MerbAdmin::Forms (controller)" do
   it "should have an index action" do
     controller = dispatch_to(MerbAdmin::Forms, :index)
     controller.status.should == 200
-    controller.body.should contain("MerbAdmin")
+    controller.body.should contain("Site administration")
+  end
+
+  it "should have a list action" do
+    controller = dispatch_to(MerbAdmin::Forms, :list, :model_name => @model_name)
+    controller.status.should == 200
+    controller.body.should contain("Select #{@model_name.snake_case.gsub('_', ' ')} to edit")
+  end
+
+  it "should have a new action" do
+    controller = dispatch_to(MerbAdmin::Forms, :new, :model_name => @model_name)
+    controller.status.should == 200
+    controller.body.should contain("New #{@model_name.snake_case.gsub('_', ' ')}")
+  end
+
+  it "should have an edit action" do
+    @instance = @model.gen
+    controller = dispatch_to(MerbAdmin::Forms, :edit, {:model_name => @model_name, :id => @instance.id})
+    controller.status.should == 200
+    controller.body.should contain("Edit #{@model_name.snake_case.gsub('_', ' ')}")
+  end
+
+  it "should have a create action" do
+    pending
+  end
+
+  it "should have an update action" do
+    pending
+  end
+
+  it "should have a delete action" do
+    @instance = @model.gen
+    controller = dispatch_to(MerbAdmin::Forms, :delete, {:model_name => @model_name, :id => @instance.id})
+    controller.status.should == 200
+    controller.body.should contain("Delete #{@model_name.snake_case.gsub('_', ' ')}")
+  end
+
+  it "should have a destroy action" do
+    pending
   end
 
   it "should have helper methods for dealing with public paths" do
