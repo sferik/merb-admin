@@ -4,6 +4,7 @@ require 'dm-sweatshop'
 require 'dm-types'
 require 'dm-aggregates'
 require 'dm-validations'
+require 'dm-is-paginated'
 
 Dir['spec/fixtures/**/*_fixture.rb'].sort.each do |fixture_file|
   require fixture_file

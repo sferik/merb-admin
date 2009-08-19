@@ -13,6 +13,13 @@ given "an instance exists" do
   @instance = @model.gen
 end
 
+given "two thousand instances exist" do
+  @model_name = 'Player'
+  @model = eval(@model_name)
+  @model.all.destroy!
+  @instances = 2000.times{ @model.gen }
+end
+
 describe "MerbAdmin" do
 
   before(:each) do
@@ -58,6 +65,22 @@ describe "MerbAdmin" do
 
     it "should contain \"results\"" do
       @response.body.should contain("results")
+    end
+  end
+
+  describe "list with pagination", :given => "two thousand instances exist" do
+    before(:each) do
+      MerbAdmin[:paginate] = true
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case))
+      MerbAdmin[:paginate] = false
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain \"2000 results\"" do
+      @response.body.should contain("2000 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
     end
   end
 
