@@ -13,11 +13,18 @@ given "an instance exists" do
   @instance = @model.gen
 end
 
+given "two hundred instances exist" do
+  @model_name = 'Player'
+  @model = eval(@model_name)
+  @model.all.destroy!
+  @instances = 200.times{@model.gen}
+end
+
 given "two thousand instances exist" do
   @model_name = 'Player'
   @model = eval(@model_name)
   @model.all.destroy!
-  @instances = 2000.times{ @model.gen }
+  @instances = 2000.times{@model.gen}
 end
 
 describe "MerbAdmin" do
@@ -68,10 +75,108 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with pagination", :given => "two thousand instances exist" do
+  describe "list with boolean filter", :given => "a model exists" do
+    before(:each) do
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:filter => {:injured => true}})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+  end
+
+  describe "list with enum filter", :given => "a model exists" do
+    before(:each) do
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:filter => {:sex => :male}})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+  end
+
+  describe "list with sort", :given => "a model exists" do
+    before(:each) do
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:query => "Jackie Robinson"})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain \"results\"" do
+      @response.body.should contain("results")
+    end
+  end
+
+  describe "list with 200 instances", :given => "two hundred instances exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
       @response = request(url(:admin_list, :model_name => @model_name.snake_case))
+      MerbAdmin[:paginate] = false
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain \"200 results\"" do
+      @response.body.should contain("200 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    end
+  end
+
+  describe "list with 200 instances, show all", :given => "two hundred instances exist" do
+    before(:each) do
+      MerbAdmin[:paginate] = true
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:all => true})
+      MerbAdmin[:paginate] = false
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain \"200 results\"" do
+      @response.body.should contain("200 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    end
+  end
+
+  describe "list with 2000 instances", :given => "two thousand instances exist" do
+    before(:each) do
+      MerbAdmin[:paginate] = true
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case))
+      MerbAdmin[:paginate] = false
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain \"2000 results\"" do
+      @response.body.should contain("2000 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    end
+  end
+
+  describe "list with 2000 instances, page 8", :given => "two thousand instances exist" do
+    before(:each) do
+      MerbAdmin[:paginate] = true
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:page => 8})
+      MerbAdmin[:paginate] = false
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain \"2000 results\"" do
+      @response.body.should contain("2000 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    end
+  end
+
+  describe "list with 2000 instances, page 17", :given => "two thousand instances exist" do
+    before(:each) do
+      MerbAdmin[:paginate] = true
+      @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:page => 17})
       MerbAdmin[:paginate] = false
     end
 
@@ -114,7 +219,7 @@ describe "MerbAdmin" do
 
   describe "create", :given => "a model exists" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => @model_name.snake_case), :method => "post", :params => {:player => {:name => "Jackie Robinson", :team_id => 1, :sex => :male}})
+      @response = request(url(:admin_create, :model_name => @model_name.snake_case), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
     end
 
     it "should create a new instance" do
@@ -128,7 +233,7 @@ describe "MerbAdmin" do
 
   describe "create and edit", :given => "a model exists" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => @model_name.snake_case), :method => "post", :params => {:player => {:name => "Jackie Robinson", :team_id => 1, :sex => :male}, :_continue => true})
+      @response = request(url(:admin_create, :model_name => @model_name.snake_case), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_continue => true})
     end
 
     it "should create a new instance" do
@@ -142,7 +247,7 @@ describe "MerbAdmin" do
 
   describe "create and add another", :given => "a model exists" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => @model_name.snake_case), :method => "post", :params => {:player => {:name => "Jackie Robinson", :team_id => 1, :sex => :male}, :_add_another => true})
+      @response = request(url(:admin_create, :model_name => @model_name.snake_case), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_add_another => true})
     end
 
     it "should create a new instance" do
@@ -156,7 +261,7 @@ describe "MerbAdmin" do
 
   describe "update", :given => "an instance exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :team_id => 1, :sex => :male}})
+      @response = request(url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
     end
 
     it "should update an instance that already exists" do
@@ -170,7 +275,7 @@ describe "MerbAdmin" do
 
   describe "update and edit", :given => "an instance exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :team_id => 1, :sex => :male}, :_continue => true})
+      @response = request(url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_continue => true})
     end
 
     it "should update an instance that already exists" do
@@ -184,7 +289,7 @@ describe "MerbAdmin" do
 
   describe "update and add another", :given => "an instance exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :team_id => 1, :sex => :male}, :_add_another => true})
+      @response = request(url(:admin_update, :model_name => @model_name.snake_case, :id => @instance.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_add_another => true})
     end
 
     it "should update an instance that already exists" do
