@@ -10,29 +10,10 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
-    filters = params[:filter] || {}
-    filters.each_pair do |key, value|
-      if @model.properties[key].primitive.to_s == "TrueClass"
-        options.merge!(key.to_sym => (value == "true"))
-      elsif @model.properties[key].primitive.to_s == "Integer" && @model.properties[key].type.respond_to?(:flag_map)
-        options.merge!(key.to_sym => value.to_sym)
-      end
-    end
-    if params[:query]
-      condition_statement = []
-      conditions = []
-      @properties.each do |property|
-        next unless property.type.to_s == "String"
-        condition_statement << "#{property.field} LIKE ?"
-        conditions << "%#{params[:query]}%"
-      end
-      conditions.unshift(condition_statement.join(" OR "))
-      options.merge!(:conditions => conditions) unless conditions == [""]
-    end
-    if params[:sort]
-      order = "[:#{params[:sort]}.#{params[:sort_reverse] ? 'desc' : 'asc'}]"
-      options.merge!(:order => eval(order))
-    end
+    merge_filter(options) 
+    merge_query(options)
+    merge_sort(options)
+
     if !MerbAdmin[:paginate] || params[:all]
       options = {
         :limit => 200,
@@ -47,11 +28,12 @@ class MerbAdmin::Main < MerbAdmin::Application
         :per_page => MerbAdmin[:per_page],
       }.merge(options)
       @page_count, @objects = @model.paginated(options)
+      options.delete(:page)
+      options.delete(:per_page)
+      options.delete(:offset)
+      options.delete(:limit)
     end
-    options.delete(:page)
-    options.delete(:per_page)
-    options.delete(:offset)
-    options.delete(:limit)
+
     @record_count = @model.count(options)
     render(:layout => "list")
   end
@@ -135,6 +117,36 @@ class MerbAdmin::Main < MerbAdmin::Application
   def find_object
     @object = @model.get(params[:id])
     raise NotFound unless @object
+  end
+
+  def merge_filter(options)
+    return unless params[:filter]
+    params[:filter].each_pair do |key, value|
+      if @model.properties[key].primitive.to_s == "TrueClass"
+        options.merge!(key.to_sym => (value == "true"))
+      elsif @model.properties[key].primitive.to_s == "Integer" && @model.properties[key].type.respond_to?(:flag_map)
+        options.merge!(key.to_sym => value.to_sym)
+      end
+    end
+  end
+
+  def merge_query(options)
+    return unless params[:query]
+    condition_statement = []
+    conditions = []
+    @properties.each do |property|
+      next unless property.type.to_s == "String"
+      condition_statement << "#{property.field} LIKE ?"
+      conditions << "%#{params[:query]}%"
+    end
+    conditions.unshift(condition_statement.join(" OR "))
+    options.merge!(:conditions => conditions) unless conditions == [""]
+  end
+
+  def merge_sort(options)
+    return unless params[:sort]
+    order = "[:#{params[:sort]}.#{params[:sort_reverse] ? 'desc' : 'asc'}]"
+    options.merge!(:order => eval(order))
   end
 
 end
