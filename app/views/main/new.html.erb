@@ -1,13 +1,13 @@
         <div id="content-main">
-        <%= form_for(@instance, :action => slice_url(:admin_create, :model_name => @model_name.snake_case)) do %>
+        <%= form_for(@object, :action => slice_url(:admin_create, :model_name => @model_name.snake_case)) do %>
           <div>
             <fieldset class="module aligned">
               <% @properties.each do |property| %>
                 <% next if [:id, :created_at, :created_on, :updated_at, :updated_on].include?(property.name) %>
-              <div class="<%= @instance.errors[property.name] ? "form-row errors" : "form-row"%>">
-                <% if @instance.errors[property.name] %>
+              <div class="<%= @object.errors[property.name] ? "form-row errors" : "form-row"%>">
+                <% if @object.errors[property.name] %>
                 <ul class="errorlist">
-                  <% @instance.errors[property.name].each do |error| %>
+                  <% @object.errors[property.name].each do |error| %>
                   <li><%= error %></li>
                   <% end %>
                 </ul>

@@ -66,39 +66,39 @@
                 </tr>
               </thead>
               <tbody>
-                <% @instances.each_with_index do |instance, index| %>
+                <% @objects.each_with_index do |object, index| %>
                 <tr class="row<%= index % 2 == 0 ? '1' : '2' %>">
                   <% @properties.each do |property| %>
                   <td>
-                    <a href="<%= slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => eval("instance.id")) %>">
+                    <a href="<%= slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => eval("object.id")) %>">
                       <% case property.primitive.to_s %>
                       <% when "TrueClass" %>
-                      <% if eval("instance.#{property.field}") == true %>
+                      <% if eval("object.#{property.field}") == true %>
                       <img alt="True" src="<%= image_path("icon-yes.gif") %>"/>
                       <% else %>
                       <img alt="False" src="<%= image_path("icon-no.gif") %>"/>
                       <% end %>
                       <% when "DateTime" %>
-                        <% value = eval("instance.#{property.field}") %>
+                        <% value = eval("object.#{property.field}") %>
                       <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y, %I:%M%p") : nil %>
                       <% when "Date" %>
-                        <% value = eval("instance.#{property.field}") %>
+                        <% value = eval("object.#{property.field}") %>
                       <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y") : nil %>
                       <% when "Time" %>
-                        <% value = eval("instance.#{property.field}") %>
+                        <% value = eval("object.#{property.field}") %>
                       <%= value.respond_to?(:strftime) ? value.strftime("%I:%M%p") : nil %>
                       <% when "Integer" %>
                       <% if property.type.respond_to?(:flag_map) #Enum or Flag type %>
-                      <%= eval("instance.#{property.field}").to_s.capitalize.gsub('_', ' ') %>
+                      <%= eval("object.#{property.field}").to_s.capitalize.gsub('_', ' ') %>
                       <% else %>
-                      <%= eval("instance.#{property.field}") %>
+                      <%= eval("object.#{property.field}") %>
                       <% end %>
                       <% when "BigDecimal" %>
-                      <%= eval("instance.#{property.field}") %>
+                      <%= eval("object.#{property.field}") %>
                       <% when "Float" %>
-                      <%= eval("instance.#{property.field}") %>
+                      <%= eval("object.#{property.field}") %>
                       <% when "String" %>
-                      <%= eval("instance.#{property.field}").to_s.truncate(50) %>
+                      <%= eval("object.#{property.field}").to_s.truncate(50) %>
                       <% end %>
                     </a>
                   </td>

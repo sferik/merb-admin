@@ -3,7 +3,6 @@ require 'merb-core'
 require 'merb-slices'
 require 'merb-helpers'
 require 'merb-assets'
-require 'merb-action-args'
 require 'spec'
 require 'spec/fixtures'
 

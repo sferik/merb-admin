@@ -1,4 +1,4 @@
-<% value = eval("@instance.#{property.field}") %>
+<% value = eval("@object.#{property.field}") %>
                 <div>
                   <%= text_field(property.name, :class => "vTimeField", :label => property.field.capitalize.gsub('_', ' '), :value => value.respond_to?(:strftime) ? value.strftime("%H:%M:%S") : nil) %>
                   <p class="help">

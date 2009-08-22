@@ -1,9 +1,10 @@
 class MerbAdmin::Main < MerbAdmin::Application
 
+  before :find_models, :only => ['index']
+  before :find_model, :exclude => ['index']
+  before :find_object, :only => ['edit', 'update', 'delete', 'destroy']
+
   def index
-    @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s}
-    # remove DataMapperSessionStore because it's included by default
-    @models -= [Merb::DataMapperSessionStore] if Merb.const_defined?(:DataMapperSessionStore)
     render(:layout => "dashboard")
   end
 
@@ -36,7 +37,7 @@ class MerbAdmin::Main < MerbAdmin::Application
       options = {
         :limit => 200,
       }.merge(options)
-      @instances = @model.all(options).reverse
+      @objects = @model.all(options).reverse
     else
       # monkey patch pagination
       @model.class_eval("is_paginated") unless @model.respond_to?(:paginated)
@@ -45,7 +46,7 @@ class MerbAdmin::Main < MerbAdmin::Application
         :page => @current_page,
         :per_page => MerbAdmin[:per_page],
       }.merge(options)
-      @page_count, @instances = @model.paginated(options)
+      @page_count, @objects = @model.paginated(options)
     end
     options.delete(:page)
     options.delete(:per_page)
@@ -56,22 +57,20 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def new
-    @instance = @model.new
+    @object = @model.new
     render(:layout => "form")
   end
 
-  def edit(id)
-    @instance = @model.get(id)
-    raise NotFound unless @instance
+  def edit
     render(:layout => "form")
   end
 
   def create
-    instance = eval("params[:#{@model_name.snake_case}]")
-    @instance = @model.new(instance)
-    if @instance.save
+    object = eval("params[:#{@model_name.snake_case}]") || {}
+    @object = @model.new(object)
+    if @object.save
       if params[:_continue]
-        redirect(slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => @instance.id), :message => {:notice => "#{@model_name} was successfully created"})
+        redirect(slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => @object.id), :message => {:notice => "#{@model_name} was successfully created"})
       elsif params[:_add_another]
         redirect(slice_url(:admin_new, :model_name => @model_name.snake_case), :message => {:notice => "#{@model_name} was successfully created"})
       else
@@ -83,13 +82,11 @@ class MerbAdmin::Main < MerbAdmin::Application
     end
   end
 
-  def update(id)
-    instance = eval("params[:#{@model_name.snake_case}]")
-    @instance = @model.get(id)
-    raise NotFound unless @instance
-    if @instance.update_attributes(instance)
+  def update
+    object = eval("params[:#{@model_name.snake_case}]") || {}
+    if @object.update_attributes(object)
       if params[:_continue]
-        redirect(slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => @instance.id), :message => {:notice => "#{@model_name} was successfully updated"})
+        redirect(slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => @object.id), :message => {:notice => "#{@model_name} was successfully updated"})
       elsif params[:_add_another]
         redirect(slice_url(:admin_new, :model_name => @model_name.snake_case), :message => {:notice => "#{@model_name} was successfully updated"})
       else
@@ -101,20 +98,43 @@ class MerbAdmin::Main < MerbAdmin::Application
     end
   end
 
-  def delete(id)
-    @instance = @model.get(id)
-    raise NotFound unless @instance
+  def delete
     render(:layout => "form")
   end
 
-  def destroy(id)
-    @instance = @model.get(id)
-    raise NotFound unless @instance
-    if @instance.destroy
+  def destroy
+    if @object.destroy
       redirect(slice_url(:admin_list, :model_name => @model_name.snake_case), :message => {:notice => "#{@model_name} was successfully destroyed"})
     else
-      raise InternalServerError
+      raise BadRequest
     end
+  end
+
+  private
+
+  def find_models
+    @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s}
+    # remove DataMapperSessionStore because it's included by default
+    @models -= [Merb::DataMapperSessionStore] if Merb.const_defined?(:DataMapperSessionStore)
+  end
+
+  def find_model
+    @model_name = params[:model_name].camel_case.singularize
+    begin
+      @model = eval(@model_name)
+    rescue StandardError
+      raise NotFound
+    end
+    find_properties
+  end
+
+  def find_properties
+    @properties = @model.properties.to_a
+  end
+
+  def find_object
+    @object = @model.get(params[:id])
+    raise NotFound unless @object
   end
 
 end
