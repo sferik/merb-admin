@@ -44,7 +44,7 @@ class MerbAdmin::Forms < MerbAdmin::Application
       @current_page = (params[:page] || 1).to_i
       options = {
         :page => @current_page,
-        :per_page => 100,
+        :per_page => MerbAdmin[:per_page],
       }.merge(options)
       @page_count, @instances = @model.paginated(options)
     end

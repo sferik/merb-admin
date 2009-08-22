@@ -13,18 +13,18 @@ given "an instance exists" do
   @instance = @model.gen
 end
 
-given "two hundred instances exist" do
+given "two instances exist" do
   @model_name = 'Player'
   @model = eval(@model_name)
   @model.all.destroy!
-  @instances = 200.times{@model.gen}
+  @instances = 2.times{@model.gen}
 end
 
-given "two thousand instances exist" do
+given "twenty instances exist" do
   @model_name = 'Player'
   @model = eval(@model_name)
   @model.all.destroy!
-  @instances = 2000.times{@model.gen}
+  @instances = 20.times{@model.gen}
 end
 
 describe "MerbAdmin" do
@@ -109,83 +109,83 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 200 instances", :given => "two hundred instances exist" do
+  describe "list with 2 instances", :given => "two instances exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
+      MerbAdmin[:per_page] = 1
       @response = request(url(:admin_list, :model_name => @model_name.snake_case))
-      MerbAdmin[:paginate] = false
     end
 
     it "should respond sucessfully" do
       @response.should be_successful
     end
 
-    it "should contain \"200 results\"" do
-      @response.body.should contain("200 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    it "should contain \"2 results\"" do
+      @response.body.should contain("2 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
     end
   end
 
-  describe "list with 200 instances, show all", :given => "two hundred instances exist" do
+  describe "list with 2 instances, show all", :given => "two instances exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
+      MerbAdmin[:per_page] = 1
       @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:all => true})
-      MerbAdmin[:paginate] = false
     end
 
     it "should respond sucessfully" do
       @response.should be_successful
     end
 
-    it "should contain \"200 results\"" do
-      @response.body.should contain("200 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    it "should contain \"2 results\"" do
+      @response.body.should contain("2 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
     end
   end
 
-  describe "list with 2000 instances", :given => "two thousand instances exist" do
+  describe "list with 20 instances", :given => "twenty instances exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
+      MerbAdmin[:per_page] = 1
       @response = request(url(:admin_list, :model_name => @model_name.snake_case))
-      MerbAdmin[:paginate] = false
     end
 
     it "should respond sucessfully" do
       @response.should be_successful
     end
 
-    it "should contain \"2000 results\"" do
-      @response.body.should contain("2000 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    it "should contain \"20 results\"" do
+      @response.body.should contain("20 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
     end
   end
 
-  describe "list with 2000 instances, page 8", :given => "two thousand instances exist" do
+  describe "list with 20 instances, page 8", :given => "twenty instances exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
+      MerbAdmin[:per_page] = 1
       @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:page => 8})
-      MerbAdmin[:paginate] = false
     end
 
     it "should respond sucessfully" do
       @response.should be_successful
     end
 
-    it "should contain \"2000 results\"" do
-      @response.body.should contain("2000 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    it "should contain \"20 results\"" do
+      @response.body.should contain("20 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
     end
   end
 
-  describe "list with 2000 instances, page 17", :given => "two thousand instances exist" do
+  describe "list with 20 instances, page 17", :given => "twenty instances exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
+      MerbAdmin[:per_page] = 1
       @response = request(url(:admin_list, :model_name => @model_name.snake_case), :params => {:page => 17})
-      MerbAdmin[:paginate] = false
     end
 
     it "should respond sucessfully" do
       @response.should be_successful
     end
 
-    it "should contain \"2000 results\"" do
-      @response.body.should contain("2000 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
+    it "should contain \"20 results\"" do
+      @response.body.should contain("20 #{@model_name.snake_case.gsub('_', ' ').pluralize}")
     end
   end
 
