@@ -1,5 +1,4 @@
-class MerbAdmin::Forms < MerbAdmin::Application
-  layout :form
+class MerbAdmin::Main < MerbAdmin::Application
 
   def index
     @models = DataMapper::Resource.descendants.to_a.sort{|a, b| a.to_s <=> b.to_s}

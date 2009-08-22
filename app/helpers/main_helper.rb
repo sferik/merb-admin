@@ -1,7 +1,7 @@
 require 'builder'
 module Merb
   module MerbAdmin
-    module FormsHelper
+    module MainHelper
 
       # Given a page count and the current page, we generate a set of pagination
       # links.

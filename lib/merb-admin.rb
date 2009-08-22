@@ -45,35 +45,35 @@ if defined?(Merb::Plugins)
 
     def self.setup_router(scope)
       scope.match("/admin(/index)", :method => :get).
-        to(:controller => "forms", :action => "index").
+        to(:controller => "main", :action => "index").
         name(:admin_dashboard)
 
       scope.match("/admin/:model_name(/index)", :method => :get).
-        to(:controller => "forms", :action => "list").
+        to(:controller => "main", :action => "list").
         name(:admin_list)
 
       scope.match("/admin/:model_name/new", :method => :get).
-        to(:controller => "forms", :action => "new").
+        to(:controller => "main", :action => "new").
         name(:admin_new)
 
       scope.match("/admin/:model_name/:id/edit", :method => :get).
-        to(:controller => "forms", :action => "edit").
+        to(:controller => "main", :action => "edit").
         name(:admin_edit)
 
       scope.match("/admin/:model_name", :method => :post).
-        to(:controller => "forms", :action => "create").
+        to(:controller => "main", :action => "create").
         name(:admin_create)
 
       scope.match("/admin/:model_name/:id", :method => :put).
-        to(:controller => "forms", :action => "update").
+        to(:controller => "main", :action => "update").
         name(:admin_update)
 
       scope.match("/admin/:model_name/:id/delete", :method => :get).
-        to(:controller => "forms", :action => "delete").
+        to(:controller => "main", :action => "delete").
         name(:admin_delete)
 
       scope.match("/admin/:model_name/:id(.:format)", :method => :delete).
-        to(:controller => "forms", :action => "destroy").
+        to(:controller => "main", :action => "destroy").
         name(:admin_destroy)
     end
 
