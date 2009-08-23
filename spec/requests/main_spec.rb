@@ -28,7 +28,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should should contain \"Site administration\"" do
+    it "should contain \"Site administration\"" do
       @response.body.should contain("Site administration")
     end
   end
@@ -139,7 +139,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 2 players", :given => "two players exist" do
+  describe "list with 2 objects", :given => "two players exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
@@ -155,23 +155,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 2 players, show all", :given => "two players exist" do
-    before(:each) do
-      MerbAdmin[:paginate] = true
-      MerbAdmin[:per_page] = 1
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:all => true})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should contain \"2 results\"" do
-      @response.body.should contain("2 #{"player".gsub('_', ' ').pluralize}")
-    end
-  end
-
-  describe "list with 20 players", :given => "twenty players exist" do
+  describe "list with 20 objects", :given => "twenty players exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
@@ -187,7 +171,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 20 players, page 8", :given => "twenty players exist" do
+  describe "list with 20 objects, page 8", :given => "twenty players exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
@@ -198,12 +182,12 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"20 results\"" do
-      @response.body.should contain("20 #{"player".gsub('_', ' ').pluralize}")
+    it "should paginate correctly" do
+      @response.body.should contain(/1 2[^0-9]*5 6 7 8 9 10 11[^0-9]*19 20/)
     end
   end
 
-  describe "list with 20 players, page 17", :given => "twenty players exist" do
+  describe "list with 20 objects, page 17", :given => "twenty players exist" do
     before(:each) do
       MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
@@ -214,8 +198,20 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"20 results\"" do
-      @response.body.should contain("20 #{"player".gsub('_', ' ').pluralize}")
+    it "should paginate correctly" do
+      @response.body.should contain(/1 2[^0-9]*12 13 14 15 16 17 18 19 20/)
+    end
+  end
+
+  describe "list show all", :given => "two players exist" do
+    before(:each) do
+      MerbAdmin[:paginate] = true
+      MerbAdmin[:per_page] = 1
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:all => true})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
     end
   end
 
@@ -271,16 +267,6 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "create with invalid object" do
-    before(:each) do
-      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {}})
-    end
-
-    it "should have an error message" do
-      @response.body.should contain("Player failed to be created")
-    end
-  end
-
   describe "create and edit" do
     before(:each) do
       @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_continue => true})
@@ -309,6 +295,16 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "create with invalid object" do
+    before(:each) do
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {}})
+    end
+
+    it "should contain an error message" do
+      @response.body.should contain("Player failed to be created")
+    end
+  end
+
   describe "update", :given => "an object exists" do
     before(:each) do
       @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
@@ -320,26 +316,6 @@ describe "MerbAdmin" do
 
     it "should update an object that already exists" do
       Player.first(:id => @player.id).name.should eql("Jackie Robinson")
-    end
-  end
-
-  describe "update with invalid object", :given => "an object exists" do
-    before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:number => nil}})
-    end
-
-    it "should have an error message" do
-      @response.body.should contain("Player failed to be updated")
-    end
-  end
-
-  describe "update with missing object" do
-    before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => 1), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
-    end
-
-    it "should raise NotFound" do
-      @response.status.should == 404
     end
   end
 
@@ -368,6 +344,26 @@ describe "MerbAdmin" do
 
     it "should update an object that already exists" do
       Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+    end
+  end
+
+  describe "update with missing object" do
+    before(:each) do
+      @response = request(url(:admin_update, :model_name => "player", :id => 1), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
+    end
+
+    it "should raise NotFound" do
+      @response.status.should == 404
+    end
+  end
+
+  describe "update with invalid object", :given => "an object exists" do
+    before(:each) do
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:number => nil}})
+    end
+
+    it "should contain an error message" do
+      @response.body.should contain("Player failed to be updated")
     end
   end
 
