@@ -22,7 +22,7 @@ if defined?(Merb::Plugins)
   module MerbAdmin
 
     # Slice metadata
-    self.description = "MerbAdmin is a merb slice that uses your DataMapper models to provide an easy-to-use, Django-style interface for content managers."
+    self.description = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
     self.version = "0.2.7"
     self.author = "Erik Michaels-Ober"
 

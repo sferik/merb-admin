@@ -1,0 +1,6 @@
+                <div>
+                  <%= text_area(property[:name], :cols => 80, :label => property[:pretty_name].capitalize) %>
+                  <p class="help">
+                    <%= property[:nullable?] ? "Required." : "Optional." %>
+                  </p>
+                </div>

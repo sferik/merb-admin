@@ -1,0 +1,10 @@
+            <fieldset class="module aligned">
+              <h2><%= association[:pretty_name].capitalize %></h2>
+              <div class="form-row">
+                <div>
+                  <%= select(:name => "associations[#{association[:name]}][]", :id => association[:name], :collection => MerbAdmin::AbstractModel.new(association[:child_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}, :selected => @object.send(association[:name]).map{|o| o.id.to_s}, :label => association[:pretty_name].capitalize, :multiple => true) %>
+                  <script type="text/javascript">addEvent(window, "load", function(e) {SelectFilter.init("<%= association[:name] %>", "<%= association[:name] %>", 0, "<%= image_path %>"); });</script>
+                  <p class="help">Hold down "Control", or "Command" on a Mac, to select more than one.</p>
+                </div>
+              </div>
+            </fieldset>

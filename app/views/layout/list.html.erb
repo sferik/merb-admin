@@ -1,6 +1,6 @@
 <%
   slice_name = "MerbAdmin" + (MerbAdmin[:app_name].blank? ? "" : " for #{MerbAdmin[:app_name]}")
-  page_name = "Select " + @model_name.snake_case.gsub('_', ' ') + " to edit"
+  page_name = "Select " + @abstract_model.pretty_name + " to edit"
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
@@ -30,7 +30,7 @@
       </div>
       <div class="breadcrumbs">
         <%= link_to("Home", url(:admin_dashboard)) %> &rsaquo;
-        <%=h @model_name.pluralize %>
+        <%= @abstract_model.plural_name.to_s.capitalize %>
       </div>
 <%= partial('layout/message', :message => message) unless message.blank? -%>
       <div id="content" class="flex">

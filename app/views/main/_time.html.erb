@@ -1,7 +1,7 @@
-<% value = eval("@object.#{property.field}") %>
+<% value = @object.send(property[:name]) %>
                 <div>
-                  <%= text_field(property.name, :class => "vTimeField", :label => property.field.capitalize.gsub('_', ' '), :value => value.respond_to?(:strftime) ? value.strftime("%H:%M:%S") : nil) %>
+                  <%= text_field(property[:name], :class => "vTimeField", :label => property[:pretty_name].capitalize, :value => value.respond_to?(:strftime) ? value.strftime("%H:%M:%S") : nil) %>
                   <p class="help">
-                    <%= !property.nullable? ? "Required." : "Optional." %>
+                    <%= !property[:nullable?] ? "Required." : "Optional." %>
                   </p>
                 </div>

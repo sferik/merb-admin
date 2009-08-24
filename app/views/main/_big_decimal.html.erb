@@ -1,6 +1,6 @@
                 <div>
-                  <%= text_field(property.name, :maxlength => property.length, :label => property.field.capitalize.gsub('_', ' ')) %>
+                  <%= text_field(property[:name], :maxlength => property[:length], :label => property[:pretty_name].capitalize) %>
                   <p class="help">
-                    <%= !property.nullable? || property.serial? ? "Required." : "Optional." %>
+                    <%= !property[:nullable?] || property[:serial?] ? "Required." : "Optional." %>
                   </p>
                 </div>

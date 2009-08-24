@@ -15,7 +15,7 @@ At the command prompt, type:
 In your app, add the following dependency to `config/dependencies.rb`:
 
     dependency "sferik-merb-admin", "0.2.7", :require_as => "merb-admin"
-    dependency "dm-is-paginated", "0.0.1" # required for pagination
+    dependency "dm-is-paginated", "0.0.1" # if you want pagination support
 
 Add the following route to `config/router.rb`:
 
@@ -51,6 +51,10 @@ MerbAdmin does not implement any authorization scheme. Make sure to apply author
 
 ## Acknowledgements
 
-Many thanks to [Wilson Miner](http://www.wilsonminer.com) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com).
+Many thanks to:
+*   [Wilson Miner](http://www.wilsonminer.com) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com)
+*   [Lori Holden](http://loriholden.com/) for providing pagination via [dm-is-paginated](http://github.com/lholden/dm-is-paginated)
+*   [Aaron Wheeler](http://fightinjoe.com/) for contributing libraries from [Merb AutoScaffold](http://github.com/fightinjoe/merb-autoscaffold)
+*   [why the lucky stiff](http://whytheluckystiff.net/) for [metaid](http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html)
 
 Also, thanks to [beer](http://www.anchorbrewing.com).

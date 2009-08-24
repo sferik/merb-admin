@@ -1,10 +1,10 @@
                 <div>
-                  <% if property.type.respond_to?(:flag_map) #Enum or Flag type %>
-                  <%= select(property.name, :collection => property.type.flag_map.map{|x| [x[1], x[1].to_s.capitalize.gsub('_', ' ')]}.sort{|a, b| a[1] <=> b[1]}, :label => property.field.capitalize.gsub('_', ' ')) %>
+                  <% if property[:flag_map] # Enum or Flag type %>
+                  <%= select(property[:name], :collection => property[:flag_map].map{|x| [x[1], x[1].to_s.capitalize.gsub('_', ' ')]}.sort{|a, b| a[1] <=> b[1]}, :label => property[:pretty_name].capitalize) %>
                   <% else %>
-                  <%= text_field(property.name, :maxlength => property.length, :label => property.field.capitalize.gsub('_', ' ')) %>
-                  <% end %>
+                  <%= text_field(property[:name], :maxlength => property[:length], :label => property[:pretty_name].capitalize) %>
                   <p class="help">
-                    <%= !property.nullable? || property.serial? ? "Required." : "Optional." %>
+                    <%= !property[:nullable?] || property[:serial?] ? "Required." : "Optional." %>
                   </p>
+                  <% end %>
                 </div>

@@ -4,16 +4,16 @@
               <caption>
                 <%= link_to("Models", slice_url(:admin_dashboard), :class => "section") %>
               </caption>
-              <% @models.map{|m| m.to_s}.each do |model_name| %>
+              <% @abstract_models.each do |abstract_model| %>
               <tr>
                 <th scope="row">
-                  <%= link_to(model_name.pluralize, slice_url(:admin_list, :model_name => model_name.snake_case)) %>
+                  <%= link_to(abstract_model.plural_name.to_s.capitalize, slice_url(:admin_list, :model_name => abstract_model.singular_name)) %>
                 </th>
                 <td>
-                  <%= link_to("Add", slice_url(:admin_new, :model_name => model_name.snake_case), :class => "addlink") %>
+                  <%= link_to("Add", slice_url(:admin_new, :model_name => abstract_model.singular_name), :class => "addlink") %>
                 </td>
                 <td>
-                  <%= link_to("Edit", slice_url(:admin_list, :model_name => model_name.snake_case), :class => "changelink") %>
+                  <%= link_to("Edit", slice_url(:admin_list, :model_name => abstract_model.singular_name), :class => "changelink") %>
                 </td>
               </tr>
               <% end %>

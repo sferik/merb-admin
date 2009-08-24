@@ -2,7 +2,7 @@
         <div id="content-main">
           <ul class="object-tools">
             <li>
-              <%= link_to("Add #{@model_name.snake_case.gsub('_', ' ')}", slice_url(:admin_new, :model_name => @model_name.snake_case), :class => "addlink") %>
+              <%= link_to("Add #{@abstract_model.pretty_name}", slice_url(:admin_new, :model_name => @abstract_model.singular_name), :class => "addlink") %>
             </li>
           </ul>
           <div class="module filtered" id="changelist">
@@ -13,7 +13,7 @@
                 <input type="text" size="40" name="query" value="" id="searchbar" />
                 <input type="submit" value="Search" />
                 <% if params[:query] || params[:filter] %>
-                <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<a href="?"><%= @model.count %> total</a>)</span>
+                <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<a href="?"><%= @abstract_model.count %> total</a>)</span>
                 <% end %>
                 <% if params[:filter] %>
                 <% params[:filter].each do |name, value| %>
@@ -27,28 +27,28 @@
             <div id="changelist-filter">
               <h2>Filter</h2>
               <% @properties.each do |property| %>
-              <% if property.primitive.to_s == "TrueClass" %>
-              <h3>By <%= property.field.gsub('_', ' ') %></h3>
+              <% if property[:type] == :boolean %>
+              <h3>By <%= property[:pretty_name] %></h3>
               <ul>
-                <li class="<%= params[:filter].nil? || params[:filter][property.name].blank? ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property.name})) %>">All</a>
+                <li class="<%= params[:filter].nil? || params[:filter][property[:name]].blank? ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property[:name]})) %>">All</a>
                 </li>
-                <li class="<%= params[:filter] && params[:filter][property.name] == "true" ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => "true"}))) %>">Yes</a>
+                <li class="<%= params[:filter] && params[:filter][property[:name]] == "true" ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property[:name] => "true"}))) %>">Yes</a>
                 </li>
-                <li class="<%= params[:filter] && params[:filter][property.name] == "false" ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => "false"}))) %>">No</a>
+                <li class="<%= params[:filter] && params[:filter][property[:name]] == "false" ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property[:name] => "false"}))) %>">No</a>
                 </li>
               </ul>
-              <% elsif property.primitive.to_s == "Integer" && property.type.respond_to?(:flag_map) %>
-              <h3>By <%= property.field.gsub('_', ' ') %></h3>
+              <% elsif property[:type] == :integer && property[:flag_map] %>
+              <h3>By <%= property[:pretty_name] %></h3>
               <ul>
-                <li class="<%= params[:filter].nil? || params[:filter][property.name].blank? ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property.name})) %>">All</a>
+                <li class="<%= params[:filter].nil? || params[:filter][property[:name]].blank? ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).reject{|key, value| key.to_sym == property[:name]})) %>">All</a>
                 </li>
-                <% property.type.flag_map.each do |value, name| %>
-                <li class="<%= params[:filter] && params[:filter][property.name] == name.to_s ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property.name => name}))) %>"><%= name.to_s.capitalize.gsub('_', ' ')%></a>
+                <% property[:flag_map].each do |value, name| %>
+                <li class="<%= params[:filter] && params[:filter][property[:name]] == name.to_s ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (params[:filter] || {}).merge({property[:name] => name}))) %>"><%= name.to_s.capitalize.gsub('_', ' ')%></a>
                 </li>
                 <% end %>
               </ul>
@@ -59,8 +59,8 @@
               <thead>
                 <tr>
                   <% @properties.each do |property| %>
-                  <th class="<%= params[:sort] == property.field ? params[:sort_reverse] ? 'sorted descending' : 'sorted ascending' : nil %>">
-                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property.field).reject{|key, value| key.to_sym == :sort_reverse}.merge(params[:sort] == property.field && params[:sort_reverse] != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property.field.capitalize.gsub('_', ' ') %></a>
+                  <th class="<%= params[:sort] == property[:field] ? params[:sort_reverse] ? 'sorted descending' : 'sorted ascending' : nil %>">
+                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property[:field]).reject{|key, value| key.to_sym == :sort_reverse}.merge(params[:sort] == property[:field] && params[:sort_reverse] != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property[:pretty_name].capitalize %></a>
                   </th>
                   <% end %>
                 </tr>
@@ -70,35 +70,29 @@
                 <tr class="row<%= index % 2 == 0 ? '1' : '2' %>">
                   <% @properties.each do |property| %>
                   <td>
-                    <a href="<%= slice_url(:admin_edit, :model_name => @model_name.snake_case, :id => eval("object.id")) %>">
-                      <% case property.primitive.to_s %>
-                      <% when "TrueClass" %>
-                      <% if eval("object.#{property.field}") == true %>
+                    <a href="<%= slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => eval("object.id")) %>">
+                      <% case property[:type] %>
+                      <% when :boolean %>
+                      <% if object.send(property[:name]) == true %>
                       <img alt="True" src="<%= image_path("icon-yes.gif") %>"/>
                       <% else %>
                       <img alt="False" src="<%= image_path("icon-no.gif") %>"/>
                       <% end %>
-                      <% when "DateTime" %>
-                        <% value = eval("object.#{property.field}") %>
+                      <% when :date_time %>
+                      <% value = object.send(property[:name]) %>
                       <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y, %I:%M%p") : nil %>
-                      <% when "Date" %>
-                        <% value = eval("object.#{property.field}") %>
+                      <% when :date %>
+                      <% value = object.send(property[:name]) %>
                       <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y") : nil %>
-                      <% when "Time" %>
-                        <% value = eval("object.#{property.field}") %>
+                      <% when :time %>
+                      <% value = object.send(property[:name]) %>
                       <%= value.respond_to?(:strftime) ? value.strftime("%I:%M%p") : nil %>
-                      <% when "Integer" %>
-                      <% if property.type.respond_to?(:flag_map) #Enum or Flag type %>
-                      <%= eval("object.#{property.field}").to_s.capitalize.gsub('_', ' ') %>
+                      <% when :string %>
+                      <%= object.send(property[:name]).to_s.truncate(50) %>
+                      <% when :text %>
+                      <%= object.send(property[:name]).to_s.truncate(50) %>
                       <% else %>
-                      <%= eval("object.#{property.field}") %>
-                      <% end %>
-                      <% when "BigDecimal" %>
-                      <%= eval("object.#{property.field}") %>
-                      <% when "Float" %>
-                      <%= eval("object.#{property.field}") %>
-                      <% when "String" %>
-                      <%= eval("object.#{property.field}").to_s.truncate(50) %>
+                      <%= object.send(property[:name]) %>
                       <% end %>
                     </a>
                   </td>
@@ -111,7 +105,7 @@
               <% if @page_count.to_i > 1 %>
               <%= paginate(@current_page, @page_count, :url => '?' + Merb::Parse.params_to_query_string(params)) %>
               <% end %>
-              <%= @record_count %> <%= @record_count == 1 ? @model_name.snake_case.gsub('_', ' ') : @model_name.snake_case.gsub('_', ' ').pluralize %>
+              <%= @record_count %> <%= @record_count == 1 ? @abstract_model.pretty_name : @abstract_model.pretty_name.pluralize %>
               <% if @page_count.to_i == 2 %>
               <%= link_to("Show all", '?' + Merb::Parse.params_to_query_string(params.merge(:all => true)), :class => "showall") %>
               <% end %>
