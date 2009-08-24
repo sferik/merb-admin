@@ -52,9 +52,10 @@ MerbAdmin does not implement any authorization scheme. Make sure to apply author
 ## Acknowledgements
 
 Many thanks to:
-*   [Wilson Miner](http://www.wilsonminer.com) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com)
-*   [Lori Holden](http://loriholden.com/) for providing pagination via [dm-is-paginated](http://github.com/lholden/dm-is-paginated)
-*   [Aaron Wheeler](http://fightinjoe.com/) for contributing libraries from [Merb AutoScaffold](http://github.com/fightinjoe/merb-autoscaffold)
-*   [why the lucky stiff](http://whytheluckystiff.net/) for [metaid](http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html)
+
+* [Wilson Miner](http://www.wilsonminer.com) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com)
+* [Lori Holden](http://loriholden.com/) for providing pagination via [dm-is-paginated](http://github.com/lholden/dm-is-paginated)
+* [Aaron Wheeler](http://fightinjoe.com/) for contributing libraries from [Merb AutoScaffold](http://github.com/fightinjoe/merb-autoscaffold)
+* [why the lucky stiff](http://whytheluckystiff.net/) for [metaid](http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html)
 
 Also, thanks to [beer](http://www.anchorbrewing.com).
