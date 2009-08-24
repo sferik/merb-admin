@@ -70,7 +70,7 @@
                 <tr class="row<%= index % 2 == 0 ? '1' : '2' %>">
                   <% @properties.each do |property| %>
                   <td>
-                    <a href="<%= slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => eval("object.id")) %>">
+                    <a href="<%= slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => object.id) %>">
                       <% case property[:type] %>
                       <% when :boolean %>
                       <% if object.send(property[:name]) == true %>
