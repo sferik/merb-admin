@@ -155,8 +155,7 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def merge_sort(options)
     return unless params[:sort]
-    order = "[:#{params[:sort]}.#{params[:sort_reverse] ? 'desc' : 'asc'}]"
-    options.merge!(:order => eval(order))
+    options.merge!(:order => [params[:sort].to_sym.send(params[:sort_reverse] ? :desc : :asc)])
   end
 
   def update_has_many_association(association, ids)
@@ -171,6 +170,5 @@ class MerbAdmin::Main < MerbAdmin::Application
     end
     @object.save
   end
-
 
 end
