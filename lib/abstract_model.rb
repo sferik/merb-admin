@@ -97,9 +97,9 @@ module MerbAdmin
             :pretty_name => name.to_s.gsub('_', ' '),
             :type => association_type_lookup(relationship),
             :parent_model => relationship.parent_model,
-            :parent_key => relationship.parent_key.map{|p| p.name},
+            :parent_key => relationship.parent_key.map{|r| r.name},
             :child_model => relationship.child_model,
-            :child_key => relationship.child_key.map{|p| p.name},
+            :child_key => relationship.child_key.map{|r| r.name},
             :remote_relationship => relationship.options[:remote_relationship_name],
             :near_relationship => relationship.options[:near_relationship_name],
           }
@@ -117,12 +117,11 @@ module MerbAdmin
           {
             :name => property.name,
             :pretty_name => property.field.gsub('_', ' '),
+            :type => type_lookup(property),
+            :length => property.length,
             :nullable? => property.nullable?,
             :serial? => property.serial?,
             :key? => property.key?,
-            :field => property.field,
-            :length => property.length,
-            :type => type_lookup(property),
             :flag_map => property.type.respond_to?(:flag_map) ? property.type.flag_map : nil,
           }
         end

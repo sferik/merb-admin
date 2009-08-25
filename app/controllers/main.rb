@@ -54,7 +54,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     object = params[@abstract_model.singular_name] || {}
     # Delete fields that are blank
     object.each do |key, value|
-      object.delete(key) if value.blank?
+      object[key] = nil if value.blank?
     end
     associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
     @object = @abstract_model.new(object)
@@ -76,7 +76,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     object = params[@abstract_model.singular_name] || {}
     # Delete fields that are blank
     object.each do |key, value|
-      object.delete(key) if value.blank?
+      object[key] = nil if value.blank?
     end
     associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
     if @object.update_attributes(object) && associations.each{|association, ids| update_has_many_association(association, ids)}
@@ -146,7 +146,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     conditions = []
     @properties.each do |property|
       next unless property[:type] == :string
-      condition_statement << "#{property[:field]} LIKE ?"
+      condition_statement << "#{property[:name]} LIKE ?"
       conditions << "%#{params[:query]}%"
     end
     conditions.unshift(condition_statement.join(" OR "))

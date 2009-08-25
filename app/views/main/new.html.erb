@@ -2,8 +2,10 @@
         <%= form_for(@object, :action => slice_url(:admin_create, :model_name => @abstract_model.singular_name)) do %>
           <div>
             <fieldset class="module aligned">
+              <% belongs_to_keys = @abstract_model.belongs_to_associations.map{|b| b[:child_key].first} %>
               <% @properties.each do |property| %>
-                <% next if [:id, :created_at, :created_on, :updated_at, :updated_on].include?(property[:name]) %>
+              <% next if [:id, :created_at, :created_on, :deleted_at, :updated_at, :updated_on, :deleted_on].include?(property[:name]) %>
+              <% next if belongs_to_keys.include?(property[:name]) %>
               <div class="<%= @object.errors[property[:name]] ? "form-row errors" : "form-row"%>">
                 <% if @object.errors[property[:name]] %>
                 <ul class="errorlist">
@@ -16,8 +18,11 @@
               </div>
               <% end %>
             </fieldset>
+            <% @abstract_model.belongs_to_associations.each do |association| %>
+<%= partial('belongs_to', :association => association) -%>
+            <% end %>
             <% @abstract_model.has_many_associations.each do |association| %>
-<%= partial('has_many', :association => association) %>
+<%= partial('has_many', :association => association) -%>
             <% end %>
             <div class="submit-row" >
               <%= submit "Save", :class => "default", :name => "_save" %>
