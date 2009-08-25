@@ -59,8 +59,8 @@
               <thead>
                 <tr>
                   <% @properties.each do |property| %>
-                  <th class="<%= params[:sort] == property[:field] ? params[:sort_reverse] ? 'sorted descending' : 'sorted ascending' : nil %>">
-                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property[:field]).reject{|key, value| key.to_sym == :sort_reverse}.merge(params[:sort] == property[:field] && params[:sort_reverse] != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property[:pretty_name].capitalize %></a>
+                  <th class="<%= params[:sort] == property[:name].to_s ? params[:sort_reverse] ? 'sorted descending' : 'sorted ascending' : nil %>">
+                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property[:name]).reject{|key, value| key.to_sym == :sort_reverse}.merge(params[:sort] == property[:name].to_s && params[:sort_reverse] != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property[:pretty_name].capitalize %></a>
                   </th>
                   <% end %>
                 </tr>
