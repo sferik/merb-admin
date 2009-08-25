@@ -86,19 +86,20 @@ module MerbAdmin
 
       def type_lookup(property)
         type = {
-          DataMapper::Types::Serial => :integer,
+          BigDecimal => :big_decimal,
           DataMapper::Types::Boolean => :boolean,
-          DataMapper::Types::Text => :text,
+          DataMapper::Types::ParanoidBoolean => :boolean,
           DataMapper::Types::ParanoidDateTime => :date_time,
-          Integer => :integer,
+          DataMapper::Types::Serial => :integer,
+          DataMapper::Types::Text => :text,
+          Date => :date,
+          DateTime => :date_time,
           Fixnum => :integer,
           Float => :float,
-          BigDecimal => :big_decimal,
-          TrueClass => :boolean,
+          Integer => :integer,
           String => :string,
-          DateTime => :date_time,
-          Date => :date,
           Time => :time,
+          TrueClass => :boolean,
         }
         type[property.type] || type[property.primitive]
       end
