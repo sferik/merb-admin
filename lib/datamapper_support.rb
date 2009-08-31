@@ -23,12 +23,6 @@ module MerbAdmin
         end
       end
 
-      def has_one_associations
-        associations.select do |association|
-          association[:type] == :has_one
-        end
-      end
-
       def belongs_to_associations
         associations.select do |association|
           association[:type] == :belongs_to
@@ -48,12 +42,6 @@ module MerbAdmin
             :remote_relationship => relationship.options[:remote_relationship_name],
             :near_relationship => relationship.options[:near_relationship_name],
           }
-        end
-      end
-
-      def association_names
-        associations.map do |association|
-          association[:type] == :belongs_to ? association[:parent_name] : association[:child_name]
         end
       end
 
