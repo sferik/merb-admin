@@ -18,10 +18,11 @@ class Player
   property :notes, Text
 
   belongs_to :team
+  has 1, :draft
 end
 
 Player.fixture {{
-  :team_id => /\d{1,2}/.gen,
+  :team_id => /\d{1,5}/.gen,
   :number => /\d{1,2}/.gen,
   :name => "#{/\w{3,10}/.gen.capitalize} #{/\w{5,10}/.gen.capitalize}",
   :position => Player.properties[:position].type.flag_map.values[rand(Player.properties[:position].type.flag_map.length)],
