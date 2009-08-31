@@ -24,8 +24,7 @@ Merb.start_environment(
   :session_store => 'memory'
 )
 
-# DataMapper.setup(:default, 'sqlite3::memory:') && DataMapper.auto_migrate!
-DataMapper.setup(:default, 'sqlite3:test.db')
+DataMapper.setup(:default, 'sqlite3::memory:') && DataMapper.auto_migrate!
 
 module Merb
   module Test
@@ -61,5 +60,4 @@ Merb::Test.add_helpers do
       Merb::Router.prepare{add_slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "admin", :default_routes => false)}
     end
   end
-
 end
