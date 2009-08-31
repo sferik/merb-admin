@@ -45,10 +45,10 @@ describe "MerbAdmin" do
 
   before(:each) do
     mount_slice
-    Player.all.destroy!
-    Team.all.destroy!
     Division.all.destroy!
     League.all.destroy!
+    Player.all.destroy!
+    Team.all.destroy!
   end
 
   describe "dashboard" do
@@ -62,6 +62,10 @@ describe "MerbAdmin" do
 
     it "should contain \"Site administration\"" do
       @response.body.should contain("Site administration")
+    end
+
+    it "should be ordered correctly" do
+      @response.body.should contain(/Division.*League.*Player.*Team/m)
     end
   end
 
@@ -90,11 +94,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain right results" do
+    it "should contain correct results" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain wrong results" do
+    it "should not contain incorrect results" do
       @response.body.should_not contain("Sandy Koufax")
     end
   end
@@ -110,7 +114,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should be ordered rightly" do
+    it "should be ordered correctly" do
       @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
     end
   end
@@ -126,7 +130,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should be ordered rightly" do
+    it "should be ordered correctly" do
       @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
     end
   end
@@ -142,11 +146,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain right results" do
+    it "should contain correct results" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain wrong results" do
+    it "should not contain incorrect results" do
       @response.body.should_not contain("David Wright")
     end
   end
@@ -162,11 +166,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain right results" do
+    it "should contain correct results" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain wrong results" do
+    it "should not contain incorrect results" do
       @response.body.should_not contain("Dottie Hinson")
     end
   end
@@ -214,7 +218,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should paginate rightly" do
+    it "should paginate correctly" do
       @response.body.should contain(/1 2[^0-9]*5 6 7 8 9 10 11[^0-9]*19 20/)
     end
   end
@@ -230,7 +234,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should paginate rightly" do
+    it "should paginate correctly" do
       @response.body.should contain(/1 2[^0-9]*12 13 14 15 16 17 18 19 20/)
     end
   end
@@ -358,12 +362,12 @@ describe "MerbAdmin" do
       League.first.should_not be_nil
     end
 
-    it "should include right associations" do
+    it "should include correct associations" do
       League.first.teams.should include(@teams[0])
       League.first.teams.should include(@teams[1])
     end
 
-    it "should not include wrong associations" do
+    it "should not include incorrect associations" do
       League.first.teams.should_not include(@teams[2])
     end
   end
@@ -429,12 +433,12 @@ describe "MerbAdmin" do
       League.first(:id => @league.id).name.should eql("National League")
     end
 
-    it "should include right associations" do
+    it "should include correct associations" do
       League.first.teams.should include(@teams[0])
       League.first.teams.should include(@teams[1])
     end
 
-    it "should not include wrong associations" do
+    it "should not include incorrect associations" do
       League.first.teams.should_not include(@teams[2])
     end
   end
