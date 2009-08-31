@@ -15,7 +15,7 @@ module MerbAdmin
           model = lookup(m.to_s.to_sym)
           @models << new(model) if model
         end
-        @models.sort{|a, b| a.model.to_s <=> b.model.to_s}
+        @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
       else
         raise "MerbAdmin does not currently support the #{Merb.orm} ORM"
       end
