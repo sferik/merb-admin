@@ -4,7 +4,17 @@ require 'merb-slices'
 require 'merb-helpers'
 require 'merb-assets'
 require 'spec'
-require 'spec/fixtures'
+
+# Required for fixtures
+require 'dm-sweatshop'
+require 'dm-types'
+require 'dm-aggregates'
+require 'dm-validations'
+require 'dm-is-paginated'
+
+Dir[File.join(File.dirname(__FILE__), 'fixtures', '**', '*_fixture.rb').to_s].each do |fixture_file|
+  require fixture_file
+end
 
 # Add merb-admin.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true

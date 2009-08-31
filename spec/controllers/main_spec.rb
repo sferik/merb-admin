@@ -20,10 +20,6 @@ describe MerbAdmin::Main do
     @controller.app_path_for(:image).should == "#{Merb.root}/public/slices/merb-admin/images"
     @controller.app_path_for(:javascript).should == "#{Merb.root}/public/slices/merb-admin/javascripts"
     @controller.app_path_for(:stylesheet).should == "#{Merb.root}/public/slices/merb-admin/stylesheets"
-
-    @controller.slice_path_for(:image).should == "#{Merb.root}/public/images"
-    @controller.slice_path_for(:javascript).should == "#{Merb.root}/public/javascripts"
-    @controller.slice_path_for(:stylesheet).should == "#{Merb.root}/public/stylesheets"  
   end
 
 end
