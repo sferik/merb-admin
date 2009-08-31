@@ -23,6 +23,12 @@ module MerbAdmin
         end
       end
 
+      def has_one_associations
+        associations.select do |association|
+          association[:type] == :has_one
+        end
+      end
+
       def belongs_to_associations
         associations.select do |association|
           association[:type] == :belongs_to

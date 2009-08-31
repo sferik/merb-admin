@@ -5,6 +5,9 @@
             <% @abstract_model.belongs_to_associations.each do |association| %>
 <%= partial('belongs_to', :association => association) -%>
             <% end %>
+            <% @abstract_model.has_one_associations.each do |association| %>
+<%= partial('has_one', :association => association) -%>
+            <% end %>
             <% @abstract_model.has_many_associations.each do |association| %>
 <%= partial('has_many', :association => association) -%>
             <% end %>

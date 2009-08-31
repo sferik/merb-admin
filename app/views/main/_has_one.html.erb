@@ -16,7 +16,7 @@ end
                 </ul>
                 <% end %>
                 <div>
-                  <%= select(association[:child_key].first, :collection => MerbAdmin::AbstractModel.new(association[:parent_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}, :include_blank => true, :selected => @object.send(association[:child_key].first).to_s, :label => association[:pretty_name].capitalize) %>
+                  <%= select(:name => "associations[#{association[:name]}][]", :id => association[:name], :collection => MerbAdmin::AbstractModel.new(association[:child_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}, :include_blank => true, :selected => @object.send(association[:parent_key].first).to_s, :label => association[:pretty_name].capitalize) %>
                   <p class="help">
                     <%= required ? "Required." : "Optional." %>
                   </p>
