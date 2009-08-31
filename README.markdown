@@ -14,7 +14,7 @@ At the command prompt, type:
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "sferik-merb-admin", "0.3.1", :require_as => "merb-admin"
+    dependency "sferik-merb-admin", "0.3.2", :require_as => "merb-admin"
     dependency "dm-is-paginated", "0.0.1" # if you want pagination support
 
 Add the following route to `config/router.rb`:
