@@ -16,5 +16,5 @@ end
 Team.fixture {{
   :league_id => /\d{1,2}/.gen,
   :division_id => /\d{1,2}/.gen,
-  :name => /\w{5,10}/.gen.capitalize,
+  :name => "The #{/\w{5,10}/.gen.pluralize.capitalize}",
 }}

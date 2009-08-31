@@ -11,5 +11,5 @@ class League
 end
 
 League.fixture {{
-  :name => /\w{5,10}/.gen.capitalize,
+  :name => "#{/\w{5,10}/.gen.capitalize} League",
 }}

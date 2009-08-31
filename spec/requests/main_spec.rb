@@ -1,15 +1,44 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
-given "an object exists" do
+given "a player exists" do
   @player = Player.gen
 end
 
 given "two players exist" do
-  @players = 2.times{Player.gen}
+  @players = []
+  2.times do
+    @players << Player.gen
+  end
+end
+
+given "three teams exists" do
+  @teams = []
+  3.times do
+    @teams << Team.gen
+  end
+end
+
+given "a player exists and three teams exist" do
+  @player = Player.gen
+  @teams = []
+  3.times do
+    @teams << Team.gen
+  end
+end
+
+given "a league exists and three teams exist" do
+  @league = League.gen
+  @teams = []
+  3.times do
+    @teams << Team.gen
+  end
 end
 
 given "twenty players exist" do
-  @players = 20.times{Player.gen}
+  @players = []
+  20.times do
+    @players << Player.gen
+  end
 end
 
 describe "MerbAdmin" do
@@ -17,6 +46,9 @@ describe "MerbAdmin" do
   before(:each) do
     mount_slice
     Player.all.destroy!
+    Team.all.destroy!
+    Division.all.destroy!
+    League.all.destroy!
   end
 
   describe "dashboard" do
@@ -58,11 +90,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain matching results" do
+    it "should contain right results" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain non-matching results" do
+    it "should not contain wrong results" do
       @response.body.should_not contain("Sandy Koufax")
     end
   end
@@ -78,7 +110,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should be ordered correctly" do
+    it "should be ordered rightly" do
       @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
     end
   end
@@ -94,7 +126,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should be ordered correctly" do
+    it "should be ordered rightly" do
       @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
     end
   end
@@ -110,12 +142,32 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain matching results" do
+    it "should contain right results" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain non-matching results" do
+    it "should not contain wrong results" do
       @response.body.should_not contain("David Wright")
+    end
+  end
+
+  describe "list with enum filter" do
+    before(:each) do
+      Player.gen(:name => "Jackie Robinson", :sex => :male)
+      Player.gen(:name => "Dottie Hinson", :sex => :female)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:sex => :male}})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain right results" do
+      @response.body.should contain("Jackie Robinson")
+    end
+
+    it "should not contain wrong results" do
+      @response.body.should_not contain("Dottie Hinson")
     end
   end
 
@@ -162,7 +214,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should paginate correctly" do
+    it "should paginate rightly" do
       @response.body.should contain(/1 2[^0-9]*5 6 7 8 9 10 11[^0-9]*19 20/)
     end
   end
@@ -178,7 +230,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should paginate correctly" do
+    it "should paginate rightly" do
       @response.body.should contain(/1 2[^0-9]*12 13 14 15 16 17 18 19 20/)
     end
   end
@@ -209,7 +261,18 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit", :given => "an object exists" do
+  describe "new with has-many association", :given => "three teams exists" do
+    before(:each) do
+      @response = request(url(:admin_new, :model_name => "player"))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+  end
+
+
+  describe "edit", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_edit, :model_name => "player", :id => @player.id))
     end
@@ -222,6 +285,17 @@ describe "MerbAdmin" do
       @response.body.should contain("Edit player")
     end
   end
+
+  describe "edit with has-many association", :given => "a player exists and three teams exist" do
+    before(:each) do
+      @response = request(url(:admin_edit, :model_name => "player", :id => @player.id))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+  end
+
 
   describe "edit with missing object" do
     before(:each) do
@@ -242,7 +316,7 @@ describe "MerbAdmin" do
       @response.should redirect_to(url(:admin_list, :model_name => "player"))
     end
 
-    it "should create a new player" do
+    it "should create a new object" do
       Player.first.should_not be_nil
     end
   end
@@ -256,7 +330,7 @@ describe "MerbAdmin" do
       @response.should redirect_to(url(:admin_edit, :model_name => "player", :id => Player.first.id))
     end
 
-    it "should create a new player" do
+    it "should create a new object" do
       Player.first.should_not be_nil
     end
   end
@@ -270,8 +344,27 @@ describe "MerbAdmin" do
       @response.should redirect_to(url(:admin_new, :model_name => "player"))
     end
 
-    it "should create a new player" do
+    it "should create a new object" do
       Player.first.should_not be_nil
+    end
+  end
+
+  describe "create with has-many association", :given => "three teams exists" do
+    before(:each) do
+      @response = request(url(:admin_create, :model_name => "league"), :method => "post", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[0].id, @teams[1].id]}})
+    end
+
+    it "should create a new object" do
+      League.first.should_not be_nil
+    end
+
+    it "should include right associations" do
+      League.first.teams.should include(@teams[0])
+      League.first.teams.should include(@teams[1])
+    end
+
+    it "should not include wrong associations" do
+      League.first.teams.should_not include(@teams[2])
     end
   end
 
@@ -285,7 +378,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update", :given => "an object exists" do
+  describe "update", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
     end
@@ -299,7 +392,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update and edit", :given => "an object exists" do
+  describe "update and edit", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_continue => true})
     end
@@ -313,7 +406,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update and add another", :given => "an object exists" do
+  describe "update and add another", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_add_another => true})
     end
@@ -327,6 +420,25 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "update with has-many association", :given => "a league exists and three teams exist" do
+    before(:each) do
+      @response = request(url(:admin_update, :model_name => "league", :id => @league.id), :method => "put", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[0].id, @teams[1].id]}})
+    end
+
+    it "should update an object that already exists" do
+      League.first(:id => @league.id).name.should eql("National League")
+    end
+
+    it "should include right associations" do
+      League.first.teams.should include(@teams[0])
+      League.first.teams.should include(@teams[1])
+    end
+
+    it "should not include wrong associations" do
+      League.first.teams.should_not include(@teams[2])
+    end
+  end
+
   describe "update with missing object" do
     before(:each) do
       @response = request(url(:admin_update, :model_name => "player", :id => 1), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
@@ -337,7 +449,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update with invalid object", :given => "an object exists" do
+  describe "update with invalid object", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:number => "a"}})
     end
@@ -347,7 +459,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "delete", :given => "an object exists" do
+  describe "delete", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_delete, :model_name => "player", :id => @player.id))
     end
@@ -371,7 +483,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "destroy", :given => "an object exists" do
+  describe "destroy", :given => "a player exists" do
     before(:each) do
       @response = request(url(:admin_destroy, :model_name => "player", :id => @player.id), :method => "delete")
     end
