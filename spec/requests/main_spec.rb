@@ -4,6 +4,13 @@ given "a player exists" do
   @player = Player.gen
 end
 
+given "two drafts exist" do
+  @drafts = []
+  2.times do
+    @drafts << Draft.gen
+  end
+end
+
 given "two players exist" do
   @players = []
   2.times do
@@ -11,10 +18,18 @@ given "two players exist" do
   end
 end
 
-given "three teams exists" do
+given "three teams exist" do
   @teams = []
   3.times do
     @teams << Team.gen
+  end
+end
+
+given "a player exists and two drafts exist" do
+  @player = Player.gen
+  @drafts = []
+  2.times do
+    @drafts << Draft.gen
   end
 end
 
@@ -265,7 +280,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "new with has-many association", :given => "three teams exists" do
+  describe "new with has-one association", :given => "two drafts exist" do
     before(:each) do
       @response = request(url(:admin_new, :model_name => "player"))
     end
@@ -275,6 +290,15 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "new with has-many association", :given => "three teams exist" do
+    before(:each) do
+      @response = request(url(:admin_new, :model_name => "player"))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+  end
 
   describe "edit", :given => "a player exists" do
     before(:each) do
@@ -287,6 +311,16 @@ describe "MerbAdmin" do
 
     it "should contain \"Edit model\"" do
       @response.body.should contain("Edit player")
+    end
+  end
+
+  describe "edit with has-one association", :given => "a player exists and two drafts exist" do
+    before(:each) do
+      @response = request(url(:admin_edit, :model_name => "player", :id => @player.id))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
     end
   end
 
@@ -353,7 +387,25 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "create with has-many association", :given => "three teams exists" do
+  describe "create with has-one association", :given => "two drafts exist" do
+    before(:each) do
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @drafts[0].id}})
+    end
+
+    it "should create a new object" do
+      Player.first.should_not be_nil
+    end
+
+    it "should include correct associations" do
+      Player.first.draft.should == @drafts[0]
+    end
+
+    it "should not include incorrect associations" do
+      Player.first.draft.should_not == @drafts[1]
+    end
+  end
+
+  describe "create with has-many association", :given => "three teams exist" do
     before(:each) do
       @response = request(url(:admin_create, :model_name => "league"), :method => "post", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[0].id, @teams[1].id]}})
     end
@@ -421,6 +473,24 @@ describe "MerbAdmin" do
 
     it "should update an object that already exists" do
       Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+    end
+  end
+
+  describe "update with has-one association", :given => "a player exists and two drafts exist" do
+    before(:each) do
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @drafts[0].id}})
+    end
+
+    it "should update an object that already exists" do
+      Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+    end
+
+    it "should include correct associations" do
+      Player.first.draft.should == @drafts[0]
+    end
+
+    it "should not include incorrect associations" do
+      Player.first.draft.should_not == @drafts[1]
     end
   end
 
