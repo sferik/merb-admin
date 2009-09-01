@@ -4,11 +4,8 @@ given "a player exists" do
   @player = Player.gen
 end
 
-given "two drafts exist" do
-  @drafts = []
-  2.times do
-    @drafts << Draft.gen
-  end
+given "a draft exists" do
+  @draft = Draft.gen
 end
 
 given "two players exist" do
@@ -25,12 +22,9 @@ given "three teams exist" do
   end
 end
 
-given "a player exists and two drafts exist" do
+given "a player exists and a draft exists" do
   @player = Player.gen
-  @drafts = []
-  2.times do
-    @drafts << Draft.gen
-  end
+  @draft = Draft.gen
 end
 
 given "a player exists and three teams exist" do
@@ -109,11 +103,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain correct results" do
+    it "should contain a correct result" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain incorrect results" do
+    it "should not contain an incorrect result" do
       @response.body.should_not contain("Sandy Koufax")
     end
   end
@@ -161,11 +155,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain correct results" do
+    it "should contain a correct result" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain incorrect results" do
+    it "should not contain an incorrect result" do
       @response.body.should_not contain("David Wright")
     end
   end
@@ -181,11 +175,11 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain correct results" do
+    it "should contain a correct result" do
       @response.body.should contain("Jackie Robinson")
     end
 
-    it "should not contain incorrect results" do
+    it "should not contain an incorrect result" do
       @response.body.should_not contain("Dottie Hinson")
     end
   end
@@ -280,7 +274,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "new with has-one association", :given => "two drafts exist" do
+  describe "new with has-one association", :given => "a draft exists" do
     before(:each) do
       @response = request(url(:admin_new, :model_name => "player"))
     end
@@ -314,7 +308,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit with has-one association", :given => "a player exists and two drafts exist" do
+  describe "edit with has-one association", :given => "a player exists and a draft exists" do
     before(:each) do
       @response = request(url(:admin_edit, :model_name => "player", :id => @player.id))
     end
@@ -387,21 +381,17 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "create with has-one association", :given => "two drafts exist" do
+  describe "create with has-one association", :given => "a draft exists" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @drafts[0].id}})
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @draft.id}})
     end
 
     it "should create a new object" do
       Player.first.should_not be_nil
     end
 
-    it "should include correct associations" do
-      Player.first.draft.should == @drafts[0]
-    end
-
-    it "should not include incorrect associations" do
-      Player.first.draft.should_not == @drafts[1]
+    it "should be associated with the correct object" do
+      Player.first.draft.should == @draft
     end
   end
 
@@ -414,12 +404,12 @@ describe "MerbAdmin" do
       League.first.should_not be_nil
     end
 
-    it "should include correct associations" do
+    it "should be associated with the correct objects" do
       League.first.teams.should include(@teams[0])
       League.first.teams.should include(@teams[1])
     end
 
-    it "should not include incorrect associations" do
+    it "should be not associated with an incorrect object" do
       League.first.teams.should_not include(@teams[2])
     end
   end
@@ -476,21 +466,17 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update with has-one association", :given => "a player exists and two drafts exist" do
+  describe "update with has-one association", :given => "a player exists and a draft exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @drafts[0].id}})
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @draft.id}})
     end
 
     it "should update an object that already exists" do
       Player.first(:id => @player.id).name.should eql("Jackie Robinson")
     end
 
-    it "should include correct associations" do
-      Player.first.draft.should == @drafts[0]
-    end
-
-    it "should not include incorrect associations" do
-      Player.first.draft.should_not == @drafts[1]
+    it "should be associated with the correct object" do
+      Player.first.draft.should == @draft
     end
   end
 
@@ -503,12 +489,12 @@ describe "MerbAdmin" do
       League.first(:id => @league.id).name.should eql("National League")
     end
 
-    it "should include correct associations" do
+    it "should be associated with the correct objects" do
       League.first.teams.should include(@teams[0])
       League.first.teams.should include(@teams[1])
     end
 
-    it "should not include incorrect associations" do
+    it "should not be associated with an incorrect object" do
       League.first.teams.should_not include(@teams[2])
     end
   end
