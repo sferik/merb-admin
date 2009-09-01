@@ -164,7 +164,7 @@ class MerbAdmin::Main < MerbAdmin::Application
   def update_has_one_association(association, id)
     model = MerbAdmin::AbstractModel.new(association[:child_model])
     if object = model.find(id)
-      object.update_attributes(association[:child_key] => @object.id)
+      object.update_attributes(association[:child_key].first => @object.id)
     end
   end
 
