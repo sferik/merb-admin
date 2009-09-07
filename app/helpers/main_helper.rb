@@ -8,15 +8,15 @@ module Merb
 
       # Given a page count and the current page, we generate a set of pagination
       # links.
-      # 
-      # * We use an inner and outer window into a list of links. For a set of 
+      #
+      # * We use an inner and outer window into a list of links. For a set of
       # 20 pages with the current page being 10:
       # outer_window:
       #   1 2  ..... 19 20
       # inner_window
       #   5 6 7 8 9 10 11 12 13 14
       #
-      # This is totally adjustable, or can be turned off by giving the 
+      # This is totally adjustable, or can be turned off by giving the
       # :inner_window setting a value of nil.
       #
       # * Options
@@ -41,25 +41,24 @@ module Merb
       #    Provides the base url to use in the page navigation links.
       #    Defaults to ''
       def paginate(current_page, page_count, options = {})
-        options.reverse_merge!({
-          :left_cut_label  => '&hellip;',
-          :right_cut_label => '&hellip;',
-          :outer_window    => 2,
-          :inner_window    => 7,
-          :page_param      => 'page',
-          :url             => ''
-        })
-        url = options.delete :url
+        options[:left_cut_label] ||= '&hellip;'
+        options[:right_cut_label] ||= '&hellip;'
+        options[:outer_window] ||= 2
+        options[:inner_window] ||= 7
+        options[:page_param] ||= 'page'
+        options[:url] ||= ''
+
+        url = options.delete(:url)
         url << (url.include?('?') ? '&' : '?') << options[:page_param]
 
-        pages = { 
-          :all => (1..page_count).to_a, 
-          :left => [], 
-          :center => [], 
-          :right => [] 
+        pages = {
+          :all => (1..page_count).to_a,
+          :left => [],
+          :center => [],
+          :right => []
         }
 
-        # Only worry about using our 'windows' if the page count is less then 
+        # Only worry about using our 'windows' if the page count is less then
         # our windows combined.
         if options[:inner_window].nil? || ((options[:outer_window] * 2) + options[:inner_window] + 2) >= page_count
           pages[:center] = pages[:all]

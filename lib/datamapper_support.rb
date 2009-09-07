@@ -13,6 +13,22 @@ module MerbAdmin
         model.get(id).extend(InstanceMethods)
       end
 
+      def paginated(options = {})
+        page = options.delete(:page) || 1
+        per_page = options.delete(:per_page) || MerbAdmin[:per_page]
+
+        options[:order] ||= [:id.desc]
+
+        page_count = (count(options).to_f / per_page).ceil
+
+        options.merge!({
+          :limit => per_page,
+          :offset => (page - 1) * per_page
+        })
+
+        [page_count, find_all(options)]
+      end
+
       def new(params = {})
         model.new(params).extend(InstanceMethods)
       end

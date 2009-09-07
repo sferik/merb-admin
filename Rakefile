@@ -4,9 +4,6 @@ require "rake/gempackagetask"
 require "merb-core"
 require "merb-core/tasks/merb"
 
-dependency "dm-core"
-dependency "merb_datamapper"
-
 GEM_NAME = "merb-admin"
 AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
@@ -27,8 +24,6 @@ spec = Gem::Specification.new do |s|
   s.email = EMAIL
   s.homepage = HOMEPAGE
   s.add_dependency("merb-slices", ">= 1.0.12")
-  s.add_dependency("merb_datamapper", ">= 1.0.12")
-  s.add_dependency("dm-core", ">= 0.9.11")
   s.require_path = "lib"
   s.files = %w(LICENSE README.markdown Rakefile) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
   s.post_install_message = <<-POST_INSTALL_MESSAGE

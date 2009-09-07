@@ -18,20 +18,18 @@ class MerbAdmin::Main < MerbAdmin::Application
     merge_query(options)
     merge_sort(options)
 
-    if !MerbAdmin[:paginate] || params[:all]
+    if params[:all]
       options = {
-        :limit => 200,
+        :limit => MerbAdmin[:per_page] * 2,
       }.merge(options)
       @objects = @abstract_model.find_all(options).reverse
     else
-      # monkey patch pagination
-      @abstract_model.model.class_eval('is_paginated') unless @abstract_model.model.respond_to?(:paginated)
       @current_page = (params[:page] || 1).to_i
       options = {
         :page => @current_page,
         :per_page => MerbAdmin[:per_page],
       }.merge(options)
-      @page_count, @objects = @abstract_model.model.paginated(options)
+      @page_count, @objects = @abstract_model.paginated(options)
       options.delete(:page)
       options.delete(:per_page)
       options.delete(:offset)
@@ -157,8 +155,9 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def merge_sort(options)
-    return unless params[:sort]
-    options.merge!(:order => [params[:sort].to_sym.send(params[:sort_reverse] ? :desc : :asc)])
+    sort = params[:sort] || "id"
+    order = params[:sort_reverse] == "true" ? :desc : :asc
+    options.merge!(:order => [sort.to_sym.send(order)])
   end
 
   def update_has_one_association(association, id)

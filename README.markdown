@@ -15,7 +15,6 @@ At the command prompt, type:
 In your app, add the following dependency to `config/dependencies.rb`:
 
     dependency "sferik-merb-admin", "0.3.4", :require_as => "merb-admin"
-    dependency "dm-is-paginated", "0.0.1" # if you want pagination support
 
 Add the following route to `config/router.rb`:
 
@@ -31,7 +30,6 @@ You can configuring the merb-admin slice in a before_app_loads block:
 
     Merb::BootLoader.before_app_loads do
       Merb::Slices::config[:merb_admin][:app_name] = "My App"
-      Merb::Slices::config[:merb_admin][:paginate] = true
       Merb::Slices::config[:merb_admin][:per_page] = 100
     end
 
@@ -54,8 +52,8 @@ MerbAdmin does not implement any authorization scheme. Make sure to apply author
 Many thanks to:
 
 * [Wilson Miner](http://www.wilsonminer.com) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com)
-* [Lori Holden](http://loriholden.com/) for providing pagination via [dm-is-paginated](http://github.com/lholden/dm-is-paginated)
 * [Aaron Wheeler](http://fightinjoe.com/) for contributing libraries from [Merb AutoScaffold](http://github.com/fightinjoe/merb-autoscaffold)
+* [Lori Holden](http://loriholden.com/) for contributing the [merb-pagination](http://github.com/lholden/merb-pagination) helper
 * [why the lucky stiff](http://whytheluckystiff.net/) for [metaid](http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html)
 
 Also, thanks to [beer](http://www.anchorbrewing.com).
