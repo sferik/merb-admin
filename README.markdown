@@ -26,7 +26,7 @@ Then, run the following rake task:
 
 ## Configure it (optional)
 
-You can configuring the merb-admin slice in a before_app_loads block:
+If you're feeling crafty, you can set a couple configuration options in `config/init.rb`:
 
     Merb::BootLoader.before_app_loads do
       Merb::Slices::config[:merb_admin][:app_name] = "My App"
