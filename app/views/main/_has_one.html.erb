@@ -1,23 +1,27 @@
 <%
-selected = MerbAdmin::AbstractModel.new(association[:child_model]).find_all(association[:child_key].first => @object.id).first
-required = false
-@properties.each do |property|
-  next unless property[:name] == association[:child_key].first
-  required = true unless property[:nullable?]
-end
+  child_key = association[:child_key].first
+  name = association[:name]
+  collection = MerbAdmin::AbstractModel.new(association[:child_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
+  selected = MerbAdmin::AbstractModel.new(association[:child_model]).find_all(child_key => @object.id).first
+  label = association[:pretty_name].capitalize
+  required = false
+  @properties.each do |property|
+    next unless property[:name] == child_key
+    required = true unless property[:nullable?]
+  end
 %>
             <fieldset class="module aligned">
-              <h2><%= association[:pretty_name].capitalize %></h2>
-              <div class="<%= @object.errors[association[:child_key].first] ? "form-row errors" : "form-row"%>">
-                <% if @object.errors[association[:child_key].first] %>
+              <h2><%= label %></h2>
+              <div class="<%= @object.errors[child_key] ? "form-row errors" : "form-row" %>">
+                <% if @object.errors[child_key] %>
                 <ul class="errorlist">
-                  <% @object.errors[association[:child_key].first].each do |error| %>
+                  <% @object.errors[child_key].each do |error| %>
                   <li><%= error %></li>
                   <% end %>
                 </ul>
                 <% end %>
                 <div>
-                  <%= select(:name => "associations[#{association[:name]}][]", :id => association[:name], :collection => MerbAdmin::AbstractModel.new(association[:child_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}, :include_blank => true, :selected => selected ? selected.id.to_s : nil, :label => association[:pretty_name].capitalize) %>
+                  <%= select(:name => "associations[#{name}][]", :id => name, :collection => collection, :include_blank => true, :selected => selected ? selected.id.to_s : nil, :label => label) %>
                   <p class="help">
                     <%= required ? "Required." : "Optional." %>
                   </p>

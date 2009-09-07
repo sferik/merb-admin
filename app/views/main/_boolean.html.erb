@@ -1,3 +1,7 @@
+<%
+  name = property[:name]
+  label = property[:pretty_name].capitalize
+%>
                 <div>
-                  <%= check_box(property[:name], :label => property[:pretty_name].capitalize) %>
+                  <%= check_box(name, :label => label) %>
                 </div>

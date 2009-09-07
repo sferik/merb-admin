@@ -1,9 +1,4 @@
         <div id="content-main">
-        <ul class="object-tools">
-          <li>
-            <%= link_to("View on site", "/#{@abstract_model.singular_name}/#{@object.id}", :target => "_blank", :class => "viewsitelink") %>
-          </li>
-        </ul>
         <%= form_for(@object, :action => slice_url(:admin_update, :model_name => @abstract_model.singular_name, :id => @object.id)) do %>
           <div>
 <%= partial('properties', :properties => @properties) -%>

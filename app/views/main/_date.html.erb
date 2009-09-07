@@ -1,7 +1,12 @@
-<% value = @object.send(property[:name]) %>
+<%
+  name = property[:name]
+  value = @object.send(name)
+  label = property[:pretty_name].capitalize
+  required = !property[:nullable?]
+%>
                 <div>
-                  <%= text_field(property[:name], :class => "vDateField", :label => property[:pretty_name].capitalize, :value => value.respond_to?(:strftime) ? value.strftime("%Y-%m-%d") : nil) %>
+                  <%= text_field(name, :class => "vDateField", :value => value.respond_to?(:strftime) ? value.strftime("%Y-%m-%d") : nil, :label => label) %>
                   <p class="help">
-                    <%= !property[:nullable?] ? "Required." : "Optional." %>
+                    <%= required ? "Required." : "Optional." %>
                   </p>
                 </div>
