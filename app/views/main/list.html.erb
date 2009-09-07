@@ -36,6 +36,7 @@
               <% type = property[:type] %>
               <% name = property[:name] %>
               <% pretty_name = property[:pretty_name] %>
+              <% flag_map = property[:flag_map] %>
               <% if type == :boolean %>
               <h3>By <%= pretty_name %></h3>
               <ul>
@@ -49,15 +50,15 @@
                   <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({name => "false"}))) %>">No</a>
                 </li>
               </ul>
-              <% elsif type == :integer && property[:flag_map] %>
+              <% elsif type == :integer && flag_map %>
               <h3>By <%= pretty_name %></h3>
               <ul>
                 <li class="<%= filter.nil? || filter[name].blank? ? "selected" : nil %>">
                   <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).reject{|key, value| key.to_sym == name})) %>">All</a>
                 </li>
-                <% property[:flag_map].each do |value, name| %>
-                <li class="<%= filter && filter[name] == name.to_s ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({name => name}))) %>"><%= name.to_s.capitalize.gsub('_', ' ')%></a>
+                <% flag_map.values.map{|v| v.to_s}.sort.each do |value| %>
+                <li class="<%= filter && filter[name] == value ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({name => value}))) %>"><%= value.capitalize.gsub('_', ' ')%></a>
                 </li>
                 <% end %>
               </ul>
