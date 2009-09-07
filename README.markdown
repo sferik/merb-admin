@@ -14,7 +14,7 @@ At the command prompt, type:
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "sferik-merb-admin", "0.3.5", :require_as => "merb-admin"
+    dependency "sferik-merb-admin", "0.3.6", :require_as => "merb-admin"
 
 Add the following route to `config/router.rb`:
 
