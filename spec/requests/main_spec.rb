@@ -124,7 +124,7 @@ describe "MerbAdmin" do
     end
 
     it "should be ordered correctly" do
-      @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
+      @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
     end
   end
 
@@ -140,7 +140,7 @@ describe "MerbAdmin" do
     end
 
     it "should be ordered correctly" do
-      @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
+      @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
     end
   end
 

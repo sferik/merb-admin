@@ -10,7 +10,10 @@ require 'dm-sweatshop'
 require 'dm-types'
 require 'dm-aggregates'
 require 'dm-validations'
-require 'dm-is-paginated'
+
+Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb').to_s].each do |model_file|
+  require model_file
+end
 
 Dir[File.join(File.dirname(__FILE__), 'fixtures', '**', '*_fixture.rb').to_s].each do |fixture_file|
   require fixture_file
