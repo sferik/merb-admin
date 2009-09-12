@@ -2,101 +2,138 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-	<title>sferik/merb-admin @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #5188a1;
-		  font-family: "Helvetica,Arial,FreeSans"; 
-  		color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #ae775e; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #ae775e; }
-    h3 { text-align: center; color: #ae775e; }
-    a { color: #ae775e; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
-
-<body>
-  <a href="http://github.com/sferik/merb-admin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-  
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/sferik/merb-admin/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/sferik/merb-admin/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+  <head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	  <title>MerbAdmin</title>
+	  <style type="text/css">
+      body {
+        margin-top: 1.0em;
+        background-color: #fff;
+        font-family: "Helvetica, Arial, FreeSans, sans";
+        color: #000;
+      }
+      #container {
+        margin: 0 auto;
+        width: 700px;
+      }
+      h1 {
+        font-size: 3.8em;
+        color: #5188a1;
+        margin-bottom: 3px;
+      }
+      h1 .small {
+        font-size: 0.4em;
+      }
+      h1 a {
+        text-decoration: none;
+      }
+      h2 {
+        font-size: 1.5em;
+        color: #5188a1;
+      }
+      h3 {
+        text-align: center;
+        color: #5188a1;
+      }
+      a {
+        color: #5188a1;
+      }
+      .description {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        font-style: italic;
+      }
+      .download {
+        float: right;
+      }
+      pre {
+        background: #000;
+        color: #fff;
+        padding: 15px;
+      }
+      hr {
+        border: 0;
+        width: 80%;
+        border-bottom: 1px solid #aaa;
+      }
+      .footer {
+        text-align:center;
+        padding-top:30px;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="http://github.com/sferik/merb-admin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <div id="container">
+      <div class="download">
+        <a href="http://github.com/sferik/merb-admin/zipball/master">
+          <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+        <a href="http://github.com/sferik/merb-admin/tarball/master">
+          <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+      </div>
+      <h1>
+        <a href="http://github.com/sferik/merb-admin">MerbAdmin</a>
+        <span class="small">by <a href="http://github.com/sferik">sferik</a></span>
+      </h1>
+      <div class="description">
+        MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
+      </div>
+      <h2>Get it</h2>
+      <p>At the command prompt, type:</p>
+      <pre><code>sudo gem install sferik-merb-admin -s http://gems.github.com</code></pre>
+      <h2>Install it</h2>
+      <p>In your app, add the following dependency to <code>config/dependencies.rb</code>:</p>
+      <pre><code>dependency "sferik-merb-admin", "0.3.6", :require_as =&gt; "merb-admin"</code></pre>
+      <p>Add the following route to <code>config/router.rb</code>:</p>
+      <pre><code>slice(:MerbAdmin, :name_prefix =&gt; nil, :path_prefix =&gt; "", :default_routes =&gt; false)</code></pre>
+      <p>Then, run the following rake task:</p>
+      <pre><code>rake slices:merb-admin:install</code></pre>
+      <h2>Configure it (optional)</h2>
+      <p>If you're feeling crafty, you can set a couple configuration options in <code>config/init.rb</code>:</p>
+      <pre><code>Merb::BootLoader.before_app_loads do
+  Merb::Slices::config[:merb_admin][:app_name] = "My App"
+  Merb::Slices::config[:merb_admin][:per_page] = 100
+end</code></pre>
+      <h2>Run it</h2>
+      <p>Start the server:</p>
+      <pre><code>merb</code></pre>
+      <p>You should now be able to administer your site at <a href="http://localhost:4000/admin">http://localhost:4000/admin</a>.</p>
+      <p>Please report any problems you encounter to <a href="mailto:sferik@gmail.com">&#x73;&#102;&#101;&#x72;&#x69;&#107;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;</a> or <a href="http://twitter.com/home/?status=@sferik%20">@sferik</a> on Twitter.</p>
+      <h2>WARNING</h2>
+      <p>MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!</p>
+      <h2>Acknowledgements</h2>
+      <p>Many thanks to:</p>
+      <ul>
+        <li><a href="http://www.wilsonminer.com">Wilson Miner</a> for contributing the stylesheets and javascripts from <a href="http://www.djangoproject.com">Django</a></li>
+        <li><a href="http://fightinjoe.com/">Aaron Wheeler</a> for contributing libraries from <a href="http://github.com/fightinjoe/merb-autoscaffold">Merb AutoScaffold</a></li>
+        <li><a href="http://loriholden.com/">Lori Holden</a> for contributing the <a href="http://github.com/lholden/merb-pagination">merb-pagination</a> helper</li>
+        <li><a href="http://whytheluckystiff.net/">why the lucky stiff</a> for <a href="http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html">metaid</a></li>
+      </ul>
+      <p>Also, thanks to <a href="http://www.21st-amendment.com">beer</a>.</p>
+      <p>
+        You can download this project in either
+        <a href="http://github.com/sferik/merb-admin/zipball/master">zip</a> or
+        <a href="http://github.com/sferik/merb-admin/tarball/master">tar</a> formats.
+      </p>
+      <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+        by running:
+        <pre>$ git clone git://github.com/sferik/merb-admin</pre>
+      </p>
+      <div class="footer">
+        get the source code on GitHub: <a href="http://github.com/sferik/merb-admin">sferik/merb-admin</a>
+      </div>
     </div>
-      
-    <h1><a href="http://github.com/sferik/merb-admin">merb-admin</a> 
-      <span class="small">by <a href="http://github.com/sferik">sferik</a></span></h1>
-
-    <div class="description">
-      MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
-    </div>
-
-    <h2>Dependencies</h2>
-<p>merb-slices</p>
-<h2>Install</h2>
-<p>In your app, add the following dependency to `config/dependencies.rb`:
-
-    dependency "sferik-merb-admin", "0.3.6", :require_as => "merb-admin"
-
-Add the following route to `config/router.rb`:
-
-    slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "", :default_routes => false)
-
-Then, run the following rake task:
-
-    rake slices:merb-admin:install</p>
-<h2>Authors</h2>
-<p>Erik Michaels-Ober (sferik@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Erik Michaels-Ober (sferik@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/sferik/merb-admin/zipball/master">zip</a> or
-      <a href="http://github.com/sferik/merb-admin/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/sferik/merb-admin</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/sferik/merb-admin">sferik/merb-admin</a>
-    </div>
-    
-  </div>
-
-  <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-10631189-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-</body>
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-10631189-1");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+  </body>
 </html>
