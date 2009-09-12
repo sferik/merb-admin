@@ -56,4 +56,4 @@ Many thanks to:
 * [Lori Holden](http://loriholden.com/) for contributing the [merb-pagination](http://github.com/lholden/merb-pagination) helper
 * [why the lucky stiff](http://whytheluckystiff.net/) for [metaid](http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html)
 
-Also, thanks to [beer](http://www.anchorbrewing.com).
+Also, thanks to [beer](http://www.21st-amendment.com).
