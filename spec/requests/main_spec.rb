@@ -146,9 +146,9 @@ describe "MerbAdmin" do
 
   describe "list with boolean filter" do
     before(:each) do
-      Player.gen(:name => "Jackie Robinson", :retired => true)
-      Player.gen(:name => "David Wright", :retired => false)
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:retired => true}})
+      Player.gen(:name => "Moises Alou", :injured => true)
+      Player.gen(:name => "David Wright", :injured => false)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:injured => true}})
     end
 
     it "should respond sucessfully" do
@@ -156,7 +156,7 @@ describe "MerbAdmin" do
     end
 
     it "should contain a correct result" do
-      @response.body.should contain("Jackie Robinson")
+      @response.body.should contain("Moises Alou")
     end
 
     it "should not contain an incorrect result" do

@@ -12,7 +12,6 @@ class Player
   property :sex, Enum[:male, :female]
   property :batting_average, Float, :default => 0.0, :precision => 4, :scale => 3
   property :injured, Boolean, :default => false
-  property :retired, TrueClass, :default => false
   property :born_on, Date
   property :wake_at, Time
   property :notes, Text

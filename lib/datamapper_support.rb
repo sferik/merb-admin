@@ -109,7 +109,6 @@ module MerbAdmin
           Integer => :integer,
           String => :string,
           Time => :time,
-          TrueClass => :boolean,
         }
         type[property.type] || type[property.primitive]
       end
