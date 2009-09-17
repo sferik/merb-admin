@@ -55,6 +55,7 @@ describe "MerbAdmin" do
   before(:each) do
     mount_slice
     Division.all.destroy!
+    Draft.all.destroy!
     League.all.destroy!
     Player.all.destroy!
     Team.all.destroy!
@@ -74,7 +75,7 @@ describe "MerbAdmin" do
     end
 
     it "should be ordered correctly" do
-      @response.body.should contain(/Division.*League.*Player.*Team/m)
+      @response.body.should contain(/Division.*Draft.*League.*Player.*Team/m)
     end
   end
 
