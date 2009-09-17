@@ -6,6 +6,7 @@ require 'merb-assets'
 require 'spec'
 
 # Required for fixtures
+require 'dm-core'
 require 'dm-sweatshop'
 require 'dm-types'
 require 'dm-aggregates'
