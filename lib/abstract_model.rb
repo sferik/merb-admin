@@ -36,7 +36,7 @@ module MerbAdmin
       begin
         model = const_get(model_name)
       rescue NameError
-        raise "could not find model #{model_name}"
+        raise "MerbAdmin could not find model #{model_name}"
       end
 
       case Merb.orm
