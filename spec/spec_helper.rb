@@ -43,14 +43,12 @@ module Merb
         case orm
         when :activerecord
           require 'activerecord'
-          require 'factory_girl'
           require_models(orm)
           require_fixtures(orm)
 
           ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => 'test.db')
         when :datamapper
           require 'dm-core'
-          require 'dm-sweatshop'
           require 'dm-types'
           require 'dm-aggregates'
           require 'dm-validations'
