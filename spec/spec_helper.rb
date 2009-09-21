@@ -46,7 +46,15 @@ module Merb
           require_models(orm)
           require_fixtures(orm)
 
-          ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => 'test.db')
+          unless ActiveRecord::Base.connected?
+            ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
+            ActiveRecord::Migration.verbose = false
+            ActiveRecord::Migrator.run(:up, "schema/migrations/", 1)
+            ActiveRecord::Migrator.run(:up, "schema/migrations/", 2)
+            ActiveRecord::Migrator.run(:up, "schema/migrations/", 3)
+            ActiveRecord::Migrator.run(:up, "schema/migrations/", 4)
+            ActiveRecord::Migrator.run(:up, "schema/migrations/", 5)
+          end
         when :datamapper
           require 'dm-core'
           require 'dm-types'
@@ -55,7 +63,10 @@ module Merb
           require_models(orm)
           require_fixtures(orm)
 
-          DataMapper.setup(:default, 'sqlite3::memory:') && DataMapper.auto_migrate!
+          unless DataMapper::Repository.adapters.key?(:default)
+            DataMapper.setup(:default, 'sqlite3::memory:')
+            DataMapper.auto_migrate!
+          end
         when :sequel
           require 'sequel'
         else
@@ -93,7 +104,7 @@ Spec::Runner.configure do |config|
   config.include(Merb::Test::RouteHelper)
   config.include(Merb::Test::ControllerHelper)
   config.include(Merb::Test::SliceHelper)
-  config.before(:all) do
+  config.before(:each) do
     setup_orm
   end
 end

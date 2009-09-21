@@ -10,7 +10,7 @@ module MerbAdmin
       @models ||= []
       case Merb.orm
       when :activerecord
-        Dir.glob(Merb.dir_for(:app) / "**" / "models" / Merb.glob_for(:model)).each do |filename|
+        Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
           # FIXME: This heuristic for finding ActiveRecord models is too strict
           File.read(filename).scan(/^class ([\w\d_\-:]+) < ActiveRecord::Base$/).flatten.each do |m|
             model = lookup(m.to_s.to_sym)
@@ -33,8 +33,11 @@ module MerbAdmin
 
     # Given a symbol +model_name+, finds the corresponding model class
     def self.lookup(model_name)
-      model = const_get(model_name)
-      raise "could not find model #{model_name}" if model.nil?
+      begin
+        model = const_get(model_name)
+      rescue NameError
+        raise "could not find model #{model_name}"
+      end
 
       case Merb.orm
       when :activerecord
@@ -48,7 +51,7 @@ module MerbAdmin
     attr_accessor :model
 
     def initialize(model)
-      model = self.class.lookup(model.to_s.camel_case.to_sym) unless model.is_a?(Class)
+      model = self.class.lookup(model.to_s.camel_case) unless model.is_a?(Class)
       @model = model
       self.extend(GenericSupport)
       case Merb.orm

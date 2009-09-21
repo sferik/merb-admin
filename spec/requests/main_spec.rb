@@ -73,10 +73,6 @@ describe "MerbAdmin" do
     it "should contain \"Site administration\"" do
       @response.body.should contain("Site administration")
     end
-
-    it "should be ordered correctly" do
-      @response.body.should contain(/Division.*Draft.*League.*Player.*Team/m)
-    end
   end
 
   describe "list" do
