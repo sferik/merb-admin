@@ -1,5 +1,5 @@
         <div id="content-main">
-        <%= form_for(@object, :action => slice_url(:admin_create, :model_name => @abstract_model.singular_name)) do %>
+        <%= form_for(@object, :action => url(:admin_create, :model_name => @abstract_model.singular_name)) do %>
           <div>
 <%= partial('properties', :properties => @properties) -%>
             <% @abstract_model.belongs_to_associations.each do |association| %>
