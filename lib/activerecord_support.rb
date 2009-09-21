@@ -1,12 +1,14 @@
 module MerbAdmin
   class AbstractModel
-    module DatamapperSupport
+    module ActiverecordSupport
       def count(options = {})
         model.count(options)
       end
 
       def get(id)
-        model.get(id).extend(InstanceMethods)
+        model.find(id).extend(InstanceMethods)
+      rescue
+        nil
       end
 
       def first(options = {})
@@ -18,7 +20,7 @@ module MerbAdmin
       end
 
       def all_in(ids, options = {})
-        options[:id] = ids
+        options[:conditions] = ["id IN (?)", ids]
         model.all(options)
       end
 
@@ -45,7 +47,9 @@ module MerbAdmin
       end
 
       def destroy_all!
-        model.all.destroy!
+        model.all.each do |object|
+          object.destroy
+        end
       end
 
       def has_many_associations
@@ -67,29 +71,29 @@ module MerbAdmin
       end
 
       def associations
-        model.relationships.to_a.map do |name, association|
+        model.reflect_on_all_associations.map do |association|
           {
-            :name => name,
-            :pretty_name => name.to_s.gsub('_', ' ').capitalize,
-            :type => association_type_lookup(association),
-            :parent_model => association.parent_model,
-            :parent_key => association.parent_key.map{|r| r.name},
-            :child_model => association.child_model,
-            :child_key => association.child_key.map{|r| r.name},
+            :name => association.name,
+            :pretty_name => association.name.to_s.gsub('_', ' ').capitalize,
+            :type => association.macro,
+            :parent_model => association_parent_model_lookup(association),
+            :parent_key => association_parent_key_lookup(association),
+            :child_model => association_child_model_lookup(association),
+            :child_key => association_child_key_lookup(association),
           }
         end
       end
 
       def properties
-        model.properties.map do |property|
+        model.columns.map do |property|
           {
-            :name => property.name,
-            :pretty_name => property.name.to_s.gsub('_', ' ').capitalize,
-            :type => type_lookup(property),
-            :length => property.length,
-            :nullable? => property.nullable?,
-            :serial? => property.serial?,
-            :key? => property.key?,
+            :name => property.name.to_sym,
+            :pretty_name => property.human_name,
+            :type => property.type,
+            :length => property.limit,
+            :nullable? => property.null,
+            :serial? => property.primary,
+            :key? => property.primary,
             :flag_map => property.type.respond_to?(:flag_map) ? property.type.flag_map : nil,
           }
         end
@@ -97,33 +101,41 @@ module MerbAdmin
 
       private
 
-      def association_type_lookup(association)
-        if self.model == association.parent_model
-          association.options[:max] > 1 ? :has_many : :has_one
-        elsif self.model == association.child_model
-          :belongs_to
+      def association_parent_model_lookup(association)
+        case association.macro
+        when :belongs_to
+          association.klass
+        when :has_one, :has_many
+          association.active_record
         else
           raise "Unknown association type"
         end
       end
 
-      def type_lookup(property)
-        type = {
-          BigDecimal => :big_decimal,
-          DataMapper::Types::Boolean => :boolean,
-          DataMapper::Types::ParanoidBoolean => :boolean,
-          DataMapper::Types::ParanoidDateTime => :timestamp,
-          DataMapper::Types::Serial => :integer,
-          DataMapper::Types::Text => :text,
-          Date => :date,
-          DateTime => :timestamp,
-          Fixnum => :integer,
-          Float => :float,
-          Integer => :integer,
-          String => :string,
-          Time => :time,
-        }
-        type[property.type] || type[property.primitive]
+      def association_parent_key_lookup(association)
+        [:id]
+      end
+
+      def association_child_model_lookup(association)
+        case association.macro
+        when :belongs_to
+          association.active_record
+        when :has_one, :has_many
+          association.klass
+        else
+          raise "Unknown association type"
+        end
+      end
+
+      def association_child_key_lookup(association)
+        case association.macro
+        when :belongs_to
+          ["#{association.class_name.snake_case}_id".to_sym]
+        when :has_one, :has_many
+          [association.primary_key_name.to_sym]
+        else
+          raise "Unknown association type"
+        end
       end
 
       module InstanceMethods

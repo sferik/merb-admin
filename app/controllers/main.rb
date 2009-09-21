@@ -1,5 +1,4 @@
 require File.join( File.dirname(__FILE__), '..', '..', 'lib', 'abstract_model' )
-require File.join( File.dirname(__FILE__), '..', '..', 'lib', 'metaid' )
 
 class MerbAdmin::Main < MerbAdmin::Application
   include Merb::MerbAdmin::MainHelper
@@ -14,15 +13,12 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
-    merge_filter(options) 
-    merge_query(options)
-    merge_sort(options)
 
     if params[:all]
       options = {
         :limit => MerbAdmin[:per_page] * 2,
       }.merge(options)
-      @objects = @abstract_model.find_all(options).reverse
+      @objects = @abstract_model.all(options).reverse
     else
       @current_page = (params[:page] || 1).to_i
       options = {
@@ -60,14 +56,14 @@ class MerbAdmin::Main < MerbAdmin::Application
     @object = @abstract_model.new(object)
     if @object.save && has_one_associations.each{|association, id| update_has_one_association(association, id)} && has_many_associations.each{|association, ids| update_has_many_association(association, ids)}
       if params[:_continue]
-        redirect(slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully created"})
+        redirect(slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
       elsif params[:_add_another]
-        redirect(slice_url(:admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully created"})
+        redirect(slice_url(:admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
       else
-        redirect(slice_url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully created"})
+        redirect(slice_url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
       end
     else
-      message[:error] = "#{@abstract_model.pretty_name.capitalize} failed to be created"
+      message[:error] = "#{@abstract_model.pretty_name} failed to be created"
       render(:new, :layout => 'form')
     end
   end
@@ -82,14 +78,14 @@ class MerbAdmin::Main < MerbAdmin::Application
     has_many_associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
     if @object.update_attributes(object) && has_one_associations.each{|association, id| update_has_one_association(association, id)} && has_many_associations.each{|association, ids| update_has_many_association(association, ids)} 
       if params[:_continue]
-        redirect(slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully updated"})
+        redirect(slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       elsif params[:_add_another]
-        redirect(slice_url(:admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully updated"})
+        redirect(slice_url(:admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       else
-        redirect(slice_url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully updated"})
+        redirect(slice_url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       end
     else
-      message[:error] = "#{@abstract_model.pretty_name.capitalize} failed to be updated"
+      message[:error] = "#{@abstract_model.pretty_name} failed to be updated"
       render(:edit, :layout => 'form')
     end
   end
@@ -100,7 +96,7 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def destroy
     if @object.destroy
-      redirect(slice_url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name.capitalize} was successfully destroyed"})
+      redirect(slice_url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully destroyed"})
     else
       raise BadRequest
     end
@@ -123,46 +119,13 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def find_object
-    @object = @abstract_model.find(params[:id])
+    @object = @abstract_model.get(params[:id])
     raise NotFound unless @object
-  end
-
-  def merge_filter(options)
-    return unless params[:filter]
-    params[:filter].each_pair do |key, value|
-      @properties.each do |property|
-        next unless property[:name] == key.to_sym
-        if property[:type] == :boolean
-          options.merge!(key.to_sym => (value == 'true'))
-        elsif property[:type] == :integer && property[:flag_map]
-          options.merge!(key.to_sym => value.to_sym)
-        end
-      end
-    end
-  end
-
-  def merge_query(options)
-    return unless params[:query]
-    condition_statement = []
-    conditions = []
-    @properties.each do |property|
-      next unless property[:type] == :string
-      condition_statement << "#{property[:name]} LIKE ?"
-      conditions << "%#{params[:query]}%"
-    end
-    conditions.unshift(condition_statement.join(' OR '))
-    options.merge!(:conditions => conditions) unless conditions == ['']
-  end
-
-  def merge_sort(options)
-    sort = params[:sort] || "id"
-    order = params[:sort_reverse] == "true" ? :desc : :asc
-    options.merge!(:order => [sort.to_sym.send(order)])
   end
 
   def update_has_one_association(association, id)
     model = MerbAdmin::AbstractModel.new(association[:child_model])
-    if object = model.find(id)
+    if object = model.get(id)
       object.update_attributes(association[:child_key].first => @object.id)
     end
   end
@@ -172,9 +135,8 @@ class MerbAdmin::Main < MerbAdmin::Application
     relationship = @object.send(association[:name])
     @object.clear_association(relationship)
     # Add all of the objects to the relationship
-    conditions = {association[:parent_key].first => ids}
     model = MerbAdmin::AbstractModel.new(association[:child_model])
-    for object in model.find_all(conditions)
+    for object in model.all_in(ids)
       relationship << object
     end
     @object.save

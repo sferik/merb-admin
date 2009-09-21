@@ -1,9 +1,9 @@
 <%
   child_key = association[:child_key].first
   name = association[:name]
-  collection = MerbAdmin::AbstractModel.new(association[:child_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
-  selected = MerbAdmin::AbstractModel.new(association[:child_model]).find_all(child_key => @object.id).first
-  label = association[:pretty_name].capitalize
+  collection = MerbAdmin::AbstractModel.new(association[:child_model]).all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
+  selected = MerbAdmin::AbstractModel.new(association[:child_model]).get(@object.id)
+  label = association[:pretty_name]
   required = false
   @properties.each do |property|
     next unless property[:name] == child_key

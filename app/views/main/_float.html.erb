@@ -1,7 +1,7 @@
 <%
   name = property[:name]
   length = property[:length]
-  label = property[:pretty_name].capitalize
+  label = property[:pretty_name]
   required = !property[:nullable?] || property[:serial?]
 %>
                 <div>

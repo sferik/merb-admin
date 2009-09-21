@@ -5,21 +5,6 @@ require 'merb-helpers'
 require 'merb-assets'
 require 'spec'
 
-# Required for fixtures
-require 'dm-core'
-require 'dm-sweatshop'
-require 'dm-types'
-require 'dm-aggregates'
-require 'dm-validations'
-
-Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb').to_s].each do |model_file|
-  require model_file
-end
-
-Dir[File.join(File.dirname(__FILE__), 'fixtures', '**', '*_fixture.rb').to_s].each do |fixture_file|
-  require fixture_file
-end
-
 # Add merb-admin.rb to the search path
 Merb::Plugins.config[:merb_slices][:auto_register] = true
 Merb::Plugins.config[:merb_slices][:search_path]   = File.join(File.dirname(__FILE__), '..', 'lib', 'merb-admin.rb')
@@ -31,29 +16,76 @@ require Merb::Plugins.config[:merb_slices][:search_path]
 # - testing standalone, without being installed as a gem and no host application
 # - testing from within the host application; its root will be used
 Merb.start_environment(
-  :testing => true, 
-  :adapter => 'runner', 
+  :testing => true,
+  :adapter => 'runner',
   :environment => ENV['MERB_ENV'] || 'test',
   :merb_root => Merb.root,
   :session_store => 'memory'
 )
 
-DataMapper.setup(:default, 'sqlite3::memory:') && DataMapper.auto_migrate!
-
 module Merb
   module Test
     module SliceHelper
-      
+
       # The absolute path to the current slice
       def current_slice_root
         @current_slice_root ||= File.expand_path(File.join(File.dirname(__FILE__), '..'))
       end
-      
+
       # Whether the specs are being run from a host application or standalone
       def standalone?
         Merb.root == ::MerbAdmin.root
       end
-      
+
+      def setup_orm(orm = nil)
+        orm = set_orm(orm)
+        orm = orm.to_s.downcase.to_sym
+        case orm
+        when :activerecord
+          require 'activerecord'
+          require 'factory_girl'
+          require_models(orm)
+          require_fixtures(orm)
+
+          ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => 'test.db')
+        when :datamapper
+          require 'dm-core'
+          require 'dm-sweatshop'
+          require 'dm-types'
+          require 'dm-aggregates'
+          require 'dm-validations'
+          require_models(orm)
+          require_fixtures(orm)
+
+          DataMapper.setup(:default, 'sqlite3::memory:') && DataMapper.auto_migrate!
+        when :sequel
+          require 'sequel'
+        else
+          raise "MerbAdmin does not support the #{orm} ORM"
+        end
+        Merb.orm = orm
+      end
+
+      private
+
+      def require_models(orm = nil)
+        orm ||= set_orm
+        Dir.glob(File.dirname(__FILE__) / "models" / orm.to_s.downcase / Merb.glob_for(:model)).each do |model_filename|
+          require model_filename
+        end
+      end
+
+      def require_fixtures(orm = nil)
+        orm ||= set_orm
+        Dir.glob(File.dirname(__FILE__) / "fixtures" / orm.to_s.downcase / "**" / "*_fixture.rb").each do |fixture_filename|
+          require fixture_filename
+        end
+      end
+
+      def set_orm(orm = nil)
+        orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :datamapper
+      end
+
     end
   end
 end
@@ -63,6 +95,9 @@ Spec::Runner.configure do |config|
   config.include(Merb::Test::RouteHelper)
   config.include(Merb::Test::ControllerHelper)
   config.include(Merb::Test::SliceHelper)
+  config.before(:all) do
+    setup_orm
+  end
 end
 
 # You can add your own helpers here

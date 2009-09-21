@@ -10,7 +10,7 @@ module MerbAdmin
       end
 
       def pretty_name
-        model.to_s.snake_case.gsub('_', ' ')
+        model.to_s.snake_case.gsub('_', ' ').capitalize
       end
     end
   end

@@ -6,8 +6,8 @@ class Player
   property :updated_at, DateTime
   property :deleted_at, ParanoidDateTime
   property :team_id, Integer, :nullable => false, :index => true
-  property :number, Integer, :nullable => false
   property :name, String, :length => 100, :nullable => false
+  property :number, Integer, :nullable => false
   property :position, Enum[:pitcher, :catcher, :first, :second, :third, :shortstop, :left, :center, :right]
   property :sex, Enum[:male, :female]
   property :batting_average, Float, :default => 0.0, :precision => 4, :scale => 3

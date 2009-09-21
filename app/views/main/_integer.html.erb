@@ -1,7 +1,7 @@
 <%
   flag_map = property[:flag_map]
   name = property[:name]
-  label = property[:pretty_name].capitalize
+  label = property[:pretty_name]
   required = !property[:nullable?] || property[:serial?]
 %>
                 <div>

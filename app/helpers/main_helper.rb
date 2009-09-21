@@ -3,7 +3,13 @@ module Merb
   module MerbAdmin
     module MainHelper
       def object_title(object)
-        object.try(:name) || object.try(:title) || "#{object.class.to_s} ##{object.id}"
+        if object.respond_to?(:name)
+          object.name
+        elsif object.respond_to?(:title)
+          object.title
+        else
+          "#{object.class.to_s} ##{object.id}"
+        end
       end
 
       # Given a page count and the current page, we generate a set of pagination

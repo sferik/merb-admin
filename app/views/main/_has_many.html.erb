@@ -1,8 +1,8 @@
 <% 
   name = association[:name]
-  collection = MerbAdmin::AbstractModel.new(association[:child_model]).find_all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
+  collection = MerbAdmin::AbstractModel.new(association[:child_model]).all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
   selected = @object.send(name)
-  label = association[:pretty_name].capitalize
+  label = association[:pretty_name]
 %>
             <fieldset class="module aligned">
               <h2><%= label %></h2>

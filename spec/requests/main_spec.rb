@@ -1,52 +1,52 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 given "a player exists" do
-  @player = Player.gen
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1", :sex => :male, :position => :pitcher)
 end
 
 given "a draft exists" do
-  @draft = Draft.gen
+  @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => rand(99999), :team_id => rand(99999), :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
 end
 
 given "two players exist" do
   @players = []
-  2.times do
-    @players << Player.gen
+  2.times do |i|
+    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player #{i}", :sex => :male, :position => :pitcher)
   end
 end
 
 given "three teams exist" do
   @teams = []
-  3.times do
-    @teams << Team.gen
+  3.times do |i|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i}")
   end
 end
 
 given "a player exists and a draft exists" do
-  @player = Player.gen
-  @draft = Draft.gen
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1", :sex => :male, :position => :pitcher)
+  @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => rand(99999), :team_id => rand(99999), :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
 end
 
 given "a player exists and three teams exist" do
-  @player = Player.gen
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1", :sex => :male, :position => :pitcher)
   @teams = []
-  3.times do
-    @teams << Team.gen
+  3.times do |i|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i}")
   end
 end
 
 given "a league exists and three teams exist" do
-  @league = League.gen
+  @league = League.create(:name => "League 1")
   @teams = []
-  3.times do
-    @teams << Team.gen
+  3.times do |i|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i}")
   end
 end
 
 given "twenty players exist" do
   @players = []
-  20.times do
-    @players << Player.gen
+  20.times do |i|
+    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player #{i}", :sex => :male, :position => :pitcher)
   end
 end
 
@@ -54,11 +54,11 @@ describe "MerbAdmin" do
 
   before(:each) do
     mount_slice
-    Division.all.destroy!
-    Draft.all.destroy!
-    League.all.destroy!
-    Player.all.destroy!
-    Team.all.destroy!
+    MerbAdmin::AbstractModel.new("Division").destroy_all!
+    MerbAdmin::AbstractModel.new("Draft").destroy_all!
+    MerbAdmin::AbstractModel.new("League").destroy_all!
+    MerbAdmin::AbstractModel.new("Player").destroy_all!
+    MerbAdmin::AbstractModel.new("Team").destroy_all!
   end
 
   describe "dashboard" do
@@ -90,98 +90,6 @@ describe "MerbAdmin" do
 
     it "should contain \"Select model to edit\"" do
       @response.body.should contain("Select player to edit")
-    end
-  end
-
-  describe "list with query" do
-    before(:each) do
-      Player.gen(:name => "Jackie Robinson")
-      Player.gen(:name => "Sandy Koufax")
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:query => "Jackie Robinson"})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should contain a correct result" do
-      @response.body.should contain("Jackie Robinson")
-    end
-
-    it "should not contain an incorrect result" do
-      @response.body.should_not contain("Sandy Koufax")
-    end
-  end
-
-  describe "list with sort" do
-    before(:each) do
-      Player.gen(:name => "Jackie Robinson")
-      Player.gen(:name => "Sandy Koufax")
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => :name})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should be ordered correctly" do
-      @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
-    end
-  end
-
-  describe "list with reverse sort" do
-    before(:each) do
-      Player.gen(:name => "Jackie Robinson")
-      Player.gen(:name => "Sandy Koufax")
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => :name, :sort_reverse => true})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should be ordered correctly" do
-      @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
-    end
-  end
-
-  describe "list with boolean filter" do
-    before(:each) do
-      Player.gen(:name => "Moises Alou", :injured => true)
-      Player.gen(:name => "David Wright", :injured => false)
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:injured => true}})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should contain a correct result" do
-      @response.body.should contain("Moises Alou")
-    end
-
-    it "should not contain an incorrect result" do
-      @response.body.should_not contain("David Wright")
-    end
-  end
-
-  describe "list with enum filter" do
-    before(:each) do
-      Player.gen(:name => "Jackie Robinson", :sex => :male)
-      Player.gen(:name => "Dottie Hinson", :sex => :female)
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:sex => :male}})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should contain a correct result" do
-      @response.body.should contain("Jackie Robinson")
-    end
-
-    it "should not contain an incorrect result" do
-      @response.body.should_not contain("Dottie Hinson")
     end
   end
 
@@ -350,7 +258,7 @@ describe "MerbAdmin" do
     end
 
     it "should create a new object" do
-      Player.first.should_not be_nil
+      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
     end
   end
 
@@ -360,11 +268,11 @@ describe "MerbAdmin" do
     end
 
     it "should redirect to edit" do
-      @response.should redirect_to(url(:admin_edit, :model_name => "player", :id => Player.first.id))
+      @response.should redirect_to(url(:admin_edit, :model_name => "player", :id => MerbAdmin::AbstractModel.new("Player").first.id))
     end
 
     it "should create a new object" do
-      Player.first.should_not be_nil
+      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
     end
   end
 
@@ -378,7 +286,7 @@ describe "MerbAdmin" do
     end
 
     it "should create a new object" do
-      Player.first.should_not be_nil
+      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
     end
   end
 
@@ -388,11 +296,11 @@ describe "MerbAdmin" do
     end
 
     it "should create a new object" do
-      Player.first.should_not be_nil
+      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
     end
 
     it "should be associated with the correct object" do
-      Player.first.draft.should == @draft
+      MerbAdmin::AbstractModel.new("Player").first.draft.should == @draft
     end
   end
 
@@ -402,16 +310,16 @@ describe "MerbAdmin" do
     end
 
     it "should create a new object" do
-      League.first.should_not be_nil
+      MerbAdmin::AbstractModel.new("League").first.should_not be_nil
     end
 
     it "should be associated with the correct objects" do
-      League.first.teams.should include(@teams[0])
-      League.first.teams.should include(@teams[1])
+      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[0])
+      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
     end
 
     it "should be not associated with an incorrect object" do
-      League.first.teams.should_not include(@teams[2])
+      MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[2])
     end
   end
 
@@ -435,7 +343,7 @@ describe "MerbAdmin" do
     end
 
     it "should update an object that already exists" do
-      Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
     end
   end
 
@@ -449,7 +357,7 @@ describe "MerbAdmin" do
     end
 
     it "should update an object that already exists" do
-      Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
     end
   end
 
@@ -463,7 +371,7 @@ describe "MerbAdmin" do
     end
 
     it "should update an object that already exists" do
-      Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
     end
   end
 
@@ -473,11 +381,11 @@ describe "MerbAdmin" do
     end
 
     it "should update an object that already exists" do
-      Player.first(:id => @player.id).name.should eql("Jackie Robinson")
+      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
     end
 
     it "should be associated with the correct object" do
-      Player.first.draft.should == @draft
+      MerbAdmin::AbstractModel.new("Player").first.draft.should == @draft
     end
   end
 
@@ -487,16 +395,16 @@ describe "MerbAdmin" do
     end
 
     it "should update an object that already exists" do
-      League.first(:id => @league.id).name.should eql("National League")
+      MerbAdmin::AbstractModel.new("League").first.name.should eql("National League")
     end
 
     it "should be associated with the correct objects" do
-      League.first.teams.should include(@teams[0])
-      League.first.teams.should include(@teams[1])
+      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[0])
+      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
     end
 
     it "should not be associated with an incorrect object" do
-      League.first.teams.should_not include(@teams[2])
+      MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[2])
     end
   end
 
@@ -554,7 +462,7 @@ describe "MerbAdmin" do
     end
 
     it "should destroy an object" do
-      Player.first(:id => @player.id).should be_nil
+      MerbAdmin::AbstractModel.new("Player").first.should be_nil
     end
   end
 

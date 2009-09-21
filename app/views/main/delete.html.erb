@@ -1,4 +1,4 @@
-        <p>Are you sure you want to delete the <%= @abstract_model.pretty_name %>? All of the following related items will be deleted:</p>
+        <p>Are you sure you want to delete the <%= @abstract_model.pretty_name.downcase %>? All of the following related items will be deleted:</p>
         <ul>
           <li>
             <%= link_to(@model_name, slice_url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id))%>
