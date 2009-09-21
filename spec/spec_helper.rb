@@ -44,7 +44,6 @@ module Merb
         when :activerecord
           require 'activerecord'
           require_models(orm)
-          require_fixtures(orm)
 
           unless ActiveRecord::Base.connected?
             ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
@@ -61,7 +60,6 @@ module Merb
           require 'dm-aggregates'
           require 'dm-validations'
           require_models(orm)
-          require_fixtures(orm)
 
           unless DataMapper::Repository.adapters.key?(:default)
             DataMapper.setup(:default, 'sqlite3::memory:')
@@ -81,13 +79,6 @@ module Merb
         orm ||= set_orm
         Dir.glob(File.dirname(__FILE__) / "models" / orm.to_s.downcase / Merb.glob_for(:model)).each do |model_filename|
           require model_filename
-        end
-      end
-
-      def require_fixtures(orm = nil)
-        orm ||= set_orm
-        Dir.glob(File.dirname(__FILE__) / "fixtures" / orm.to_s.downcase / "**" / "*_fixture.rb").each do |fixture_filename|
-          require fixture_filename
         end
       end
 
