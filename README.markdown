@@ -18,7 +18,7 @@ In your app, add the following dependency to `config/dependencies.rb`:
 
 Add the following route to `config/router.rb`:
 
-    slice(:MerbAdmin, :name_prefix => nil, :path_prefix => "", :default_routes => false)
+    add_slice(:merb_admin, :name_prefix => nil, :path_prefix => "admin", :default_routes => false)
 
 Then, run the following rake task:
 
