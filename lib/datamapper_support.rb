@@ -92,7 +92,6 @@ module MerbAdmin
             :length => property.length,
             :nullable? => property.nullable?,
             :serial? => property.serial?,
-            :flag_map => property.type.respond_to?(:flag_map) ? property.type.flag_map : nil,
           }
         end
       end

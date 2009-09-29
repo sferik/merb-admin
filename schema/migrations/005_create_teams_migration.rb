@@ -5,7 +5,6 @@ class CreateTeamsMigration < ActiveRecord::Migration
       t.integer :league_id
       t.integer :division_id
       t.string :name, :limit => 50, :null => false
-      t.integer :colors
     end
     add_index :teams, :division_id
     add_index :teams, :league_id

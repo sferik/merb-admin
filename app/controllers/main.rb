@@ -14,6 +14,7 @@ class MerbAdmin::Main < MerbAdmin::Application
   def list
     options = {}
     merge_query!(options)
+    merge_filter!(options)
     merge_sort!(options)
     merge_sort_reverse!(options)
 
@@ -128,15 +129,36 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def merge_query!(options)
     return unless params[:query]
-    condition_statement = []
-    conditions = []
+    statements = []
+    values = []
+    conditions = options[:conditions] || [""]
     @properties.each do |property|
       next unless property[:type] == :string
-      condition_statement << "#{property[:name]} LIKE ?"
-      conditions << "%#{params[:query]}%"
+      statements << "#{property[:name]} LIKE ?"
+      values << "%#{params[:query]}%"
     end
-    conditions.unshift(condition_statement.join(' OR '))
-    options.merge!(:conditions => conditions) unless conditions == ['']
+    conditions[0] += statements.join(" OR ")
+    conditions += values
+    options.merge!(:conditions => conditions) unless conditions == [""]
+  end
+
+  def merge_filter!(options)
+    return unless params[:filter]
+    statements = []
+    values = []
+    conditions = options[:conditions] || [""]
+    params[:filter].each_pair do |key, value|
+      @properties.each do |property|
+        next unless property[:name] == key.to_sym
+        next unless property[:type] == :boolean
+        statements << "#{key} = ?"
+        values << (value == "true")
+      end
+    end
+    conditions[0] += statements.join(" AND ")
+    conditions += values
+    options.merge!(:conditions => conditions) unless conditions == [""]
+    puts options.inspect
   end
 
   def merge_sort!(options)

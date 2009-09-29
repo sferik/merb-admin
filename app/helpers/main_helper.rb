@@ -22,7 +22,7 @@ module Merb
           if object.send(property_name) == true
             Builder::XmlMarkup.new.img(:src => image_path("icon-yes.gif"), :alt => "True")
           else
-            Builder::XmlMarkup.new.img(:src => image_path("icon-on.gif"), :alt => "False")
+            Builder::XmlMarkup.new.img(:src => image_path("icon-no.gif"), :alt => "False")
           end
         when :date_time
           value = object.send(property_name)

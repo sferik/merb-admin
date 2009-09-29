@@ -1,6 +1,7 @@
 <%
   params = request.params.except(:action, :controller, :model_name)
   query = params[:query]
+  filter = params[:filter]
   sort = params[:sort]
   sort_reverse = params[:sort_reverse]
 %>
@@ -10,20 +11,47 @@
               <%= link_to("Add #{@abstract_model.pretty_name.downcase}", url(:admin_new, :model_name => @abstract_model.singular_name), :class => "addlink") %>
             </li>
           </ul>
-          <div class="module" id="changelist">
+          <div class="module filtered" id="changelist">
             <div id="toolbar">
               <form id="changelist-search" action="" method="get">
               <div>
                 <label for="searchbar"><img src="<%= image_path("icon_searchbox.png") %>" alt="Search" /></label>
                 <input type="text" size="40" name="query" value="" id="searchbar" />
                 <input type="submit" value="Search" />
-                <% if query %>
+                <% if query || filter %>
                 <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<a href="?"><%= @abstract_model.count %> total</a>)</span>
+                <% end %>
+                <% if filter %>
+                <% filter.each do |name, value| %>
+                <input type="hidden" name="filter[<%= name %>]" value="<%= value %>"/>
+                <% end %>
                 <% end %>
               </div>
               </form>
             </div>
             <script type="text/javascript">document.getElementById("searchbar").focus();</script>
+            <div id="changelist-filter">
+              <h2>Filter</h2>
+              <% @properties.each do |property| %>
+              <% property_type = property[:type] %>
+              <% property_name = property[:name] %>
+              <% property_pretty_name = property[:pretty_name] %>
+              <% if property_type == :boolean %>
+              <h3>By <%= property_pretty_name %></h3>
+              <ul>
+                <li class="<%= filter.nil? || filter[property_name].blank? ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).reject{|key, value| key.to_sym == property_name})) %>">All</a>
+                </li>
+                <li class="<%= filter && filter[property_name] == "true" ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({property_name => "true"}))) %>">Yes</a>
+                </li>
+                <li class="<%= filter && filter[property_name] == "false" ? "selected" : nil %>">
+                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({property_name => "false"}))) %>">No</a>
+                </li>
+              </ul>
+              <% end %>
+              <% end %>
+            </div>
             <table cellspacing="0">
               <thead>
                 <tr>

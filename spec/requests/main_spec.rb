@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 given "a player exists" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1", :sex => :male, :position => :pitcher)
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1")
 end
 
 given "a draft exists" do
@@ -11,7 +11,7 @@ end
 given "two players exist" do
   @players = []
   2.times do |i|
-    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player #{i}", :sex => :male, :position => :pitcher)
+    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player #{i}")
   end
 end
 
@@ -23,12 +23,12 @@ given "three teams exist" do
 end
 
 given "a player exists and a draft exists" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1", :sex => :male, :position => :pitcher)
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1")
   @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => rand(99999), :team_id => rand(99999), :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
 end
 
 given "a player exists and three teams exist" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1", :sex => :male, :position => :pitcher)
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player 1")
   @teams = []
   3.times do |i|
     @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i}")
@@ -46,7 +46,7 @@ end
 given "twenty players exist" do
   @players = []
   20.times do |i|
-    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player #{i}", :sex => :male, :position => :pitcher)
+    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => rand(99), :name => "Player #{i}")
   end
 end
 
@@ -91,8 +91,8 @@ describe "MerbAdmin" do
 
   describe "list with query" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
       @response = request(url(:admin_list, :model_name => "player"), :params => {:query => "Jackie Robinson"})
     end
 
@@ -111,8 +111,8 @@ describe "MerbAdmin" do
 
   describe "list with sort" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
       @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name"})
     end
 
@@ -127,8 +127,8 @@ describe "MerbAdmin" do
 
   describe "list with reverse sort" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
       @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name", :sort_reverse => "true"})
     end
 
@@ -138,6 +138,26 @@ describe "MerbAdmin" do
 
     it "should be sorted correctly" do
       @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
+    end
+  end
+
+  describe "list with boolean filter" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "left", :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "third", :injured => false)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:injured => true}})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain a correct result" do
+      @response.body.should contain("Moises Alou")
+    end
+
+    it "should not contain an incorrect result" do
+      @response.body.should_not contain("David Wright")
     end
   end
 
@@ -298,7 +318,7 @@ describe "MerbAdmin" do
 
   describe "create" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}})
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "second"}})
     end
 
     it "should redirect to list" do
@@ -312,7 +332,7 @@ describe "MerbAdmin" do
 
   describe "create and edit" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :_continue => true})
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "second"}, :_continue => true})
     end
 
     it "should redirect to edit" do
@@ -326,7 +346,7 @@ describe "MerbAdmin" do
 
   describe "create and add another" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :_add_another => true})
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "second"}, :_add_another => true})
     end
 
     it "should redirect to new" do
@@ -340,7 +360,7 @@ describe "MerbAdmin" do
 
   describe "create with has-one association", :given => "a draft exists" do
     before(:each) do
-      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @draft.id}})
+      @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "second"}, :associations => {:draft => @draft.id}})
     end
 
     it "should create a new object" do
@@ -383,7 +403,7 @@ describe "MerbAdmin" do
 
   describe "update", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}})
     end
 
     it "should redirect to list" do
@@ -397,7 +417,7 @@ describe "MerbAdmin" do
 
   describe "update and edit", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_continue => true})
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}, :_continue => true})
     end
 
     it "should redirect to edit" do
@@ -411,7 +431,7 @@ describe "MerbAdmin" do
 
   describe "update and add another", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}, :_add_another => true})
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}, :_add_another => true})
     end
 
     it "should redirect to new" do
@@ -425,7 +445,7 @@ describe "MerbAdmin" do
 
   describe "update with has-one association", :given => "a player exists and a draft exists" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => :second, :sex => :male}, :associations => {:draft => @draft.id}})
+      @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "second"}, :associations => {:draft => @draft.id}})
     end
 
     it "should update an object that already exists" do
@@ -458,7 +478,7 @@ describe "MerbAdmin" do
 
   describe "update with missing object" do
     before(:each) do
-      @response = request(url(:admin_update, :model_name => "player", :id => 1), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :sex => :male}})
+      @response = request(url(:admin_update, :model_name => "player", :id => 1), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}})
     end
 
     it "should raise NotFound" do

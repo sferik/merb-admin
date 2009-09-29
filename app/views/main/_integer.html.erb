@@ -1,18 +1,12 @@
 <%
-  flag_map = property[:flag_map]
   property_name = property[:name]
+  length = property[:length]
   label = property[:pretty_name]
   required = !property[:nullable?] || property[:serial?]
 %>
                 <div>
-                  <% if flag_map # Enum or Flag type %>
-                  <% collection = flag_map.map{|x| [x[1], x[1].to_s.capitalize.gsub('_', ' ')]}.sort{|a, b| a[1] <=> b[1]} %>
-                  <%= select(property_name, :collection => collection, :label => label) %>
-                  <% else %>
-                    <% length = property[:length] %>
                   <%= text_field(property_name, :maxlength => length, :label => label) %>
                   <p class="help">
                     <%= required ? "Required." : "Optional." %>
                   </p>
-                  <% end %>
                 </div>
