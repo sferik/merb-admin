@@ -1,21 +1,24 @@
 module MerbAdmin
   class AbstractModel
     module ActiverecordSupport
-      def count(options = {})
-        model.count(options)
-      end
-
       def get(id)
         model.find(id).extend(InstanceMethods)
       rescue ActiveRecord::RecordNotFound
         nil
       end
 
+      def count(options = {})
+        merge_order!(options)
+        model.count(options)
+      end
+
       def first(options = {})
+        merge_order!(options)
         model.first(options).extend(InstanceMethods)
       end
 
       def all(options = {})
+        merge_order!(options)
         model.all(options)
       end
 
@@ -99,6 +102,12 @@ module MerbAdmin
       end
 
       private
+
+      def merge_order!(options)
+        @sort ||= options.delete(:sort) || "id"
+        @reverse ||= options.delete(:reverse) ? "desc" : "asc"
+        options.merge!(:order => ["#{@sort} #{@reverse}"])
+      end
 
       def association_parent_model_lookup(association)
         case association.macro

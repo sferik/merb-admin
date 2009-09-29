@@ -1,19 +1,22 @@
 module MerbAdmin
   class AbstractModel
     module DatamapperSupport
-      def count(options = {})
-        model.count(options)
-      end
-
       def get(id)
         model.get(id).extend(InstanceMethods)
       end
 
+      def count(options = {})
+        merge_order!(options)
+        model.count(options)
+      end
+
       def first(options = {})
+        merge_order!(options)
         model.first(options).extend(InstanceMethods)
       end
 
       def all(options = {})
+        merge_order!(options)
         model.all(options)
       end
 
@@ -95,6 +98,12 @@ module MerbAdmin
       end
 
       private
+
+      def merge_order!(options)
+        @sort ||= options.delete(:sort) || :id
+        @reverse ||= options.delete(:reverse) ? :desc : :asc
+        options.merge!(:order => [@sort.to_sym.send(@reverse)])
+      end
 
       def association_type_lookup(association)
         if self.model == association.parent_model

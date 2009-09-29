@@ -89,6 +89,38 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "list with sort" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name"})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should be sorted correctly" do
+      @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
+    end
+  end
+
+  describe "list with reverse sort" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name", :reverse => "true"})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should be sorted correctly" do
+      @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
+    end
+  end
+
   describe "list with 2 objects", :given => "two players exist" do
     before(:each) do
       MerbAdmin[:paginate] = true

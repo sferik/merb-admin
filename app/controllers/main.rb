@@ -13,6 +13,8 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
+    merge_sort!(options) if params[:sort]
+    merge_reverse!(options) if params[:reverse]
 
     if params[:all]
       options = {
@@ -121,6 +123,16 @@ class MerbAdmin::Main < MerbAdmin::Application
   def find_object
     @object = @abstract_model.get(params[:id])
     raise NotFound unless @object
+  end
+
+  def merge_sort!(options)
+    sort = params[:sort] || "id"
+    options.merge!(:sort => sort)
+  end
+
+  def merge_reverse!(options)
+    reverse = params[:reverse] == "true"
+    options.merge!(:reverse => reverse)
   end
 
   def update_has_one_association(association, id)
