@@ -13,6 +13,7 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
+    merge_query!(options)
     merge_sort!(options)
     merge_sort_reverse!(options)
 
@@ -123,6 +124,19 @@ class MerbAdmin::Main < MerbAdmin::Application
   def find_object
     @object = @abstract_model.get(params[:id])
     raise NotFound unless @object
+  end
+
+  def merge_query!(options)
+    return unless params[:query]
+    condition_statement = []
+    conditions = []
+    @properties.each do |property|
+      next unless property[:type] == :string
+      condition_statement << "#{property[:name]} LIKE ?"
+      conditions << "%#{params[:query]}%"
+    end
+    conditions.unshift(condition_statement.join(' OR '))
+    options.merge!(:conditions => conditions) unless conditions == ['']
   end
 
   def merge_sort!(options)

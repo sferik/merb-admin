@@ -89,6 +89,26 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "list with query" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:query => "Jackie Robinson"})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain a correct result" do
+      @response.body.should contain("Jackie Robinson")
+    end
+
+    it "should not contain an incorrect result" do
+      @response.body.should_not contain("Sandy Koufax")
+    end
+  end
+
   describe "list with sort" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
