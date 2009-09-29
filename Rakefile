@@ -9,7 +9,7 @@ AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
 HOMEPAGE = "http://twitter.com/sferik"
 SUMMARY = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
-GEM_VERSION = "0.4.4"
+GEM_VERSION = "0.4.5"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = "merb"
