@@ -1,11 +1,11 @@
 <%
-  name = property[:name]
+  property_name = property[:name]
   length = property[:length]
   label = property[:pretty_name]
   required = !property[:nullable?]
 %>
                 <div>
-                  <%= text_field(name, :size => [50, length].min, :maxlength => length, :label => label) %>
+                  <%= text_field(property_name, :size => [50, length].min, :maxlength => length, :label => label) %>
                   <p class="help">
                     <%= required ? "Required." : "Optional." %> <%= length %> <%= length == 1 ? "character." : "characters or fewer." %>
                   </p>

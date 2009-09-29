@@ -1,8 +1,8 @@
 <%
   child_key = association[:child_key].first
-  name = association[:name]
+  association_name = association[:name]
   collection = MerbAdmin::AbstractModel.new(association[:child_model]).all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
-  selected = @object.send(association[:name])
+  selected = @object.send(association_name)
   label = association[:pretty_name]
   required = false
   @properties.each do |property|
@@ -21,7 +21,7 @@
                 </ul>
                 <% end %>
                 <div>
-                  <%= select(:name => "associations[#{name}][]", :id => name, :collection => collection, :include_blank => true, :selected => selected ? selected.id.to_s : nil, :label => label) %>
+                  <%= select(:name => "associations[#{association_name}][]", :id => association_name, :collection => collection, :include_blank => true, :selected => selected ? selected.id.to_s : nil, :label => label) %>
                   <p class="help">
                     <%= required ? "Required." : "Optional." %>
                   </p>

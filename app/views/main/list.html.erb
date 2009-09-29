@@ -12,10 +12,9 @@
               <thead>
                 <tr>
                   <% @properties.each do |property| %>
-                  <% name = property[:name] %>
-                  <% pretty_name = property[:pretty_name] %>
+                  <% property_pretty_name = property[:pretty_name] %>
                   <th>
-                    <%= pretty_name %>
+                    <%= property_pretty_name %>
                   </th>
                   <% end %>
                 </tr>
@@ -24,33 +23,9 @@
                 <% @objects.each_with_index do |object, index| %>
                 <tr class="row<%= index % 2 == 0 ? '1' : '2' %>">
                   <% @properties.each do |property| %>
-                  <% type = property[:type] %>
-                  <% name = property[:name] %>
                   <td>
                     <a href="<%= url(:admin_edit, :model_name => @abstract_model.singular_name, :id => object.id) %>">
-                      <% case type %>
-                      <% when :boolean %>
-                      <% if object.send(name) == true %>
-                      <img alt="True" src="<%= image_path("icon-yes.gif") %>"/>
-                      <% else %>
-                      <img alt="False" src="<%= image_path("icon-no.gif") %>"/>
-                      <% end %>
-                      <% when :date_time %>
-                      <% value = object.send(name) %>
-                      <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y, %I:%M%p") : nil %>
-                      <% when :date %>
-                      <% value = object.send(name) %>
-                      <%= value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y") : nil %>
-                      <% when :time %>
-                      <% value = object.send(name) %>
-                      <%= value.respond_to?(:strftime) ? value.strftime("%I:%M%p") : nil %>
-                      <% when :string %>
-                      <%= object.send(name).to_s.truncate(50) %>
-                      <% when :text %>
-                      <%= object.send(name).to_s.truncate(50) %>
-                      <% else %>
-                      <%= object.send(name) %>
-                      <% end %>
+                      <%= object_property(object, property) %>
                     </a>
                   </td>
                   <% end %>

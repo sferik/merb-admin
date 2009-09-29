@@ -1,15 +1,15 @@
 <% 
-  name = association[:name]
+  association_name = association[:name]
   collection = MerbAdmin::AbstractModel.new(association[:child_model]).all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
-  selected = @object.send(name)
+  selected = @object.send(association_name)
   label = association[:pretty_name]
 %>
             <fieldset class="module aligned">
               <h2><%= label %></h2>
               <div class="form-row">
                 <div>
-                  <%= select(:name => "associations[#{name}][]", :id => name, :collection => collection, :selected => selected.map{|o| o.id.to_s}, :label => label, :multiple => true) %>
-                  <script type="text/javascript">addEvent(window, "load", function(e) {SelectFilter.init("<%= name %>", "<%= name %>", 0, "<%= image_path %>"); });</script>
+                  <%= select(:name => "associations[#{association_name}][]", :id => association_name, :collection => collection, :selected => selected.map{|o| o.id.to_s}, :label => label, :multiple => true) %>
+                  <script type="text/javascript">addEvent(window, "load", function(e) {SelectFilter.init("<%= association_name %>", "<%= association_name %>", 0, "<%= image_path %>"); });</script>
                   <p class="help">Hold down "Control", or "Command" on a Mac, to select more than one.</p>
                 </div>
               </div>

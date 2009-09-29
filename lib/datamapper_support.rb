@@ -70,7 +70,7 @@ module MerbAdmin
         model.relationships.to_a.map do |name, association|
           {
             :name => name,
-            :pretty_name => name.to_s.gsub('_', ' ').capitalize,
+            :pretty_name => name.to_s.gsub("_", " ").capitalize,
             :type => association_type_lookup(association),
             :parent_model => association.parent_model,
             :parent_key => association.parent_key.map{|r| r.name},
@@ -84,12 +84,11 @@ module MerbAdmin
         model.properties.map do |property|
           {
             :name => property.name,
-            :pretty_name => property.name.to_s.gsub('_', ' ').capitalize,
+            :pretty_name => property.name.to_s.gsub(/_id$/, "").gsub("_", " ").capitalize,
             :type => type_lookup(property),
             :length => property.length,
             :nullable? => property.nullable?,
             :serial? => property.serial?,
-            :key? => property.key?,
             :flag_map => property.type.respond_to?(:flag_map) ? property.type.flag_map : nil,
           }
         end

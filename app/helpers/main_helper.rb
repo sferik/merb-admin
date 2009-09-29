@@ -3,12 +3,49 @@ module Merb
   module MerbAdmin
     module MainHelper
       def object_title(object)
-        if object.respond_to?(:name)
+        if object.nil?
+          nil
+        elsif object.respond_to?(:name)
           object.name
         elsif object.respond_to?(:title)
           object.title
         else
           "#{object.class.to_s} ##{object.id}"
+        end
+      end
+
+      def object_property(object, property)
+        property_type = property[:type]
+        property_name = property[:name]
+        case property_type
+        when :boolean
+          if object.send(property_name) == true
+            Builder::XmlMarkup.new.img(:src => image_path("icon-yes.gif"), :alt => "True")
+          else
+            Builder::XmlMarkup.new.img(:src => image_path("icon-on.gif"), :alt => "False")
+          end
+        when :date_time
+          value = object.send(property_name)
+          value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y, %I:%M%p") : nil
+        when :date
+          value = object.send(property_name)
+          value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y") : nil
+        when :time
+          value = object.send(property_name)
+          value.respond_to?(:strftime) ? value.strftime("%I:%M%p") : nil
+        when :string
+          object.send(property_name).to_s.truncate(50)
+        when :text
+          object.send(property_name).to_s.truncate(50)
+        when :integer
+          association = @abstract_model.belongs_to_associations.select{|a| a[:child_key].first == property_name}.first
+          if association
+            object_title(object.send(association[:name]))
+          else
+            object.send(property_name)
+          end
+        else
+          object.send(property_name)
         end
       end
 

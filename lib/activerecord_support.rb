@@ -7,7 +7,7 @@ module MerbAdmin
 
       def get(id)
         model.find(id).extend(InstanceMethods)
-      rescue
+      rescue ActiveRecord::RecordNotFound
         nil
       end
 
@@ -93,7 +93,6 @@ module MerbAdmin
             :length => property.limit,
             :nullable? => property.null,
             :serial? => property.primary,
-            :key? => property.primary,
             :flag_map => property.type.respond_to?(:flag_map) ? property.type.flag_map : nil,
           }
         end

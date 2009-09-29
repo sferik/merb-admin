@@ -1,18 +1,19 @@
             <fieldset class="module aligned">
               <% belongs_to_keys = @abstract_model.belongs_to_associations.map{|b| b[:child_key].first} %>
               <% properties.each do |property| %>
-              <% name = property[:name] %>
-              <% next if [:id, :created_at, :created_on, :deleted_at, :updated_at, :updated_on, :deleted_on].include?(name) %>
-              <% next if belongs_to_keys.include?(name) %>
-              <div class="<%= @object.errors[name] ? "form-row errors" : "form-row" %>">
-                <% if @object.errors[name] %>
+              <% property_name = property[:name] %>
+              <% property_type = property[:type] %>
+              <% next if [:id, :created_at, :created_on, :deleted_at, :updated_at, :updated_on, :deleted_on].include?(property_name) %>
+              <% next if belongs_to_keys.include?(property_name) %>
+              <div class="<%= @object.errors[property_name] ? "form-row errors" : "form-row" %>">
+                <% if @object.errors[property_name] %>
                 <ul class="errorlist">
-                  <% @object.errors[name].each do |error| %>
+                  <% @object.errors[property_name].each do |error| %>
                   <li><%= error %></li>
                   <% end %>
                 </ul>
                 <% end %>
-<%= partial(property[:type].to_s, :property => property) -%>
+<%= partial(property_type.to_s, :property => property) -%>
               </div>
               <% end %>
             </fieldset> 
