@@ -13,8 +13,8 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
-    merge_sort!(options) if params[:sort]
-    merge_reverse!(options) if params[:reverse]
+    merge_sort!(options)
+    merge_sort_reverse!(options)
 
     if params[:all]
       options = {
@@ -126,13 +126,15 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def merge_sort!(options)
+    return unless params[:sort]
     sort = params[:sort] || "id"
     options.merge!(:sort => sort)
   end
 
-  def merge_reverse!(options)
-    reverse = params[:reverse] == "true"
-    options.merge!(:reverse => reverse)
+  def merge_sort_reverse!(options)
+    return unless params[:sort_reverse]
+    reverse = params[:sort_reverse] == "true"
+    options.merge!(:sort_reverse => reverse)
   end
 
   def update_has_one_association(association, id)

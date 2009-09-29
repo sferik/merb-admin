@@ -109,7 +109,7 @@ describe "MerbAdmin" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :sex => :male, :position => :second)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :sex => :male, :position => :pitcher)
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name", :reverse => "true"})
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name", :sort_reverse => "true"})
     end
 
     it "should respond sucessfully" do

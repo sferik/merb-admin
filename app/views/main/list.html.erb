@@ -1,7 +1,7 @@
 <%
   params = request.params.except(:action, :controller, :model_name)
   sort = params[:sort]
-  reverse = params[:reverse]
+  sort_reverse = params[:sort_reverse]
 %>
         <div id="content-main">
           <ul class="object-tools">
@@ -16,8 +16,8 @@
                   <% @properties.each do |property| %>
                   <% property_name = property[:name] %>
                   <% property_pretty_name = property[:pretty_name] %>
-                  <th class="<%= sort == property_name.to_s ? reverse ? 'sorted descending' : 'sorted ascending' : nil %>">
-                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property_name).reject{|key, value| key.to_sym == :reverse}.merge(sort == property_name.to_s && reverse != "true" ? {:reverse => "true"} : {})) %>"><%= property_pretty_name %></a>
+                  <th class="<%= sort == property_name.to_s ? sort_reverse ? 'sorted descending' : 'sorted ascending' : nil %>">
+                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property_name).reject{|key, value| key.to_sym == :sort_reverse}.merge(sort == property_name.to_s && sort_reverse != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property_pretty_name %></a>
                   </th>
                   <% end %>
                 </tr>

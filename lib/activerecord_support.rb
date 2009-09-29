@@ -105,8 +105,8 @@ module MerbAdmin
 
       def merge_order!(options)
         @sort ||= options.delete(:sort) || "id"
-        @reverse ||= options.delete(:reverse) ? "desc" : "asc"
-        options.merge!(:order => ["#{@sort} #{@reverse}"])
+        @sort_order ||= options.delete(:sort_reverse) ? "desc" : "asc"
+        options.merge!(:order => ["#{@sort} #{@sort_order}"])
       end
 
       def association_parent_model_lookup(association)
