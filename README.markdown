@@ -8,13 +8,13 @@ It currently offers the features listed [here](http://sferik.tadalist.com/lists/
 
 At the command prompt, type:
 
-    sudo gem install sferik-merb-admin -s http://gems.github.com
+    sudo gem install merb-admin -s http://gemcutter.org
 
 ## Install it
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "sferik-merb-admin", "0.4.3", :require_as => "merb-admin"
+    dependency "merb-admin", "0.4.4"
 
 Add the following route to `config/router.rb`:
 
