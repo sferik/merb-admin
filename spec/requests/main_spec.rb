@@ -89,10 +89,42 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "list with sort" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name"})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should be sorted correctly" do
+      @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
+    end
+  end
+
+  describe "list with reverse sort" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name", :sort_reverse => "true"})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should be sorted correctly" do
+      @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
+    end
+  end
+
   describe "list with query" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
       @response = request(url(:admin_list, :model_name => "player"), :params => {:query => "Jackie Robinson"})
     end
 
@@ -109,43 +141,36 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with sort" do
+  describe "list with query and boolean filter" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name"})
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher", :retired => true, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second", :retired => true, :injured => false)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "left", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "third", :retired => false, :injured => false)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:query => "Sandy Koufax", :filter => {:injured => "true"}})
     end
 
     it "should respond sucessfully" do
       @response.should be_successful
     end
 
-    it "should be sorted correctly" do
-      @response.body.should contain(/Jackie Robinson.*Sandy Koufax/m)
+    it "should contain a correct result" do
+      @response.body.should contain("Sandy Koufax")
+    end
+
+    it "should not contain an incorrect result" do
+      @response.body.should_not contain("Jackie Robinson")
+      @response.body.should_not contain("Moises Alou")
+      @response.body.should_not contain("David Wright")
     end
   end
 
-  describe "list with reverse sort" do
-    before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second")
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher")
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:sort => "name", :sort_reverse => "true"})
-    end
-
-    it "should respond sucessfully" do
-      @response.should be_successful
-    end
-
-    it "should be sorted correctly" do
-      @response.body.should contain(/Sandy Koufax.*Jackie Robinson/m)
-    end
-  end
 
   describe "list with boolean filter" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "left", :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "third", :injured => false)
-      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:injured => true}})
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:injured => "true"}})
     end
 
     it "should respond sucessfully" do
@@ -157,6 +182,29 @@ describe "MerbAdmin" do
     end
 
     it "should not contain an incorrect result" do
+      @response.body.should_not contain("David Wright")
+    end
+  end
+
+  describe "list with boolean filters" do
+    before(:each) do
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "pitcher", :retired => true, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "second", :retired => true, :injured => false)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "left", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "third", :retired => false, :injured => false)
+      @response = request(url(:admin_list, :model_name => "player"), :params => {:filter => {:retired => "true", :injured => "true"}})
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should contain a correct result" do
+    end
+
+    it "should not contain an incorrect result" do
+      @response.body.should_not contain("Jackie Robinson")
+      @response.body.should_not contain("Moises Alou")
       @response.body.should_not contain("David Wright")
     end
   end

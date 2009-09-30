@@ -8,7 +8,7 @@ class CreatePlayersMigration < ActiveRecord::Migration
       t.string :position, :limit => 50
       t.integer :number
       t.float :batting_average, :default => 0.0
-      t.boolean :all_star, :default => false
+      t.boolean :retired, :default => false
       t.boolean :injured, :default => false
       t.date :born_on
       t.timestamp :wake_at

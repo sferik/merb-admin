@@ -10,7 +10,7 @@ class Player
   property :position, String
   property :number, Integer, :nullable => false
   property :batting_average, Float, :default => 0.0, :precision => 4, :scale => 3
-  property :all_star, Boolean, :default => false
+  property :retired, Boolean, :default => false
   property :injured, Boolean, :default => false
   property :born_on, Date
   property :wake_at, Time

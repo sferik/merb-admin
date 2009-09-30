@@ -137,6 +137,7 @@ class MerbAdmin::Main < MerbAdmin::Application
       statements << "#{property[:name]} LIKE ?"
       values << "%#{params[:query]}%"
     end
+    conditions[0] += " AND " unless conditions == [""]
     conditions[0] += statements.join(" OR ")
     conditions += values
     options.merge!(:conditions => conditions) unless conditions == [""]
@@ -155,10 +156,10 @@ class MerbAdmin::Main < MerbAdmin::Application
         values << (value == "true")
       end
     end
+    conditions[0] += " AND " unless conditions == [""]
     conditions[0] += statements.join(" AND ")
     conditions += values
     options.merge!(:conditions => conditions) unless conditions == [""]
-    puts options.inspect
   end
 
   def merge_sort!(options)

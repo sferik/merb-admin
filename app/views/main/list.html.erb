@@ -16,7 +16,7 @@
               <form id="changelist-search" action="" method="get">
               <div>
                 <label for="searchbar"><img src="<%= image_path("icon_searchbox.png") %>" alt="Search" /></label>
-                <input type="text" size="40" name="query" value="" id="searchbar" />
+                <input type="text" size="40" name="query" value="<%= query %>" id="searchbar" />
                 <input type="submit" value="Search" />
                 <% if query || filter %>
                 <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<a href="?"><%= @abstract_model.count %> total</a>)</span>
