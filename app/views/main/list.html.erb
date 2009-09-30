@@ -19,7 +19,7 @@
                 <input type="text" size="40" name="query" value="<%= query %>" id="searchbar" />
                 <input type="submit" value="Search" />
                 <% if query || filter %>
-                <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<a href="?"><%= @abstract_model.count %> total</a>)</span>
+                  <span class="small quiet"><%= @record_count %> <%= @record_count == 1 ? "result" : "results" %> (<%= link_to("#{@abstract_model.count} total", "?") %>)</span>
                 <% end %>
                 <% if filter %>
                 <% filter.each do |name, value| %>
@@ -40,13 +40,13 @@
               <h3>By <%= property_pretty_name %></h3>
               <ul>
                 <li class="<%= filter.nil? || filter[property_name].blank? ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).reject{|key, value| key.to_sym == property_name})) %>">All</a>
+                  <%= link_to("All", "?" + Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).reject{|key, value| key.to_sym == property_name}))) %>
                 </li>
                 <li class="<%= filter && filter[property_name] == "true" ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({property_name => "true"}))) %>">Yes</a>
+                  <%= link_to("Yes", "?" + Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({property_name => "true"})))) %>
                 </li>
                 <li class="<%= filter && filter[property_name] == "false" ? "selected" : nil %>">
-                  <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({property_name => "false"}))) %>">No</a>
+                  <%= link_to("No", "?" + Merb::Parse.params_to_query_string(params.merge(:filter => (filter || {}).merge({property_name => "false"})))) %>
                 </li>
               </ul>
               <% end %>
@@ -59,19 +59,17 @@
                   <% property_name = property[:name] %>
                   <% property_pretty_name = property[:pretty_name] %>
                   <th class="<%= sort == property_name.to_s ? sort_reverse ? 'sorted descending' : 'sorted ascending' : nil %>">
-                    <a href="?<%= Merb::Parse.params_to_query_string(params.merge(:sort => property_name).reject{|key, value| key.to_sym == :sort_reverse}.merge(sort == property_name.to_s && sort_reverse != "true" ? {:sort_reverse => "true"} : {})) %>"><%= property_pretty_name %></a>
+                    <%= link_to(property_pretty_name, "?" + Merb::Parse.params_to_query_string(params.merge(:sort => property_name).reject{|key, value| key.to_sym == :sort_reverse}.merge(sort == property_name.to_s && sort_reverse != "true" ? {:sort_reverse => "true"} : {}))) %>
                   </th>
                   <% end %>
                 </tr>
               </thead>
               <tbody>
                 <% @objects.each_with_index do |object, index| %>
-                <tr class="row<%= index % 2 == 0 ? '1' : '2' %>">
+                <tr class="row<%= index % 2 == 0 ? "1" : "2" %>">
                   <% @properties.each do |property| %>
                   <td>
-                    <a href="<%= url(:admin_edit, :model_name => @abstract_model.singular_name, :id => object.id) %>">
-                      <%= object_property(object, property) %>
-                    </a>
+                    <%= link_to(object_property(object, property), url(:admin_edit, :model_name => @abstract_model.singular_name, :id => object.id)) %>
                   </td>
                   <% end %>
                 </tr>
@@ -80,11 +78,11 @@
             </table>
             <p class="paginator">
               <% if @page_count.to_i > 1 %>
-              <%= paginate(@current_page, @page_count, :url => '?' + Merb::Parse.params_to_query_string(params)) %>
+              <%= paginate(@current_page, @page_count, :url => "?" + Merb::Parse.params_to_query_string(params)) %>
               <% end %>
               <%= @record_count %> <%= @record_count == 1 ? @abstract_model.pretty_name.downcase : @abstract_model.pretty_name.downcase.pluralize %>
               <% if @page_count.to_i == 2 %>
-              <%= link_to("Show all", '?' + Merb::Parse.params_to_query_string(params.merge(:all => true)), :class => "showall") %>
+              <%= link_to("Show all", "?" + Merb::Parse.params_to_query_string(params.merge(:all => true)), :class => "showall") %>
               <% end %>
             </p>
           </div>
