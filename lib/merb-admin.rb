@@ -23,7 +23,7 @@ if defined?(Merb::Plugins)
 
     # Slice metadata
     self.description = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
-    self.version = "0.4.7"
+    self.version = "0.4.8"
     self.author = "Erik Michaels-Ober"
 
     # Stub classes loaded hook - runs before LoadClasses BootLoader
