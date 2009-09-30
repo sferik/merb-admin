@@ -70,7 +70,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"Site administration\"" do
+    it "should show \"Site administration\"" do
       @response.body.should contain("Site administration")
     end
   end
@@ -84,7 +84,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"Select model to edit\"" do
+    it "should show \"Select model to edit\"" do
       @response.body.should contain("Select player to edit")
     end
   end
@@ -132,7 +132,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain a correct result" do
+    it "should show a correct result" do
       @response.body.should contain("Jackie Robinson")
     end
 
@@ -154,7 +154,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain a correct result" do
+    it "should show a correct result" do
       @response.body.should contain("Sandy Koufax")
     end
 
@@ -177,7 +177,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain a correct result" do
+    it "should show a correct result" do
       @response.body.should contain("Moises Alou")
     end
 
@@ -199,7 +199,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain a correct result" do
+    it "should show a correct result" do
     end
 
     it "should not contain an incorrect result" do
@@ -220,7 +220,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"2 results\"" do
+    it "should show \"2 results\"" do
       @response.body.should contain("2 players")
     end
   end
@@ -236,7 +236,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"20 results\"" do
+    it "should show \"20 results\"" do
       @response.body.should contain("20 players")
     end
   end
@@ -294,7 +294,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"New model\"" do
+    it "should show \"New model\"" do
       @response.body.should contain("New player")
     end
   end
@@ -328,8 +328,23 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"Edit model\"" do
+    it "should show \"Edit model\"" do
       @response.body.should contain("Edit player")
+    end
+
+    it "should show required fields as \"Required\"" do
+      @response.body.should contain(/Name\n\s*Required/)
+      @response.body.should contain(/Number\n\s*Required/)
+      @response.body.should contain(/Team\n\s*Required/)
+    end
+
+    it "should show non-required fields as \"Optional\"" do
+      @response.body.should contain(/Position\n\s*Optional/)
+      @response.body.should contain(/Batting average\n\s*Optional/)
+      @response.body.should contain(/Born on\n\s*Optional/)
+      @response.body.should contain(/Wake at\n\s*Optional/)
+      @response.body.should contain(/Notes\n\s*Optional/)
+      @response.body.should contain(/Draft\n\s*Optional/)
     end
   end
 
@@ -444,7 +459,7 @@ describe "MerbAdmin" do
       @response = request(url(:admin_create, :model_name => "player"), :method => "post", :params => {:player => {}})
     end
 
-    it "should contain an error message" do
+    it "should show an error message" do
       @response.body.should contain("Player failed to be created")
     end
   end
@@ -539,7 +554,7 @@ describe "MerbAdmin" do
       @response = request(url(:admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:number => "a"}})
     end
 
-    it "should contain an error message" do
+    it "should show an error message" do
       @response.body.should contain("Player failed to be updated")
     end
   end
@@ -553,7 +568,7 @@ describe "MerbAdmin" do
       @response.should be_successful
     end
 
-    it "should contain \"Delete model\"" do
+    it "should show \"Delete model\"" do
       @response.body.should contain("Delete player")
     end
   end
