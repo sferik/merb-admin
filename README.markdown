@@ -16,7 +16,7 @@ At the command prompt, type:
 
 In your app, add the following dependency to `config/dependencies.rb`:
 
-    dependency "merb-admin", "0.4.6"
+    dependency "merb-admin", "0.4.7"
 
 Add the following route to `config/router.rb`:
 
