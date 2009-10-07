@@ -35,7 +35,7 @@ namespace :slices do
         t.spec_opts = ["--format", "specdoc", "--colour"]
         if(ENV['REQUEST'])
           t.spec_files = Dir["#{slice_root}/spec/requests/**/#{ENV['REQUEST']}_spec.rb"].sort
-        else    
+        else
           t.spec_files = Dir["#{slice_root}/spec/requests/**/*_spec.rb"].sort
         end
       end

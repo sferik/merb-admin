@@ -78,7 +78,7 @@ function findPosX(obj) {
             curleft += obj.offsetLeft - ((isOpera) ? 0 : obj.scrollLeft);
             obj = obj.offsetParent;
         }
-        // IE offsetParent does not include the top-level 
+        // IE offsetParent does not include the top-level
         if (isIE && obj.parentElement){
             curleft += obj.offsetLeft - obj.scrollLeft;
         }
@@ -95,7 +95,7 @@ function findPosY(obj) {
             curtop += obj.offsetTop - ((isOpera) ? 0 : obj.scrollTop);
             obj = obj.offsetParent;
         }
-        // IE offsetParent does not include the top-level 
+        // IE offsetParent does not include the top-level
         if (isIE && obj.parentElement){
             curtop += obj.offsetTop - obj.scrollTop;
         }

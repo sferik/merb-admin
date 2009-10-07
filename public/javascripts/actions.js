@@ -25,7 +25,7 @@ var Actions = {
             tr.className += ' selected';
         } else if (!checked) {
             tr.className = tr.className.replace(' selected', '');
-        }  
+        }
     },
     checker: function(checked) {
         var actionCheckboxes = document.getElementsBySelector('tr input.action-select');

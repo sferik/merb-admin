@@ -1,4 +1,4 @@
-<% 
+<%
   association_name = association[:name]
   collection = MerbAdmin::AbstractModel.new(association[:child_model]).all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
   selected = @object.send(association_name)

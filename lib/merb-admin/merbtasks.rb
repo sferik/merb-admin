@@ -47,7 +47,7 @@ namespace :slices do
     task :migrate do # see slicetasks.rb
     end
 
-    desc "Freeze MerbAdmin into your app (only merb-admin/app)" 
+    desc "Freeze MerbAdmin into your app (only merb-admin/app)"
     task :freeze => [ "freeze:app" ]
 
     namespace :freeze do
@@ -67,7 +67,7 @@ namespace :slices do
         preserved.each { |f| puts "! preserved override as #{f}" }
       end
 
-      desc "Freeze all views into your application for easy modification" 
+      desc "Freeze all views into your application for easy modification"
       task :views do
         puts "Copying all view templates to your application - resolves any collisions"
         copied, preserved = MerbAdmin.mirror_files_for :view
@@ -76,7 +76,7 @@ namespace :slices do
         preserved.each { |f| puts "! preserved override as #{f}" }
       end
 
-      desc "Freeze all models into your application for easy modification" 
+      desc "Freeze all models into your application for easy modification"
       task :models do
         puts "Copying all models to your application - resolves any collisions"
         copied, preserved = MerbAdmin.mirror_files_for :model

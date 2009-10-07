@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe MerbAdmin::Main do 
+describe MerbAdmin::Main do
 
   before(:each) do
     mount_slice

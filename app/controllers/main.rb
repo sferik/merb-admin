@@ -80,7 +80,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     end
     has_one_associations = @abstract_model.has_one_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
     has_many_associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
-    if @object.update_attributes(object) && has_one_associations.each{|association, id| update_has_one_association(association, id)} && has_many_associations.each{|association, ids| update_has_many_association(association, ids)} 
+    if @object.update_attributes(object) && has_one_associations.each{|association, id| update_has_one_association(association, id)} && has_many_associations.each{|association, ids| update_has_many_association(association, ids)}
       if params[:_continue]
         redirect(url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       elsif params[:_add_another]

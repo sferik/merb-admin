@@ -57,10 +57,10 @@ p img, h1 img, h2 img, h3 img, h4 img, td img { vertical-align:middle; }
 table { border-collapse:collapse; border-color:#ccc; }
 td, th { font-size:11px; line-height:13px; border-bottom:1px solid #eee; vertical-align:top; padding:5px; font-family:"Lucida Grande", Verdana, Arial, sans-serif; }
 th { text-align:left; font-size:12px; font-weight:bold; }
-thead th, 
+thead th,
 tfoot td { color:#666; padding:2px 5px; font-size:11px; background:#e1e1e1 url(../images/nav-bg.gif) top left repeat-x; border-left:1px solid #ddd; border-bottom:1px solid #ddd; }
 tfoot td { border-bottom:none; border-top:1px solid #ddd; }
-thead th:first-child, 
+thead th:first-child,
 tfoot td:first-child { border-left:none !important; }
 thead th.optional { font-weight:normal !important; }
 fieldset table { border-right:1px solid #eee; }
