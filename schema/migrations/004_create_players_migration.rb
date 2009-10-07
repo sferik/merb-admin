@@ -12,6 +12,9 @@ class CreatePlayersMigration < ActiveRecord::Migration
       t.date :born_on
       t.text :notes
     end
+    add_index :players, :team_id
+    add_index :players, :name
+    add_index :players, :position
   end
 
   def self.down

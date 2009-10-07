@@ -13,6 +13,7 @@ class CreateDraftsMigration < ActiveRecord::Migration
     end
     add_index :drafts, :player_id
     add_index :drafts, :team_id
+    add_index :drafts, :college
   end
 
   def self.down

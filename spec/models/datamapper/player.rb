@@ -5,9 +5,9 @@ class Player
   property :created_at, DateTime
   property :updated_at, DateTime
   property :deleted_at, ParanoidDateTime
-  property :team_id, Integer
+  property :team_id, Integer, :index => true
   property :name, String, :length => 100, :nullable => false, :index => true
-  property :position, String
+  property :position, String, :index => true
   property :number, Integer, :nullable => false
   property :retired, Boolean, :default => false
   property :injured, Boolean, :default => false

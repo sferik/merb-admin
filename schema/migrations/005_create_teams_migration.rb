@@ -18,6 +18,8 @@ class CreateTeamsMigration < ActiveRecord::Migration
     add_index :teams, :league_id
     add_index :teams, :name
     add_index :teams, :manager
+    add_index :teams, :ballpark
+    add_index :teams, :mascot
   end
 
   def self.down

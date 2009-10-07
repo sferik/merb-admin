@@ -7,7 +7,7 @@ require "merb-core/tasks/merb"
 GEM_NAME = "merb-admin"
 AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
-HOMEPAGE = "http://twitter.com/sferik"
+HOMEPAGE = "http://github.com/sferik/merb-admin"
 SUMMARY = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
 GEM_VERSION = "0.4.9"
 
@@ -25,6 +25,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   s.add_dependency("merb-slices", ">= 1.0.12")
   s.add_dependency("builder", ">= 2.1.2")
+  s.add_dependency("mlb", ">= 0.0.1")
   s.require_path = "lib"
   s.files = %w(LICENSE README.markdown Rakefile) + Dir.glob("{app,lib,public,schema,spec,stubs}/**/*")
   s.post_install_message = <<-POST_INSTALL_MESSAGE

@@ -10,7 +10,7 @@ class Draft
   property :round, Integer, :nullable => false
   property :pick, Integer, :nullable => false
   property :overall, Integer, :nullable => false
-  property :college, String, :length => 100
+  property :college, String, :length => 100, :index => true
   property :notes, Text
 
   belongs_to :team

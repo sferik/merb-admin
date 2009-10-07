@@ -9,8 +9,8 @@ class Team
   property :name, String, :nullable => false, :index => true
   property :logo_image_url, String, :length => 255
   property :manager, String, :length => 100, :nullable => false, :index => true
-  property :ballpark, String, :length => 100
-  property :mascot, String, :length => 100
+  property :ballpark, String, :length => 100, :index => true
+  property :mascot, String, :length => 100, :index => true
   property :founded, Integer, :nullable => false
   property :wins, Integer, :nullable => false
   property :losses, Integer, :nullable => false
