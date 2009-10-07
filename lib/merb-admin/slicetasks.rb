@@ -60,7 +60,7 @@ def load_data
       division = MerbAdmin::AbstractModel.new("Division").create(:name => mlb_team.division, :league => league)
     end
     unless team = MerbAdmin::AbstractModel.new("Team").first(:conditions => ["name = ?", mlb_team.name])
-      team = MerbAdmin::AbstractModel.new("Team").create(:name => mlb_team.name, :division => division, :league => league)
+      team = MerbAdmin::AbstractModel.new("Team").create(:name => mlb_team.name, :logo_image_url => mlb_team.logo_url, :manager => mlb_team.manager, :ballpark => mlb_team.ballpark, :mascot => mlb_team.mascot, :founded => mlb_team.founded, :wins => mlb_team.wins, :losses => mlb_team.losses, :win_percentage => ("%.3f" % (mlb_team.wins.to_f / mlb_team.wins + mlb_team.losses)).to_f, :division => division, :league => league)
     end
     mlb_team.players.each do |player|
       MerbAdmin::AbstractModel.new("Player").create(:name => player.name, :number => player.number, :position => player.position, :team => team)
@@ -128,4 +128,3 @@ def split_name(name)
   mres = /^([^\/\.]+)\.(.+)$/i.match(file_name)
   mres.nil? ? [file_name, ''] : [mres[1], mres[2]]
 end
-

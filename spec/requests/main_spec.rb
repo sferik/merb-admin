@@ -18,7 +18,7 @@ end
 given "three teams exist" do
   @teams = []
   3.times do |i|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => "%.3f" % (wins.to_f / 162))
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
@@ -31,7 +31,7 @@ given "a player exists and three teams exist" do
   @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
   @teams = []
   3.times do |i|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => "%.3f" % (wins.to_f / 162))
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
@@ -39,7 +39,7 @@ given "a league exists and three teams exist" do
   @league = League.create(:name => "League 1")
   @teams = []
   3.times do |i|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => "%.3f" % (wins.to_f / 162))
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
