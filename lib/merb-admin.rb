@@ -11,19 +11,19 @@ if defined?(Merb::Plugins)
   # Slice configuration - set this in a before_app_loads callback.
   # By default a Slice uses its own layout, so you can swicht to 
   # the main application layout or no layout at all if needed.
-  # 
+  #
   # Configuration options:
   # :layout - the layout to use; defaults to :merb-admin
   # :mirror - which path component types to use on copy operations; defaults to all
   Merb::Slices::config[:merb_admin][:layout] ||= :merb_admin
   Merb::Slices::config[:merb_admin][:per_page] ||= 100
-  
+
   # All Slice code is expected to be namespaced inside a module
   module MerbAdmin
 
     # Slice metadata
     self.description = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
-    self.version = "0.4.9"
+    self.version = "0.5.0"
     self.author = "Erik Michaels-Ober"
 
     # Stub classes loaded hook - runs before LoadClasses BootLoader
