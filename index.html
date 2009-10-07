@@ -82,12 +82,12 @@
       </div>
       <h2>Get it</h2>
       <p>At the command prompt, type:</p>
-      <pre><code>sudo gem install sferik-merb-admin -s http://gems.github.com</code></pre>
+      <pre><code>sudo gem install merb-admin -s http://gemcutter.org</code></pre>
       <h2>Install it</h2>
       <p>In your app, add the following dependency to <code>config/dependencies.rb</code>:</p>
-      <pre><code>dependency "sferik-merb-admin", "0.3.6", :require_as =&gt; "merb-admin"</code></pre>
+      <pre><code>dependency "merb-admin", "0.5.0"</code></pre>
       <p>Add the following route to <code>config/router.rb</code>:</p>
-      <pre><code>slice(:MerbAdmin, :name_prefix =&gt; nil, :path_prefix =&gt; "", :default_routes =&gt; false)</code></pre>
+      <pre><code>slice(:MerbAdmin, :path_prefix =&gt; "admin")</code></pre>
       <p>Then, run the following rake task:</p>
       <pre><code>rake slices:merb-admin:install</code></pre>
       <h2>Configure it (optional)</h2>
@@ -109,7 +109,6 @@ end</code></pre>
         <li><a href="http://www.wilsonminer.com">Wilson Miner</a> for contributing the stylesheets and javascripts from <a href="http://www.djangoproject.com">Django</a></li>
         <li><a href="http://fightinjoe.com/">Aaron Wheeler</a> for contributing libraries from <a href="http://github.com/fightinjoe/merb-autoscaffold">Merb AutoScaffold</a></li>
         <li><a href="http://loriholden.com/">Lori Holden</a> for contributing the <a href="http://github.com/lholden/merb-pagination">merb-pagination</a> helper</li>
-        <li><a href="http://whytheluckystiff.net/">why the lucky stiff</a> for <a href="http://whytheluckystiff.net/articles/seeingMetaclassesClearly.html">metaid</a></li>
       </ul>
       <p>Also, thanks to <a href="http://www.21st-amendment.com">beer</a>.</p>
       <p>
