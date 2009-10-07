@@ -1,5 +1,5 @@
-require 'mlb'
 require 'abstract_model'
+require 'mlb'
 
 namespace :slices do
   namespace :"merb-admin" do
@@ -51,19 +51,19 @@ end
 private
 
 def load_data
-  puts "Loading current MLB leagues, divisions, mlb_teams, and players"
+  puts "Loading current MLB leagues, divisions, teams, and players"
   MLB.teams.each do |mlb_team|
-    unless league = MerbAdmin::AbstractModel.new("League").first(:conditions => ["name = ?", mlb_team['league']['name']])
-      league = MerbAdmin::AbstractModel.new("League").create(:name => mlb_team['league']['name'])
+    unless league = MerbAdmin::AbstractModel.new("League").first(:conditions => ["name = ?", mlb_team.league])
+      league = MerbAdmin::AbstractModel.new("League").create(:name => mlb_team.league)
     end
-    unless division = MerbAdmin::AbstractModel.new("Division").first(:conditions => ["name = ?", mlb_team['division']['name']])
-      division = MerbAdmin::AbstractModel.new("Division").create(:name => mlb_team['division']['name'], :league => league)
+    unless division = MerbAdmin::AbstractModel.new("Division").first(:conditions => ["name = ?", mlb_team.division])
+      division = MerbAdmin::AbstractModel.new("Division").create(:name => mlb_team.division, :league => league)
     end
-    unless team = MerbAdmin::AbstractModel.new("Team").first(:conditions => ["name = ?", mlb_team['name']])
-      team = MerbAdmin::AbstractModel.new("Team").create(:name => mlb_team['name'], :division => division, :league => league)
+    unless team = MerbAdmin::AbstractModel.new("Team").first(:conditions => ["name = ?", mlb_team.name])
+      team = MerbAdmin::AbstractModel.new("Team").create(:name => mlb_team.name, :division => division, :league => league)
     end
-    mlb_team['current_roster'].each do |player|
-      MerbAdmin::AbstractModel.new("Player").create(:name => player['player'], :number => player['number'], :position => player['position'], :team => team)
+    mlb_team.players.each do |player|
+      MerbAdmin::AbstractModel.new("Player").create(:name => player.name, :number => player.number, :position => player.position, :team => team)
     end
   end
 end
