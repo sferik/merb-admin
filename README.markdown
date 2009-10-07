@@ -4,8 +4,6 @@
 
 It currently offers the features listed [here](http://sferik.tadalist.com/lists/1352791/public).
 
-The status of the current build can be seen [here](http://runcoderun.com/sferik/merb-admin).
-
 ## Get it
 
 At the command prompt, type:
