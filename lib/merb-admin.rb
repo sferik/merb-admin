@@ -46,35 +46,35 @@ if defined?(Merb::Plugins)
     def self.setup_router(scope)
       scope.match("/", :method => :get).
         to(:controller => "main", :action => "index").
-        name(:admin_dashboard)
+        name(:dashboard)
 
       scope.match("/:model_name", :method => :get).
         to(:controller => "main", :action => "list").
-        name(:admin_list)
+        name(:list)
 
       scope.match("/:model_name/new", :method => :get).
         to(:controller => "main", :action => "new").
-        name(:admin_new)
+        name(:new)
 
       scope.match("/:model_name/:id/edit", :method => :get).
         to(:controller => "main", :action => "edit").
-        name(:admin_edit)
+        name(:edit)
 
       scope.match("/:model_name", :method => :post).
         to(:controller => "main", :action => "create").
-        name(:admin_create)
+        name(:create)
 
       scope.match("/:model_name/:id", :method => :put).
         to(:controller => "main", :action => "update").
-        name(:admin_update)
+        name(:update)
 
       scope.match("/:model_name/:id/delete", :method => :get).
         to(:controller => "main", :action => "delete").
-        name(:admin_delete)
+        name(:delete)
 
       scope.match("/:model_name/:id(.:format)", :method => :delete).
         to(:controller => "main", :action => "destroy").
-        name(:admin_destroy)
+        name(:destroy)
     end
 
   end

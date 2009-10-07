@@ -2,18 +2,18 @@
           <div class="module">
             <table summary="Models available in the application.">
               <caption>
-                <%= link_to("Models", url(:admin_dashboard), :class => "section") %>
+                <%= link_to("Models", url(:merb_admin_dashboard), :class => "section") %>
               </caption>
               <% @abstract_models.each do |abstract_model| %>
               <tr>
                 <th scope="row">
-                  <%= link_to(abstract_model.plural_name.to_s.capitalize, url(:admin_list, :model_name => abstract_model.singular_name)) %>
+                  <%= link_to(abstract_model.plural_name.to_s.capitalize, url(:merb_admin_list, :model_name => abstract_model.singular_name)) %>
                 </th>
                 <td>
-                  <%= link_to("Add", url(:admin_new, :model_name => abstract_model.singular_name), :class => "addlink") %>
+                  <%= link_to("Add", url(:merb_admin_new, :model_name => abstract_model.singular_name), :class => "addlink") %>
                 </td>
                 <td>
-                  <%= link_to("Edit", url(:admin_list, :model_name => abstract_model.singular_name), :class => "changelink") %>
+                  <%= link_to("Edit", url(:merb_admin_list, :model_name => abstract_model.singular_name), :class => "changelink") %>
                 </td>
               </tr>
               <% end %>

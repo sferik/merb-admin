@@ -31,8 +31,8 @@
         </div>
       </div>
       <div class="breadcrumbs">
-        <%= link_to("Home", url(:admin_dashboard)) %> &rsaquo;
-        <%= link_to(@abstract_model.plural_name.to_s.capitalize, url(:admin_list, :model_name => @abstract_model.singular_name)) %> &rsaquo;
+        <%= link_to("Home", url(:merb_admin_dashboard)) %> &rsaquo;
+        <%= link_to(@abstract_model.plural_name.to_s.capitalize, url(:merb_admin_list, :model_name => @abstract_model.singular_name)) %> &rsaquo;
         <%= page_name %>
       </div>
 <%= partial('layout/message', :message => message) unless message.blank? -%>

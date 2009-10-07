@@ -60,11 +60,11 @@ class MerbAdmin::Main < MerbAdmin::Application
     @object = @abstract_model.new(object)
     if @object.save && has_one_associations.each{|association, id| update_has_one_association(association, id)} && has_many_associations.each{|association, ids| update_has_many_association(association, ids)}
       if params[:_continue]
-        redirect(url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
+        redirect(url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
       elsif params[:_add_another]
-        redirect(url(:admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
+        redirect(url(:merb_admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
       else
-        redirect(url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
+        redirect(url(:merb_admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
       end
     else
       message[:error] = "#{@abstract_model.pretty_name} failed to be created"
@@ -82,11 +82,11 @@ class MerbAdmin::Main < MerbAdmin::Application
     has_many_associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
     if @object.update_attributes(object) && has_one_associations.each{|association, id| update_has_one_association(association, id)} && has_many_associations.each{|association, ids| update_has_many_association(association, ids)} 
       if params[:_continue]
-        redirect(url(:admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
+        redirect(url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       elsif params[:_add_another]
-        redirect(url(:admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
+        redirect(url(:merb_admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       else
-        redirect(url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
+        redirect(url(:merb_admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
       end
     else
       message[:error] = "#{@abstract_model.pretty_name} failed to be updated"
@@ -100,7 +100,7 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def destroy
     if @object.destroy
-      redirect(url(:admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully destroyed"})
+      redirect(url(:merb_admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully destroyed"})
     else
       raise BadRequest
     end

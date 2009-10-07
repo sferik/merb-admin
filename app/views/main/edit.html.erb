@@ -1,5 +1,5 @@
         <div id="content-main">
-        <%= form_for(@object, :action => url(:admin_update, :model_name => @abstract_model.singular_name, :id => @object.id)) do %>
+        <%= form_for(@object, :action => url(:merb_admin_update, :model_name => @abstract_model.singular_name, :id => @object.id)) do %>
           <div>
 <%= partial('properties', :properties => @properties) -%>
 <%= partial('belongs_to', :with => @abstract_model.belongs_to_associations, :as => :association) -%>
@@ -8,7 +8,7 @@
             <div class="submit-row" >
               <%= submit "Save", :class => "default", :name => "_save" %>
               <p class="deletelink-box">
-                <%= link_to("Delete", url(:admin_delete, :model_name => @abstract_model.singular_name, :id => @object.id), :class => "deletelink") %>
+                <%= link_to("Delete", url(:merb_admin_delete, :model_name => @abstract_model.singular_name, :id => @object.id), :class => "deletelink") %>
               </p>
               <%= submit "Save and add another", :name => "_add_another" %>
               <%= submit "Save and continue editing", :name => "_continue" %>

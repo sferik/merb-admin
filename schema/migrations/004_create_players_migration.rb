@@ -3,18 +3,15 @@ class CreatePlayersMigration < ActiveRecord::Migration
     create_table :players do |t|
       t.timestamps
       t.datetime :deleted_at
-      t.integer :team_id, :null => false
+      t.integer :team_id
       t.string :name, :limit => 100, :null => false
       t.string :position, :limit => 50
       t.integer :number, :null => false
-      t.float :batting_average, :default => 0.0
       t.boolean :retired, :default => false
       t.boolean :injured, :default => false
       t.date :born_on
-      t.timestamp :wake_at
       t.text :notes
     end
-    add_index :players, :team_id
   end
 
   def self.down

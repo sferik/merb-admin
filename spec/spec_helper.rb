@@ -106,7 +106,7 @@ Merb::Test.add_helpers do
   def mount_slice
     if standalone?
       Merb::Router.reset!
-      Merb::Router.prepare{add_slice(:merb_admin, :name_prefix => nil, :path_prefix => "admin", :default_routes => false)}
+      Merb::Router.prepare{add_slice(:merb_admin, :path_prefix => "admin")}
     end
   end
 end
