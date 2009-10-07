@@ -147,7 +147,7 @@ module MerbAdmin
         end
 
         def update_attributes(attributes)
-          super
+          update(attributes)
         end
 
         def errors
