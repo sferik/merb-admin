@@ -22,6 +22,10 @@
 
 use_test :rspec
 use_template_engine :erb
+use_orm :datamapper
+
+dependency "merb-helpers"
+dependency "merb-assets"
 
 Merb::Config.use do |c|
   c[:exception_details] = true
