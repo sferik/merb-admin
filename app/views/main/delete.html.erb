@@ -1,7 +1,24 @@
         <p>Are you sure you want to delete the <%= @abstract_model.pretty_name.downcase %> &ldquo;<%= object_name(@object) %>&rdquo;? All of the following related items will be deleted:</p>
         <ul>
           <li>
-            <%= link_to(@model_name, url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id))%>
+            <%= @abstract_model.pretty_name %>: <%= link_to(object_name(@object), url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id)) %>
+            <ul>
+              <% @abstract_model.has_many_associations.each do |association| %>
+              <% @object.send(association[:name]).each do |child| %>
+              <% next if child.nil? %>
+              <li>
+                One or more <%= @abstract_model.pretty_name.pluralize.downcase %> in <%= association[:pretty_name].downcase %>: <%= link_to(object_name(child), url(:merb_admin_edit, :model_name => association[:name].to_s.singularize.to_sym, :id => child.id)) %>
+              </li>
+              <% end %>
+              <% end %>
+              <% @abstract_model.has_one_associations.each do |association| %>
+              <% child = @object.send(association[:name]) %>
+              <% next if child.nil? %>
+              <li>
+                A <%= @abstract_model.pretty_name.downcase %> in <%= association[:pretty_name].downcase %>: <%= link_to(object_name(child), url(:merb_admin_edit, :model_name => association[:name], :id => child.id)) %>
+              </li>
+              <% end %>
+            </ul>
           </li>
         </ul>
         <%= form_for(@object, :action => url(:merb_admin_destroy, :model_name => @abstract_model.singular_name, :id => @object.id), :method => :delete) do %>
