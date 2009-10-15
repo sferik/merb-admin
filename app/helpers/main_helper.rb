@@ -24,7 +24,7 @@ module Merb
           else
             Builder::XmlMarkup.new.img(:src => image_path("icon-no.gif"), :alt => "False")
           end
-        when :date_time
+        when :datetime
           value = object.send(property_name)
           value.respond_to?(:strftime) ? value.strftime("%b. %d, %Y, %I:%M%p") : nil
         when :date
