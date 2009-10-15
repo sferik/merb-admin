@@ -1,6 +1,6 @@
 <%
   child_key = association[:child_key].first
-  collection = MerbAdmin::AbstractModel.new(association[:parent_model]).all.map{|o| [o.id, object_title(o)]}.sort_by{|o| o[1]}
+  collection = MerbAdmin::AbstractModel.new(association[:parent_model]).all.map{|o| [o.id, object_name(o)]}.sort_by{|o| o[1]}
   selected = @object.send(child_key)
   label = association[:pretty_name]
   required = false

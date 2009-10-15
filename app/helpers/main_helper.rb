@@ -2,7 +2,7 @@ require 'builder'
 module Merb
   module MerbAdmin
     module MainHelper
-      def object_title(object)
+      def object_name(object)
         if object.nil?
           nil
         elsif object.respond_to?(:name)
@@ -40,7 +40,7 @@ module Merb
         when :integer
           association = @abstract_model.belongs_to_associations.select{|a| a[:child_key].first == property_name}.first
           if association
-            object_title(object.send(association[:name]))
+            object_name(object.send(association[:name]))
           else
             object.send(property_name)
           end
