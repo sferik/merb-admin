@@ -4,6 +4,7 @@
   selected = @object.send(child_key)
   label = association[:pretty_name]
   required = false
+  errors_exist = !(@object.errors[child_key].nil? || @object.errors[child_key].empty?)
   @properties.each do |property|
     next unless property[:name] == child_key
     required = true unless property[:nullable?]
@@ -11,8 +12,8 @@
 %>
             <fieldset class="module aligned">
               <h2><%= label %></h2>
-              <div class="<%= @object.errors[child_key] ? "form-row errors" : "form-row"%>">
-                <% if @object.errors[child_key] %>
+              <div class="<%= errors_exist ? "form-row errors" : "form-row"%>">
+                <% if errors_exist %>
                 <ul class="errorlist">
                   <% @object.errors[child_key].each do |error| %>
                   <li><%= error %></li>
