@@ -4,6 +4,7 @@
   filter = params[:filter]
   sort = params[:sort]
   sort_reverse = params[:sort_reverse]
+  filters_exist = !@properties.select{|property| property[:type] == :boolean}.empty?
 %>
         <div id="content-main">
           <ul class="object-tools">
@@ -11,7 +12,7 @@
               <%= link_to("Add #{@abstract_model.pretty_name.downcase}", url(:merb_admin_new, :model_name => @abstract_model.singular_name), :class => "addlink") %>
             </li>
           </ul>
-          <div class="module filtered" id="changelist">
+          <div class="<%= filters_exist ? "module filtered" : "module" %>" id="changelist">
             <div id="toolbar">
               <form id="changelist-search" action="" method="get">
               <div>
@@ -30,6 +31,7 @@
               </form>
             </div>
             <script type="text/javascript">document.getElementById("searchbar").focus();</script>
+            <% if filters_exist %>
             <div id="changelist-filter">
               <h2>Filter</h2>
               <% @properties.each do |property| %>
@@ -52,13 +54,14 @@
               <% end %>
               <% end %>
             </div>
+            <% end %>
             <table cellspacing="0">
               <thead>
                 <tr>
                   <% @properties.each do |property| %>
                   <% property_name = property[:name] %>
                   <% property_pretty_name = property[:pretty_name] %>
-                  <th class="<%= sort == property_name.to_s ? sort_reverse ? 'sorted descending' : 'sorted ascending' : nil %>">
+                  <th class="<%= sort == property_name.to_s ? sort_reverse ? "sorted descending" : "sorted ascending" : nil %>">
                     <%= link_to(property_pretty_name, "?" + Merb::Parse.params_to_query_string(params.merge(:sort => property_name).reject{|key, value| key.to_sym == :sort_reverse}.merge(sort == property_name.to_s && sort_reverse != "true" ? {:sort_reverse => "true"} : {}))) %>
                   </th>
                   <% end %>
