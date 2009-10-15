@@ -4,32 +4,6 @@ require 'mlb'
 namespace :slices do
   namespace :"merb-admin" do
 
-    desc "Loads sample DataMapper models and data"
-    task :load_sample => ["load_sample:datamapper"]
-
-    namespace :load_sample do
-
-      desc "Loads sample ActiveRecord models"
-      task :activerecord do
-        puts "Copying sample ActiveRecord models into host application - resolves any collisions"
-        copy_models(:activerecord)
-        puts "Copying sample ActiveRecord migrations into host application - resolves any collisions"
-        copy_migrations
-        Rake::Task["db:migrate"].reenable
-        Rake::Task["db:migrate"].invoke
-        load_data
-      end
-
-      desc "Loads sample DataMapper models"
-      task :datamapper do
-        puts "Copying sample DataMapper models into host application - resolves any collisions"
-        copy_models(:datamapper)
-        Rake::Task["db:automigrate"].reenable
-        Rake::Task["db:automigrate"].invoke
-        load_data
-      end
-    end
-
     # add your own merb-admin tasks here
 
     # # Uncomment the following lines and edit the pre defined tasks
@@ -44,6 +18,47 @@ namespace :slices do
     # desc "Migrate the database"
     # task :migrate do
     # end
+
+    namespace :activerecord do
+
+      desc "Loads sample ActiveRecord models and data"
+      task :load_sample => ["load_sample:activerecord:models", "load_sample:activerecord:data"]
+      namespace :load_sample do
+        desc "Loads sample ActiveRecord models"
+        task :models do
+          copy_models(:activerecord)
+          copy_migrations(:activerecord)
+        end
+
+        desc "Loads sample ActiveRecord data"
+        task :data do
+          Rake::Task["db:migrate"].reenable
+          Rake::Task["db:migrate"].invoke
+          load_data
+        end
+      end
+
+    end
+
+    namespace :datamapper do
+
+      desc "Loads sample DataMapper models and data"
+      task :load_sample => ["load_sample:datamapper:models", "load_sample:datamapper:data"]
+      namespace :load_sample do
+        desc "Loads sample DataMapper models"
+        task :models do
+          copy_models(:datamapper)
+        end
+
+        desc "Loads sample DataMapper data"
+        task :data do
+          Rake::Task["db:automigrate"].reenable
+          Rake::Task["db:automigrate"].invoke
+          load_data
+        end
+      end
+
+    end
 
   end
 end
@@ -70,6 +85,7 @@ end
 
 def copy_models(orm = nil)
   orm ||= set_orm
+  puts "Copying sample #{orm} models into host application - resolves any collisions"
   seen, copied, duplicated = [], [], []
   Dir.glob(File.dirname(__FILE__) / ".." / ".." / "spec" / "models" / orm.to_s.downcase / MerbAdmin.glob_for(:model)).each do |source_filename|
     destination_filename = Merb.dir_for(:model) / File.basename(source_filename)
@@ -81,7 +97,9 @@ def copy_models(orm = nil)
   duplicated.each { |f| puts "! duplicated override as #{f}" }
 end
 
-def copy_migrations
+def copy_migrations(orm = nil)
+  orm ||= set_orm
+  puts "Copying sample #{orm} migrations into host application - resolves any collisions"
   seen, copied, duplicated = [], [], []
   Dir.glob(File.dirname(__FILE__) / ".." / ".." / "schema" / "migrations" / "*.rb").each do |source_filename|
     destination_filename = Merb.root / "schema" / "migrations" / File.basename(source_filename)
