@@ -34,7 +34,11 @@ module Merb
           value = object.send(property_name)
           value.respond_to?(:strftime) ? value.strftime("%I:%M%p") : nil
         when :string
-          object.send(property_name).to_s.truncate(50)
+          if property_name.to_s =~ /(image|logo|photo|photograph|picture|thumb|thumbnail)_ur(i|l)/i
+            Builder::XmlMarkup.new.img(:src => object.send(property_name), :width => 10, :height => 10)
+          else
+            object.send(property_name).to_s.truncate(50)
+          end
         when :text
           object.send(property_name).to_s.truncate(50)
         when :integer
