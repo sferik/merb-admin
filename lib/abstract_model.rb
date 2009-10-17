@@ -19,7 +19,7 @@ module MerbAdmin
         end
         @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
       when :datamapper
-        DataMapper::Resource.descendants.each do |m|
+        DataMapper::Model.descendants.each do |m|
           # Remove DataMapperSessionStore because it's included by default
           next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)
           model = lookup(m.to_s.to_sym)
@@ -34,7 +34,7 @@ module MerbAdmin
     # Given a symbol +model_name+, finds the corresponding model class
     def self.lookup(model_name)
       begin
-        model = const_get(model_name)
+        model = Object.full_const_get(model_name.to_s)
       rescue NameError
         raise "MerbAdmin could not find model #{model_name}"
       end
