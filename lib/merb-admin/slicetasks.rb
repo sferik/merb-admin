@@ -1,5 +1,4 @@
 require 'abstract_model'
-require 'mlb'
 
 namespace :slices do
   namespace :"merb-admin" do
@@ -66,6 +65,14 @@ end
 private
 
 def load_data
+  begin
+    require "mlb"    
+  rescue Exception => e
+    puts "MLB Gem Required"
+    puts "gem install mlb --source=http://gemcutter.org"
+    return
+  end
+  
   puts "Loading current MLB leagues, divisions, teams, and players"
   MLB.teams.each do |mlb_team|
     unless league = MerbAdmin::AbstractModel.new("League").first(:conditions => ["name = ?", mlb_team.league])

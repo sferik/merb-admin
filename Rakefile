@@ -25,7 +25,6 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
   s.add_dependency("merb-slices", ">= 1.0.12")
   s.add_dependency("builder", ">= 2.1.2")
-  s.add_dependency("mlb", ">= 0.0.3")
   s.require_path = "lib"
   s.files = %w(LICENSE README.markdown Rakefile) + Dir.glob("{app,lib,public,schema,spec,stubs}/**/*")
   s.post_install_message = <<-POST_INSTALL_MESSAGE
