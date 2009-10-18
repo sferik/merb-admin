@@ -30,4 +30,5 @@ Many thanks to:
 * {Wilson Miner}[http://www.wilsonminer.com] for contributing the stylesheets and javascripts from Django[http://www.djangoproject.com]
 * {Aaron Wheeler}[http://fightinjoe.com/] for contributing libraries from {Merb AutoScaffold}[http://github.com/fightinjoe/merb-autoscaffold]
 * {Lori Holden}[http://loriholden.com/] for contributing the merb-pagination[http://github.com/lholden/merb-pagination] helper
+* {Jacques Crocker}[http://merbjedi.com] for adding support for {namespaced models}[http://github.com/merbjedi/merb-admin/commit/8139e2241038baf9b72452056fcdc7c340d79275]
 Also, thanks to beer[http://www.21st-amendment.com].
