@@ -3,8 +3,6 @@ require 'abstract_model'
 namespace :slices do
   namespace :"merb-admin" do
 
-    # add your own merb-admin tasks here
-
     # # Uncomment the following lines and edit the pre defined tasks
     #
     # # implement this to test for structural/code dependencies
@@ -19,9 +17,8 @@ namespace :slices do
     # end
 
     namespace :activerecord do
-
       desc "Loads sample ActiveRecord models and data"
-      task :load_sample => ["load_sample:activerecord:models", "load_sample:activerecord:data"]
+      task :load_sample => ["activerecord:load_sample:models", "activerecord:load_sample:data"]
       namespace :load_sample do
         desc "Loads sample ActiveRecord models"
         task :models do
@@ -36,13 +33,11 @@ namespace :slices do
           load_data
         end
       end
-
     end
 
     namespace :datamapper do
-
       desc "Loads sample DataMapper models and data"
-      task :load_sample => ["load_sample:datamapper:models", "load_sample:datamapper:data"]
+      task :load_sample => ["datamapper:load_sample:models", "datamapper:load_sample:data"]
       namespace :load_sample do
         desc "Loads sample DataMapper models"
         task :models do
@@ -56,7 +51,6 @@ namespace :slices do
           load_data
         end
       end
-
     end
 
   end
@@ -67,9 +61,9 @@ private
 def load_data
   begin
     require "mlb"    
-  rescue Exception => e
-    puts "MLB Gem Required"
-    puts "gem install mlb --source=http://gemcutter.org"
+  rescue LoadError => e
+    puts "LoadError: #{e}"
+    puts "gem install mlb -s http://gemcutter.org"
     return
   end
   
