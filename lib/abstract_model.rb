@@ -19,7 +19,7 @@ module MerbAdmin
         end
         @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
       when :datamapper
-        DataMapper::Model.descendants.each do |m|
+        DataMapper::Resource.descendants.each do |m|
           # Remove DataMapperSessionStore because it's included by default
           next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)
           model = lookup(m.to_s.to_sym)
