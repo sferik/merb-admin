@@ -10,6 +10,7 @@
 TAGS
 TODO
 coverage/*
+doc/*
 gems/gems/*
 gems/specifications/*
 log/*
