@@ -1,0 +1,33 @@
+= MerbAdmin
+==== MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
+It currently offers the features listed here[http://sferik.tadalist.com/lists/1352791/public].
+
+The status of the current build can be seen here[http://runcoderun.com/sferik/merb-admin].
+== Installtion
+  $ gem install merb-admin -s http://gemcutter.org
+In your app, add the following dependency to <tt>config/dependencies.rb</tt>:
+  dependency "merb-admin", "0.5.5"
+Add the following route to <tt>config/router.rb</tt>:
+  add_slice(:merb_admin, :path_prefix => "admin")
+Then, run the following rake task:
+  $ rake slices:merb-admin:install
+== Configuration (optional)
+If you're feeling crafty, you can set a couple configuration options in <tt>config/init.rb</tt>:
+  Merb::BootLoader.before_app_loads do
+    Merb::Slices::config[:merb_admin][:app_name] = "My App"
+    Merb::Slices::config[:merb_admin][:per_page] = 100
+  end
+== Usage
+Start the server:
+  $ merb
+You should now be able to administer your site at http://localhost:4000/admin.
+== Contact
+Please report any problems you encounter to mailto:sferik@gmail.com or {@sferik}[http://twitter.com/sferik] on Twitter.
+== WARNING
+MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!
+== Credits
+Many thanks to:
+* {Wilson Miner}[http://www.wilsonminer.com] for contributing the stylesheets and javascripts from Django[http://www.djangoproject.com]
+* {Aaron Wheeler}[http://fightinjoe.com/] for contributing libraries from {Merb AutoScaffold}[http://github.com/fightinjoe/merb-autoscaffold]
+* {Lori Holden}[http://loriholden.com/] for contributing the merb-pagination[http://github.com/lholden/merb-pagination] helper
+Also, thanks to beer[http://www.21st-amendment.com].
