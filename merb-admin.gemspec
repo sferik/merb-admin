@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{merb-admin}
-  s.version = "0.5.5"
+  s.version = "0.5.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Erik Michaels-Ober"]
-  s.date = %q{2009-10-15}
+  s.date = %q{2009-10-18}
   s.description = %q{MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.}
   s.email = %q{sferik@gmail.com}
   s.extra_rdoc_files = ["README.markdown", "LICENSE"]
@@ -31,15 +31,12 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<merb-slices>, [">= 1.0.12"])
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
-      s.add_runtime_dependency(%q<mlb>, [">= 0.0.3"])
     else
       s.add_dependency(%q<merb-slices>, [">= 1.0.12"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
-      s.add_dependency(%q<mlb>, [">= 0.0.3"])
     end
   else
     s.add_dependency(%q<merb-slices>, [">= 1.0.12"])
     s.add_dependency(%q<builder>, [">= 2.1.2"])
-    s.add_dependency(%q<mlb>, [">= 0.0.3"])
   end
 end
