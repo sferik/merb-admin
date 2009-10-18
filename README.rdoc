@@ -2,8 +2,8 @@
 ==== MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
 It currently offers the features listed here[http://sferik.tadalist.com/lists/1352791/public].
 
-The status of the current build can be seen here[http://runcoderun.com/sferik/merb-admin].
-== Installtion
+The status of the latest build is available here[http://runcoderun.com/sferik/merb-admin].
+== Installation
   $ gem install merb-admin -s http://gemcutter.org
 In your app, add the following dependency to <tt>config/dependencies.rb</tt>:
   dependency "merb-admin", "0.5.6"
@@ -21,10 +21,22 @@ If you're feeling crafty, you can set a couple configuration options in <tt>conf
 Start the server:
   $ merb
 You should now be able to administer your site at http://localhost:4000/admin.
-== Contact
-Please report any problems you encounter to mailto:sferik@gmail.com or {@sferik}[http://twitter.com/sferik] on Twitter.
 == WARNING
 MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!
+== Contributing
+In the spirit of {free software}[http://www.fsf.org/licensing/essays/free-sw.html], people of all abilities are encouraged to help improve MerbAdmin.
+
+There are many ways to contribute:
+* by reporting bugs
+* by suggesting new features
+* by writing documentation
+* by writing specifications
+* by writing code (no patch is too small: fix typos in comments or inconsistent whitespace)
+* financially[http://pledgie.com/campaigns/5428]
+
+All contributors will be added to the credits below and will receive the respect and gratitude of the author.
+== Contact
+If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via email[mailto:sferik@gmail.com], GitHub[http://github.com/sferik/], or Twitter[http://twitter.com/sferik].
 == Credits
 Many thanks to:
 * {Wilson Miner}[http://www.wilsonminer.com] for contributing the stylesheets and javascripts from Django[http://www.djangoproject.com]
