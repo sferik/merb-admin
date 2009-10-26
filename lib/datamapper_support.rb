@@ -20,11 +20,6 @@ module MerbAdmin
         model.all(options)
       end
 
-      def all_in(ids, options = {})
-        options[:id] = ids
-        model.all(options)
-      end
-
       def paginated(options = {})
         page = options.delete(:page) || 1
         per_page = options.delete(:per_page) || MerbAdmin[:per_page]
