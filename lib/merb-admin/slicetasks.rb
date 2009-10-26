@@ -16,41 +16,44 @@ namespace :slices do
     # task :migrate do
     # end
 
+    desc "Copies sample models, copies and runs sample migrations, and loads sample data into your app"
+    task :activerecord => ["activerecord:copy_sample_models", "activerecord:copy_sample_migrations", "activerecord:migrate", "load_sample_data"]
     namespace :activerecord do
-      desc "Loads sample ActiveRecord models and data"
-      task :load_sample => ["activerecord:load_sample:models", "activerecord:load_sample:data"]
-      namespace :load_sample do
-        desc "Loads sample ActiveRecord models"
-        task :models do
-          copy_models(:activerecord)
-          copy_migrations(:activerecord)
-        end
+      desc "Copies sample models into your app"
+      task :copy_sample_models do
+        copy_models(:activerecord)
+      end
 
-        desc "Loads sample ActiveRecord data"
-        task :data do
-          Rake::Task["db:migrate"].reenable
-          Rake::Task["db:migrate"].invoke
-          load_data
-        end
+      desc "Copies sample migrations into your app"
+      task :copy_sample_migrations do
+        copy_migrations(:activerecord)
+      end
+
+      desc "Migrate the database to the latest version"
+      task :migrate do
+        Rake::Task["db:migrate"].reenable
+        Rake::Task["db:migrate"].invoke
       end
     end
 
+    desc "Copies sample models, runs sample migrations, and loads sample data into your app"
+    task :datamapper => ["datamapper:copy_sample_models", "datamapper:migrate", "load_sample_data"]
     namespace :datamapper do
-      desc "Loads sample DataMapper models and data"
-      task :load_sample => ["datamapper:load_sample:models", "datamapper:load_sample:data"]
-      namespace :load_sample do
-        desc "Loads sample DataMapper models"
-        task :models do
-          copy_models(:datamapper)
-        end
-
-        desc "Loads sample DataMapper data"
-        task :data do
-          Rake::Task["db:automigrate"].reenable
-          Rake::Task["db:automigrate"].invoke
-          load_data
-        end
+      desc "Copies sample models into your app"
+      task :copy_sample_models do
+        copy_models(:datamapper)
       end
+
+      desc "Perform non destructive automigration"
+      task :migrate do
+        Rake::Task["db:automigrate"].reenable
+        Rake::Task["db:automigrate"].invoke
+      end
+    end
+
+    desc "Loads sample data into your app"
+    task :load_sample_data do
+      load_data
     end
 
   end
@@ -79,6 +82,7 @@ def load_data
       team = MerbAdmin::AbstractModel.new("Team").create(:name => mlb_team.name, :logo_url => mlb_team.logo_url, :manager => mlb_team.manager, :ballpark => mlb_team.ballpark, :mascot => mlb_team.mascot, :founded => mlb_team.founded, :wins => mlb_team.wins, :losses => mlb_team.losses, :win_percentage => ("%.3f" % (mlb_team.wins.to_f / (mlb_team.wins + mlb_team.losses))).to_f, :division => division, :league => league)
     end
     mlb_team.players.each do |player|
+      next if player.number.nil?
       MerbAdmin::AbstractModel.new("Player").create(:name => player.name, :number => player.number, :position => player.position, :team => team)
     end
   end
@@ -102,7 +106,7 @@ def copy_migrations(orm = nil)
   orm ||= set_orm
   puts "Copying sample #{orm} migrations into host application - resolves any collisions"
   seen, copied, duplicated = [], [], []
-  Dir.glob(File.dirname(__FILE__) / ".." / ".." / "schema" / "migrations" / "*.rb").each do |source_filename|
+  Dir.glob(File.dirname(__FILE__) / ".." / ".." / "spec" / "migrations" / orm.to_s.downcase / "*.rb").each do |source_filename|
     destination_filename = Merb.root / "schema" / "migrations" / File.basename(source_filename)
     next if seen.include?(source_filename)
     mirror_file(source_filename, destination_filename, copied, duplicated)
