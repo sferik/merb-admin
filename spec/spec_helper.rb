@@ -64,6 +64,10 @@ module Merb
           end
         when :sequel
           require 'sequel'
+          require 'sequel/extensions/blank'
+          require 'sequel/extensions/migration'
+          Sequel::Migrator.apply(Sequel.sqlite, File.join(File.dirname(__FILE__), "migrations", "sequel"))
+          require_models(orm)
         else
           raise "MerbAdmin does not support the #{orm} ORM"
         end

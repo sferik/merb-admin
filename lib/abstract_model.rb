@@ -24,6 +24,15 @@ module MerbAdmin
           @models << new(model) if model
         end
         @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
+      when :sequel
+        Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
+          # FIXME: This heuristic for finding Sequel models could be too strict
+          File.read(filename).scan(/^class ([\w\d_\-:]+) < Sequel::Model$/).flatten.each do |m|
+            model = lookup(m.to_s.to_sym)
+            @models << new(model) if model
+          end
+        end
+        @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
       else
         raise "MerbAdmin does not support the #{Merb.orm} ORM"
       end
@@ -42,6 +51,8 @@ module MerbAdmin
         return model if model.superclass == ActiveRecord::Base
       when :datamapper
         return model if model.include?(DataMapper::Resource)
+      when :sequel
+        return model if model.superclass == Sequel::Model
       end
       nil
     end
@@ -59,6 +70,9 @@ module MerbAdmin
       when :datamapper
         require 'datamapper_support'
         self.extend(DatamapperSupport)
+      when :sequel
+        require 'sequel_support'
+        self.extend(SequelSupport)
       else
         raise "MerbAdmin does not support the #{Merb.orm} ORM"
       end

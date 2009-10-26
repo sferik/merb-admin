@@ -51,6 +51,27 @@ namespace :slices do
       end
     end
 
+    desc "Copies sample models, copies and runs sample migrations, and loads sample data"
+    task :sequel => ["sequel:copy_sample_models", "sequel:copy_sample_migrations", "sequel:migrate", "load_sample_data"]
+    namespace :sequel do
+      desc "Copies sample models into your app"
+      task :copy_sample_models do
+        copy_models(:sequel)
+      end
+
+      desc "Copies sample migrations into your app"
+      task :copy_sample_migrations do
+        copy_migrations(:sequel)
+      end
+
+      desc "Perform migration using migrations in schema/migrations"
+      task :migrate do
+        require 'sequel/extensions/migration'
+        Rake::Task["sequel:db:migrate"].reenable
+        Rake::Task["sequel:db:migrate"].invoke
+      end
+    end
+
     desc "Loads sample data into your app"
     task :load_sample_data do
       load_data
@@ -63,13 +84,13 @@ private
 
 def load_data
   begin
-    require "mlb"    
+    require "mlb"
   rescue LoadError => e
     puts "LoadError: #{e}"
     puts "gem install mlb -s http://gemcutter.org"
     return
   end
-  
+
   puts "Loading current MLB leagues, divisions, teams, and players"
   MLB.teams.each do |mlb_team|
     unless league = MerbAdmin::AbstractModel.new("League").first(:conditions => ["name = ?", mlb_team.league])

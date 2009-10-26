@@ -449,6 +449,7 @@ describe "MerbAdmin" do
     end
 
     it "should be associated with the correct object" do
+      @draft.reload
       MerbAdmin::AbstractModel.new("Player").first.draft.should == @draft
     end
   end
@@ -463,7 +464,9 @@ describe "MerbAdmin" do
     end
 
     it "should be associated with the correct objects" do
+      @teams[0].reload
       MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[0])
+      @teams[1].reload
       MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
     end
 
@@ -544,6 +547,7 @@ describe "MerbAdmin" do
     end
 
     it "should be associated with the correct object" do
+      @draft.reload
       MerbAdmin::AbstractModel.new("Player").first.draft.should == @draft
     end
   end
@@ -558,7 +562,9 @@ describe "MerbAdmin" do
     end
 
     it "should be associated with the correct objects" do
+      @teams[0].reload
       MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[0])
+      @teams[1].reload
       MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
     end
 
