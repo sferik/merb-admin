@@ -6,7 +6,7 @@ The status of the latest build is available here[http://runcoderun.com/sferik/me
 == Installation
   $ gem install merb-admin -s http://gemcutter.org
 In your app, add the following dependency to <tt>config/dependencies.rb</tt>:
-  dependency "merb-admin", "0.5.6"
+  dependency "merb-admin", "0.5.7"
 Add the following route to <tt>config/router.rb</tt>:
   add_slice(:merb_admin, :path_prefix => "admin")
 Then, run the following rake task:
