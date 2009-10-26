@@ -88,9 +88,7 @@ module MerbAdmin
       end
 
       def destroy_all!
-        model.all.each do |object|
-          object.destroy
-        end
+        model.destroy
       end
 
       def has_many_associations
@@ -272,15 +270,12 @@ module MerbAdmin
 
       module InstanceMethods
         def update_attributes(attributes)
-          # NOTE: Not sure why calling update(attributes) raises
-          # Argument Error: wrong number of arguments (1 for 0)
-          # but this seems to work:
-          set(attributes)
-          save
+          update(attributes)
         end
 
         def clear_association(association)
-          association.clear # FIXME!
+          # FIXME: This should be changed to use the remove_all_* association method.
+          association.clear
         end
       end
 
