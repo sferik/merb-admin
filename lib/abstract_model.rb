@@ -1,6 +1,4 @@
 require 'generic_support'
-require 'activerecord_support'
-require 'datamapper_support'
 
 module MerbAdmin
   class AbstractModel
@@ -11,7 +9,7 @@ module MerbAdmin
       case Merb.orm
       when :activerecord
         Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
-          # FIXME: This heuristic for finding ActiveRecord models is too strict
+          # FIXME: This heuristic for finding ActiveRecord models could be too strict
           File.read(filename).scan(/^class ([\w\d_\-:]+) < ActiveRecord::Base$/).flatten.each do |m|
             model = lookup(m.to_s.to_sym)
             @models << new(model) if model
@@ -56,8 +54,10 @@ module MerbAdmin
       self.extend(GenericSupport)
       case Merb.orm
       when :activerecord
+        require 'activerecord_support'
         self.extend(ActiverecordSupport)
       when :datamapper
+        require 'datamapper_support'
         self.extend(DatamapperSupport)
       else
         raise "MerbAdmin does not support the #{Merb.orm} ORM"
