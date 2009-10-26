@@ -1,3 +1,7 @@
+require 'dm-core'
+require 'dm-validations'
+require 'dm-aggregates'
+
 module MerbAdmin
   class AbstractModel
     module DatamapperSupport
@@ -151,6 +155,10 @@ module MerbAdmin
 
         def clear_association(association)
           association.clear
+        end
+
+        def reset
+          super
         end
       end
 

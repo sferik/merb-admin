@@ -1,3 +1,5 @@
+require 'activerecord'
+
 module MerbAdmin
   class AbstractModel
     module ActiverecordSupport
@@ -163,6 +165,10 @@ module MerbAdmin
 
         def clear_association(association)
           association.clear
+        end
+
+        def reset
+          super
         end
       end
 
