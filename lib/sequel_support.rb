@@ -197,7 +197,7 @@ module MerbAdmin
             association[:name]
           end
         when :many_to_one
-            association[:name]
+          association[:name]
         else
           raise "Unknown association type"
         end
