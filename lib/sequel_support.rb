@@ -271,18 +271,6 @@ module MerbAdmin
       end
 
       module InstanceMethods
-        def id
-          super
-        end
-
-        def save
-          super
-        end
-
-        def destroy
-          super
-        end
-
         def update_attributes(attributes)
           # NOTE: Not sure why calling update(attributes) raises
           # Argument Error: wrong number of arguments (1 for 0)
@@ -291,16 +279,8 @@ module MerbAdmin
           save
         end
 
-        def errors
-          super
-        end
-
         def clear_association(association)
           association.clear # FIXME!
-        end
-
-        def reset
-          super
         end
       end
 

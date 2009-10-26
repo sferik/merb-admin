@@ -143,32 +143,8 @@ module MerbAdmin
       end
 
       module InstanceMethods
-        def id
-          super
-        end
-
-        def save
-          super
-        end
-
-        def destroy
-          super
-        end
-
-        def update_attributes(attributes)
-          super
-        end
-
-        def errors
-          super
-        end
-
         def clear_association(association)
           association.clear
-        end
-
-        def reset
-          super
         end
       end
 
