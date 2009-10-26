@@ -48,11 +48,11 @@ module MerbAdmin
 
       case Merb.orm
       when :activerecord
-        return model if model.superclass == ActiveRecord::Base
+        return model if superclasses(model).include?(ActiveRecord::Base)
       when :datamapper
         return model if model.include?(DataMapper::Resource)
       when :sequel
-        return model if model.superclass == Sequel::Model
+        return model if superclasses(model).include?(Sequel::Model)
       end
       nil
     end
@@ -77,5 +77,17 @@ module MerbAdmin
         raise "MerbAdmin does not support the #{Merb.orm} ORM"
       end
     end
+
+    private
+
+    def self.superclasses(klass)
+      superclasses = []
+      while klass
+        superclasses << klass.superclass if klass && klass.superclass
+        klass = klass.superclass
+      end
+      superclasses
+    end
+
   end
 end
