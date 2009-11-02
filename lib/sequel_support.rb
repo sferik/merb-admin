@@ -29,8 +29,7 @@ module MerbAdmin
 
       def count(options = {})
         if options[:conditions] && !options[:conditions].empty?
-          # If options[:conditions] isn't cloned, Sequel eats the first condition!
-          model.where(options[:conditions].clone).count
+          model.where(options[:conditions]).count
         else
           model.count
         end
@@ -41,8 +40,7 @@ module MerbAdmin
         sort_order = options.delete(:sort_reverse) ? :desc : :asc
 
         if options[:conditions] && !options[:conditions].empty?
-          # If options[:conditions] isn't cloned, Sequel eats the first condition!
-          model.order(sort.to_sym.send(sort_order)).first(options[:conditions].clone).extend(InstanceMethods)
+          model.order(sort.to_sym.send(sort_order)).first(options[:conditions]).extend(InstanceMethods)
         else
           model.order(sort.to_sym.send(sort_order)).first.extend(InstanceMethods)
         end
@@ -56,8 +54,7 @@ module MerbAdmin
         sort_order = options.delete(:sort_reverse) ? :desc : :asc
 
         if options[:conditions] && !options[:conditions].empty?
-          # If options[:conditions] isn't cloned, Sequel eats the first condition!
-          model.where(options[:conditions].clone).order(sort.to_sym.send(sort_order))
+          model.where(options[:conditions]).order(sort.to_sym.send(sort_order))
         else
           model.order(sort.to_sym.send(sort_order))
         end
@@ -72,8 +69,7 @@ module MerbAdmin
         sort_order = options.delete(:sort_reverse) ? :desc : :asc
 
         if options[:conditions] && !options[:conditions].empty?
-          # If options[:conditions] isn't cloned, Sequel eats the first condition!
-          [page_count, model.paginate(page.to_i, per_page).where(options[:conditions].clone).order(sort.to_sym.send(sort_order))]
+          [page_count, model.paginate(page.to_i, per_page).where(options[:conditions]).order(sort.to_sym.send(sort_order))]
         else
           [page_count, model.paginate(page.to_i, per_page).order(sort.to_sym.send(sort_order))]
         end
