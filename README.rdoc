@@ -3,6 +3,9 @@
 It currently offers the features listed here[http://sferik.tadalist.com/lists/1352791/public].
 
 The status of the latest build is available here[http://runcoderun.com/sferik/merb-admin].
+== Screenshots
+http://github.com/sferik/merb-admin/raw/master/screenshots/list.png
+http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png
 == Installation
   $ gem install merb-admin -s http://gemcutter.org
 In your app, add the following dependency to <tt>config/dependencies.rb</tt>:
