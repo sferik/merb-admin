@@ -92,7 +92,7 @@ def load_data
   end
 
   puts "Loading current MLB leagues, divisions, teams, and players"
-  MLB.teams.each do |mlb_team|
+  MLB::Teams.all.each do |mlb_team|
     unless league = MerbAdmin::AbstractModel.new("League").first(:conditions => ["name = ?", mlb_team.league])
       league = MerbAdmin::AbstractModel.new("League").create(:name => mlb_team.league)
     end
