@@ -327,6 +327,10 @@ describe "MerbAdmin" do
     it "should respond sucessfully" do
       @response.should be_successful
     end
+
+    it "should show associated objects" do
+      @response.body.should contain(/DraftDraft #\d+/)
+    end
   end
 
   describe "new with has-many association", :given => "three teams exist" do
@@ -336,6 +340,10 @@ describe "MerbAdmin" do
 
     it "should respond sucessfully" do
       @response.should be_successful
+    end
+
+    it "should show associated objects" do
+      @response.body.should contain(/TeamTeam 1Team 2Team 3/)
     end
   end
 
@@ -374,6 +382,10 @@ describe "MerbAdmin" do
     it "should respond sucessfully" do
       @response.should be_successful
     end
+
+    it "should show associated objects" do
+      @response.body.should contain(/DraftDraft #\d+/)
+    end
   end
 
   describe "edit with has-many association", :given => "a player exists and three teams exist" do
@@ -383,6 +395,10 @@ describe "MerbAdmin" do
 
     it "should respond sucessfully" do
       @response.should be_successful
+    end
+
+    it "should show associated objects" do
+      @response.body.should contain(/TeamTeam 1Team 2Team 3/)
     end
   end
 
