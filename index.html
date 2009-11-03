@@ -9,7 +9,7 @@
       body {
         margin-top: 1.0em;
         background-color: #fff;
-        font-family: "Helvetica, Arial, FreeSans, sans";
+        font-family: 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
         color: #000;
       }
       #container {
@@ -18,7 +18,7 @@
       }
       h1 {
         font-size: 3.8em;
-        color: #5188a1;
+        color: #3e7691;
         margin-bottom: 3px;
       }
       h1 .small {
@@ -29,14 +29,13 @@
       }
       h2 {
         font-size: 1.5em;
-        color: #5188a1;
+        color: #3e7691;
       }
-      h3 {
-        text-align: center;
-        color: #5188a1;
+      p, li {
+        font-family: Helvetica, Arial, FreeSans, sans;
       }
       a {
-        color: #5188a1;
+        color: #3e7691;
       }
       .description {
         font-size: 1.2em;
@@ -44,85 +43,78 @@
         margin-top: 30px;
         font-style: italic;
       }
-      .download {
-        float: right;
+      img.screenshot {
+        width: 700px;
+        height: 631px;
       }
       pre {
         background: #000;
         color: #fff;
         padding: 15px;
       }
-      hr {
-        border: 0;
-        width: 80%;
-        border-bottom: 1px solid #aaa;
-      }
-      .footer {
-        text-align:center;
-        padding-top:30px;
-        font-style: italic;
-      }
     </style>
   </head>
   <body>
     <a href="http://github.com/sferik/merb-admin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
     <div id="container">
-      <div class="download">
-        <a href="http://github.com/sferik/merb-admin/zipball/master">
-          <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-        <a href="http://github.com/sferik/merb-admin/tarball/master">
-          <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-      </div>
       <h1>
         <a href="http://github.com/sferik/merb-admin">MerbAdmin</a>
-        <span class="small">by <a href="http://github.com/sferik">sferik</a></span>
+        <span class="small">by <a href="http://github.com/sferik">Erik Michaels-Ober</a></span>
       </h1>
       <div class="description">
         MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
       </div>
-      <h2>Get it</h2>
-      <p>At the command prompt, type:</p>
-      <pre><code>sudo gem install merb-admin -s http://gemcutter.org</code></pre>
-      <h2>Install it</h2>
+      <p>It currently offers the features listed <a href="http://sferik.tadalist.com/lists/1352791/public">here</a>.</p>
+      <p>The status of the latest build is available <a href="http://runcoderun.com/sferik/merb-admin">here</a>.</p>
+      <p>Various code metrics are available <a href="http://devver.net/caliper/project?repo=git://github.com/sferik/merb-admin.git">here</a>.</p>
+      <h2>Screenshots</h2>
+      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/list.png" class="screenshot" />
+      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png" class="screenshot" />
+      <h2>Installation</h2>
+      <pre><code>gem install merb-admin -s http://gemcutter.org</code></pre>
       <p>In your app, add the following dependency to <code>config/dependencies.rb</code>:</p>
-      <pre><code>dependency "merb-admin", "0.5.0"</code></pre>
+      <pre><code>dependency &quot;merb-admin&quot;, &quot;0.6.2&quot;</code></pre>
       <p>Add the following route to <code>config/router.rb</code>:</p>
-      <pre><code>slice(:MerbAdmin, :path_prefix =&gt; "admin")</code></pre>
+      <pre><code>add_slice(:merb_admin, :path_prefix =&gt; &quot;admin&quot;)</code></pre>
       <p>Then, run the following rake task:</p>
       <pre><code>rake slices:merb-admin:install</code></pre>
-      <h2>Configure it (optional)</h2>
+      <h2>Configuration (optional)</h2>
       <p>If you're feeling crafty, you can set a couple configuration options in <code>config/init.rb</code>:</p>
       <pre><code>Merb::BootLoader.before_app_loads do
-  Merb::Slices::config[:merb_admin][:app_name] = "My App"
+  Merb::Slices::config[:merb_admin][:app_name] = &quot;My App&quot;
   Merb::Slices::config[:merb_admin][:per_page] = 100
 end</code></pre>
-      <h2>Run it</h2>
+      <h2>Usage</h2>
       <p>Start the server:</p>
       <pre><code>merb</code></pre>
-      <p>You should now be able to administer your site at <a href="http://localhost:4000/admin">http://localhost:4000/admin</a>.</p>
-      <p>Please report any problems you encounter to <a href="mailto:sferik@gmail.com">&#x73;&#102;&#101;&#x72;&#x69;&#107;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;</a> or <a href="http://twitter.com/home/?status=@sferik%20">@sferik</a> on Twitter.</p>
+      <p>You should now be able to administer your site at <a href="http://localhost:4000/admin">localhost:4000/admin</a>.</p>
       <h2>WARNING</h2>
       <p>MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!</p>
-      <h2>Acknowledgements</h2>
+      <h2>Contributing</h2>
+      <p>In the spirit of <a href="http://www.fsf.org/licensing/essays/free-sw.html">free software</a>, people of all abilities are encouraged to help improve MerbAdmin.</p>
+      <p>There are many ways to contribute:</p>
+      <ul>
+        <li>by reporting bugs</li>
+        <li>by suggesting new features</li>
+        <li>by writing documentation</li>
+        <li>by writing specifications</li>
+        <li>by writing code (no patch is too small: fix typos in comments or inconsistent whitespace)</li>
+        <li>by reviewing patches</li>
+        <li><a href="http://pledgie.com/campaigns/5428">financially</a></li>
+      </ul>
+      <p>All contributors will be added to the credits below and will receive the respect and gratitude of the author.</p>
+      <h2>Contact</h2>
+      <p>If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via <a href="mailto:sferik@gmail.com">email</a>, <a href="http://github.com/sferik">GitHub</a>, or <a href="http://twitter.com/sferik">Twitter</a>.</p>
+      <h2>Credits</h2>
       <p>Many thanks to:</p>
       <ul>
         <li><a href="http://www.wilsonminer.com">Wilson Miner</a> for contributing the stylesheets and javascripts from <a href="http://www.djangoproject.com">Django</a></li>
         <li><a href="http://fightinjoe.com/">Aaron Wheeler</a> for contributing libraries from <a href="http://github.com/fightinjoe/merb-autoscaffold">Merb AutoScaffold</a></li>
         <li><a href="http://loriholden.com/">Lori Holden</a> for contributing the <a href="http://github.com/lholden/merb-pagination">merb-pagination</a> helper</li>
+        <li><a href="http://merbjedi.com/">Jacques Crocker</a> for adding support for <a href="http://github.com/merbjedi/merb-admin/commit/8139e2241038baf9b72452056fcdc7c340d79275">namespaced models</a></li>
+        <li><a href="http://code.jeremyevans.net/">Jeremy Evans</a> and <a href="http://merboutpost.com/">Pavel Kunc</a> reviewing the <a href="http://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef">patch</a> to add <a href="http://sequel.rubyforge.org/">Sequel</a> support</li>
       </ul>
       <p>Also, thanks to <a href="http://www.21st-amendment.com">beer</a>.</p>
-      <p>
-        You can download this project in either
-        <a href="http://github.com/sferik/merb-admin/zipball/master">zip</a> or
-        <a href="http://github.com/sferik/merb-admin/tarball/master">tar</a> formats.
-      </p>
-      <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-        by running:
-        <pre>$ git clone git://github.com/sferik/merb-admin</pre>
-      </p>
-      <div class="footer">
-        get the source code on GitHub: <a href="http://github.com/sferik/merb-admin">sferik/merb-admin</a>
-      </div>
     </div>
     <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
