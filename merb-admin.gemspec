@@ -30,13 +30,19 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<merb-slices>, [">= 1.0.12"])
+      s.add_runtime_dependency(%q<merb-assets>, [">= 1.0.12"])
+      s.add_runtime_dependency(%q<merb-helpers>, [">= 1.0.12"])
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
     else
       s.add_dependency(%q<merb-slices>, [">= 1.0.12"])
+      s.add_dependency(%q<merb-assets>, [">= 1.0.12"])
+      s.add_dependency(%q<merb-helpers>, [">= 1.0.12"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
     end
   else
     s.add_dependency(%q<merb-slices>, [">= 1.0.12"])
+    s.add_dependency(%q<merb-assets>, [">= 1.0.12"])
+    s.add_dependency(%q<merb-helpers>, [">= 1.0.12"])
     s.add_dependency(%q<builder>, [">= 2.1.2"])
   end
 end
