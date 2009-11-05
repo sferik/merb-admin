@@ -5,7 +5,7 @@ module MerbAdmin
     # Returns all models for a given Merb app
     def self.all
       return @models if @models
-      @models ||= []
+      @models = []
       orm = Merb.orm
       case orm
       when :activerecord, :sequel
@@ -16,7 +16,6 @@ module MerbAdmin
           end
         end
       when :datamapper
-        @models = []
         DataMapper::Model.descendants.each do |model_name|
           # Remove DataMapperSessionStore because it's included by default
           next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)

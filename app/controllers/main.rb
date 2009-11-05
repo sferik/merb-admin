@@ -14,12 +14,10 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
-    options.merge!(sort)
-    options.merge!(sort_reverse)
-    options.merge!(query(options))
-    options.merge!(filter(options))
-    # merge_query!(options)
-    # merge_filter!(options)
+    options.merge!(get_sort_hash)
+    options.merge!(get_sort_reverse_hash)
+    options.merge!(get_query_hash(options))
+    options.merge!(get_filter_hash(options))
     per_page = MerbAdmin[:per_page]
     if params[:all]
       options.merge!(:limit => per_page * 2)
@@ -96,17 +94,17 @@ class MerbAdmin::Main < MerbAdmin::Application
     raise NotFound unless @object
   end
 
-  def sort
+  def get_sort_hash
     sort = params[:sort]
     sort ? {:sort => sort} : {}
   end
 
-  def sort_reverse
+  def get_sort_reverse_hash
     sort_reverse = params[:sort_reverse]
     sort_reverse ? {:sort_reverse => sort_reverse == "true"} : {}
   end
 
-  def query(options)
+  def get_query_hash(options)
     query = params[:query]
     return {} unless query
     statements = []
@@ -114,7 +112,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     conditions = options[:conditions] || [""]
 
     @properties.select{|property| property[:type] == :string}.each do |property|
-      statements << "#{property[:name]} LIKE ?"
+      statements << "(#{property[:name]} LIKE ?)"
       values << "%#{query}%"
     end
 
@@ -124,7 +122,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     conditions != [""] ? {:conditions => conditions} : {}
   end
 
-  def filter(options)
+  def get_filter_hash(options)
     filter = params[:filter]
     return {} unless filter
     statements = []
@@ -133,7 +131,7 @@ class MerbAdmin::Main < MerbAdmin::Application
 
     filter.each_pair do |key, value|
       @properties.select{|property| property[:type] == :boolean && property[:name] == key.to_sym}.each do |property|
-        statements << "#{key} = ?"
+        statements << "(#{key} = ?)"
         values << (value == "true")
       end
     end
