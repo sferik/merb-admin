@@ -102,8 +102,7 @@ def load_data
     unless team = MerbAdmin::AbstractModel.new("Team").first(:conditions => ["name = ?", mlb_team.name])
       team = MerbAdmin::AbstractModel.new("Team").create(:name => mlb_team.name, :logo_url => mlb_team.logo_url, :manager => mlb_team.manager, :ballpark => mlb_team.ballpark, :mascot => mlb_team.mascot, :founded => mlb_team.founded, :wins => mlb_team.wins, :losses => mlb_team.losses, :win_percentage => ("%.3f" % (mlb_team.wins.to_f / (mlb_team.wins + mlb_team.losses))).to_f, :division => division, :league => league)
     end
-    mlb_team.players.each do |player|
-      next if player.number.nil?
+    mlb_team.players.reject{|player| player.number.nil?}.each do |player|
       MerbAdmin::AbstractModel.new("Player").create(:name => player.name, :number => player.number, :position => player.position, :team => team)
     end
   end
@@ -114,8 +113,8 @@ def copy_models(orm = nil)
   puts "Copying sample #{orm} models into host application - resolves any collisions"
   seen, copied, duplicated = [], [], []
   Dir.glob(File.dirname(__FILE__) / ".." / ".." / "spec" / "models" / orm.to_s.downcase / MerbAdmin.glob_for(:model)).each do |source_filename|
-    destination_filename = Merb.dir_for(:model) / File.basename(source_filename)
     next if seen.include?(source_filename)
+    destination_filename = Merb.dir_for(:model) / File.basename(source_filename)
     mirror_file(source_filename, destination_filename, copied, duplicated)
     seen << source_filename
   end
@@ -128,8 +127,8 @@ def copy_migrations(orm = nil)
   puts "Copying sample #{orm} migrations into host application - resolves any collisions"
   seen, copied, duplicated = [], [], []
   Dir.glob(File.dirname(__FILE__) / ".." / ".." / "spec" / "migrations" / orm.to_s.downcase / "*.rb").each do |source_filename|
-    destination_filename = Merb.root / "schema" / "migrations" / File.basename(source_filename)
     next if seen.include?(source_filename)
+    destination_filename = Merb.root / "schema" / "migrations" / File.basename(source_filename)
     mirror_file(source_filename, destination_filename, copied, duplicated)
     seen << source_filename
   end

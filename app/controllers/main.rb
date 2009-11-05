@@ -3,9 +3,10 @@ require File.join( File.dirname(__FILE__), '..', '..', 'lib', 'abstract_model' )
 class MerbAdmin::Main < MerbAdmin::Application
   include Merb::MerbAdmin::MainHelper
 
-  before :find_models, :only => ['index']
-  before :find_model, :exclude => ['index']
-  before :find_object, :only => ['edit', 'update', 'delete', 'destroy']
+  before :get_models, :only => ['index']
+  before :get_model, :exclude => ['index']
+  before :get_object, :only => ['edit', 'update', 'delete', 'destroy']
+  before :get_attributes, :only => ['create', 'update']
 
   def index
     render(:layout => 'dashboard')
@@ -13,29 +14,25 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def list
     options = {}
-    merge_query!(options)
-    merge_filter!(options)
-    merge_sort!(options)
-    merge_sort_reverse!(options)
-
+    options.merge!(sort)
+    options.merge!(sort_reverse)
+    options.merge!(query(options))
+    options.merge!(filter(options))
+    # merge_query!(options)
+    # merge_filter!(options)
+    per_page = MerbAdmin[:per_page]
     if params[:all]
-      options = {
-        :limit => MerbAdmin[:per_page] * 2,
-      }.merge(options)
+      options.merge!(:limit => per_page * 2)
       @objects = @abstract_model.all(options).reverse
     else
       @current_page = (params[:page] || 1).to_i
-      options = {
-        :page => @current_page,
-        :per_page => MerbAdmin[:per_page],
-      }.merge(options)
+      options.merge!(:page => @current_page, :per_page => per_page)
       @page_count, @objects = @abstract_model.paginated(options)
       options.delete(:page)
       options.delete(:per_page)
       options.delete(:offset)
       options.delete(:limit)
     end
-
     @record_count = @abstract_model.count(options)
     render(:layout => 'list')
   end
@@ -50,47 +47,19 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def create
-    object = params[@abstract_model.singular_name] || {}
-    # Delete fields that are blank
-    object.each do |key, value|
-      object[key] = nil if value.blank?
-    end
-    has_one_associations = @abstract_model.has_one_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
-    has_many_associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
-    @object = @abstract_model.new(object)
-    if @object.save && has_one_associations.each{|association, id| update_association(association, id)} && has_many_associations.each{|association, ids| update_associations(association, ids.to_a)}
-      if params[:_continue]
-        redirect(url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
-      elsif params[:_add_another]
-        redirect(url(:merb_admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
-      else
-        redirect(url(:merb_admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully created"})
-      end
+    @object = @abstract_model.new(@attributes)
+    if @object.save && update_all_associations
+      redirect_on_success
     else
-      message[:error] = "#{@abstract_model.pretty_name} failed to be created"
-      render(:new, :layout => 'form')
+      render_error
     end
   end
 
   def update
-    object = params[@abstract_model.singular_name] || {}
-    # Delete fields that are blank
-    object.each do |key, value|
-      object[key] = nil if value.blank?
-    end
-    has_one_associations = @abstract_model.has_one_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
-    has_many_associations = @abstract_model.has_many_associations.map{|association| [association, (params[:associations] || {}).delete(association[:name])]}
-    if @object.update_attributes(object) && has_one_associations.each{|association, id| update_association(association, id)} && has_many_associations.each{|association, ids| update_associations(association, ids.to_a)}
-      if params[:_continue]
-        redirect(url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
-      elsif params[:_add_another]
-        redirect(url(:merb_admin_new, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
-      else
-        redirect(url(:merb_admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully updated"})
-      end
+    if @object.update_attributes(@attributes) && update_all_associations
+      redirect_on_success
     else
-      message[:error] = "#{@abstract_model.pretty_name} failed to be updated"
-      render(:edit, :layout => 'form')
+      render_error
     end
   end
 
@@ -108,70 +77,91 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   private
 
-  def find_models
+  def get_models
     @abstract_models = MerbAdmin::AbstractModel.all
   end
 
-  def find_model
+  def get_model
     model_name = params[:model_name].camel_case
     @abstract_model = MerbAdmin::AbstractModel.new(model_name)
-    find_properties
+    get_properties
   end
 
-  def find_properties
+  def get_properties
     @properties = @abstract_model.properties
   end
 
-  def find_object
+  def get_object
     @object = @abstract_model.get(params[:id])
     raise NotFound unless @object
   end
 
-  def merge_query!(options)
-    return unless params[:query]
+  def sort
+    sort = params[:sort]
+    sort ? {:sort => sort} : {}
+  end
+
+  def sort_reverse
+    sort_reverse = params[:sort_reverse]
+    sort_reverse ? {:sort_reverse => sort_reverse == "true"} : {}
+  end
+
+  def query(options)
+    query = params[:query]
+    return {} unless query
     statements = []
     values = []
     conditions = options[:conditions] || [""]
-    @properties.each do |property|
-      next unless property[:type] == :string
+
+    @properties.select{|property| property[:type] == :string}.each do |property|
       statements << "#{property[:name]} LIKE ?"
-      values << "%#{params[:query]}%"
+      values << "%#{query}%"
     end
+
     conditions[0] += " AND " unless conditions == [""]
     conditions[0] += statements.join(" OR ")
     conditions += values
-    options.merge!(:conditions => conditions) unless conditions == [""]
+    conditions != [""] ? {:conditions => conditions} : {}
   end
 
-  def merge_filter!(options)
-    return unless params[:filter]
+  def filter(options)
+    filter = params[:filter]
+    return {} unless filter
     statements = []
     values = []
     conditions = options[:conditions] || [""]
-    params[:filter].each_pair do |key, value|
-      @properties.each do |property|
-        next unless property[:name] == key.to_sym
-        next unless property[:type] == :boolean
+
+    filter.each_pair do |key, value|
+      @properties.select{|property| property[:type] == :boolean && property[:name] == key.to_sym}.each do |property|
         statements << "#{key} = ?"
         values << (value == "true")
       end
     end
+
     conditions[0] += " AND " unless conditions == [""]
     conditions[0] += statements.join(" AND ")
     conditions += values
-    options.merge!(:conditions => conditions) unless conditions == [""]
+    conditions != [""] ? {:conditions => conditions} : {}
   end
 
-  def merge_sort!(options)
-    return unless params[:sort]
-    sort = params[:sort] || "id"
-    options.merge!(:sort => sort)
+  def get_attributes
+    @attributes = params[@abstract_model.singular_name] || {}
+    # Delete fields that are blank
+    @attributes.each do |key, value|
+      @attributes[key] = nil if value.blank?
+    end
   end
 
-  def merge_sort_reverse!(options)
-    return unless params[:sort_reverse]
-    reverse = params[:sort_reverse] == "true"
-    options.merge!(:sort_reverse => reverse)
+  def update_all_associations
+    @abstract_model.associations.each do |association|
+      ids = (params[:associations] || {}).delete(association[:name])
+      case association[:type]
+      when :has_one
+        update_association(association, ids)
+      when :has_many
+        update_associations(association, ids.to_a)
+      end
+    end
   end
 
   def update_association(association, id = nil)
@@ -188,6 +178,25 @@ class MerbAdmin::Main < MerbAdmin::Application
     ids.each do |id|
       update_association(association, id)
     end
+  end
+
+  def redirect_on_success
+    singular_name = @abstract_model.singular_name
+    pretty_name = @abstract_model.pretty_name
+    action = params[:action]
+    if params[:_continue]
+      redirect(url(:merb_admin_edit, :model_name => singular_name, :id => @object.id), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
+    elsif params[:_add_another]
+      redirect(url(:merb_admin_new, :model_name => singular_name), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
+    else
+      redirect(url(:merb_admin_list, :model_name => singular_name), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
+    end
+  end
+
+  def render_error
+    action = params[:action]
+    message[:error] = "#{@abstract_model.pretty_name} failed to be #{action}d"
+    render(:new, :layout => 'form')
   end
 
 end

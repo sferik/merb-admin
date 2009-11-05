@@ -6,36 +6,27 @@ module MerbAdmin
     def self.all
       return @models if @models
       @models ||= []
-      case Merb.orm
-      when :activerecord
+      orm = Merb.orm
+      case orm
+      when :activerecord, :sequel
         Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
-          # FIXME: This heuristic for finding ActiveRecord models could be too strict
-          File.read(filename).scan(/^class ([\w\d_\-:]+) < ActiveRecord::Base$/).flatten.each do |m|
-            model = lookup(m.to_s.to_sym)
+          File.read(filename).scan(/class ([\w\d_\-:]+)/).flatten.each do |model_name|
+            model = lookup(model_name.to_sym)
             @models << new(model) if model
           end
         end
-        @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
       when :datamapper
-        DataMapper::Resource.descendants.each do |m|
+        @models = []
+        DataMapper::Resource.descendants.each do |model_name|
           # Remove DataMapperSessionStore because it's included by default
           next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)
-          model = lookup(m.to_s.to_sym)
+          model = lookup(model_name.to_s.to_sym)
           @models << new(model) if model
         end
-        @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
-      when :sequel
-        Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
-          # FIXME: This heuristic for finding Sequel models could be too strict
-          File.read(filename).scan(/^class ([\w\d_\-:]+) < Sequel::Model$/).flatten.each do |m|
-            model = lookup(m.to_s.to_sym)
-            @models << new(model) if model
-          end
-        end
-        @models.sort!{|a, b| a.model.to_s <=> b.model.to_s}
       else
-        raise "MerbAdmin does not support the #{Merb.orm} ORM"
+        raise "MerbAdmin does not support the #{orm} ORM"
       end
+      @models.sort!{|x, y| x.model.to_s <=> y.model.to_s}
     end
 
     # Given a symbol +model_name+, finds the corresponding model class
@@ -48,22 +39,24 @@ module MerbAdmin
 
       case Merb.orm
       when :activerecord
-        return model if superclasses(model).include?(ActiveRecord::Base)
+        model if superclasses(model).include?(ActiveRecord::Base)
       when :datamapper
-        return model if model.include?(DataMapper::Resource)
+        model if model.include?(DataMapper::Resource)
       when :sequel
-        return model if superclasses(model).include?(Sequel::Model)
+        model if superclasses(model).include?(Sequel::Model)
+      else
+        nil
       end
-      nil
     end
 
     attr_accessor :model
 
     def initialize(model)
       model = self.class.lookup(model.to_s.camel_case) unless model.is_a?(Class)
+      orm = Merb.orm
       @model = model
       self.extend(GenericSupport)
-      case Merb.orm
+      case orm
       when :activerecord
         require 'activerecord_support'
         self.extend(ActiverecordSupport)
@@ -74,7 +67,7 @@ module MerbAdmin
         require 'sequel_support'
         self.extend(SequelSupport)
       else
-        raise "MerbAdmin does not support the #{Merb.orm} ORM"
+        raise "MerbAdmin does not support the #{orm} ORM"
       end
     end
 

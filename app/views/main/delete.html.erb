@@ -4,8 +4,7 @@
             <%= @abstract_model.pretty_name %>: <%= link_to(object_name(@object), url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => @object.id)) %>
             <ul>
               <% @abstract_model.has_many_associations.each do |association| %>
-              <% @object.send(association[:name]).each do |child| %>
-              <% next if child.nil? %>
+              <% @object.send(association[:name]).reject{|child| child.nil?}.each do |child| %>
               <li>
                 One or more <%= @abstract_model.pretty_name.pluralize.downcase %> in <%= association[:pretty_name].downcase %>: <%= link_to(object_name(child), url(:merb_admin_edit, :model_name => association[:name].to_s.singularize.to_sym, :id => child.id)) %>
               </li>

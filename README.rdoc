@@ -37,6 +37,7 @@ There are many ways to contribute:
 * by writing documentation
 * by writing specifications
 * by writing code (no patch is too small: fix typos in comments or inconsistent whitespace)
+* by refactoring code
 * by reviewing patches
 * financially[http://pledgie.com/campaigns/5428]
 
