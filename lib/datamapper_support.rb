@@ -133,6 +133,10 @@ module MerbAdmin
       end
 
       module InstanceMethods
+        def update_attributes(attributes)
+          update(attributes)
+        end
+
         def clear_association(association)
           association.clear
         end

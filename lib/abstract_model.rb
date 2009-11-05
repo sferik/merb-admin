@@ -17,7 +17,7 @@ module MerbAdmin
         end
       when :datamapper
         @models = []
-        DataMapper::Resource.descendants.each do |model_name|
+        DataMapper::Model.descendants.each do |model_name|
           # Remove DataMapperSessionStore because it's included by default
           next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)
           model = lookup(model_name.to_s.to_sym)
