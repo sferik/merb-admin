@@ -1,3 +1,5 @@
+require 'spec/rake/spectask'
+
 namespace :slices do
   namespace :"merb-admin" do
 
