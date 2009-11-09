@@ -5,9 +5,9 @@ module Merb
       def object_name(object)
         if object.nil?
           nil
-        elsif object.respond_to?(:name)
+        elsif object.respond_to?(:name) && object.name
           object.name
-        elsif object.respond_to?(:title)
+        elsif object.respond_to?(:title) && object.title
           object.title
         else
           "#{object.class.to_s} ##{object.id}"
