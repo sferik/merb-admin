@@ -24,3 +24,4 @@ schema/*_structure.sql
 schema/schema.rb
 src/*
 tmp/*
+*.sw[p|o]
