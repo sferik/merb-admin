@@ -11,21 +11,25 @@ module MerbAdmin
       when :activerecord, :sequel
         Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
           File.read(filename).scan(/class ([\w\d_\-:]+)/).flatten.each do |model_name|
-            model = lookup(model_name.to_sym)
-            @models << new(model) if model
+            add_model(model_name.to_sym)
           end
         end
       when :datamapper
         DataMapper::Model.descendants.each do |model_name|
           # Remove DataMapperSessionStore because it's included by default
           next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)
-          model = lookup(model_name.to_s.to_sym)
-          @models << new(model) if model
+          add_model(model_name.to_s.to_sym)
         end
       else
         raise "MerbAdmin does not support the #{orm} ORM"
       end
       @models.sort!{|x, y| x.model.to_s <=> y.model.to_s}
+    end
+    
+    def self.add_model(name)
+      return if Merb::Slices.config[:merb_admin][:excluded_models].include?(name.to_s.snake_case.to_sym)
+      model = lookup(name)
+      @models << new(model) if model
     end
 
     # Given a symbol +model_name+, finds the corresponding model class

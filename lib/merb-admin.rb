@@ -17,6 +17,7 @@ if defined?(Merb::Plugins)
   # :mirror - which path component types to use on copy operations; defaults to all
   Merb::Slices::config[:merb_admin][:layout] ||= :merb_admin
   Merb::Slices::config[:merb_admin][:per_page] ||= 100
+  Merb::Slices::config[:merb_admin][:excluded_models] ||= []
 
   # All Slice code is expected to be namespaced inside a module
   module MerbAdmin
