@@ -27,7 +27,7 @@ module MerbAdmin
     end
     
     def self.add_model(name)
-      return if Merb::Slices.config[:merb_admin][:excluded_models].include?(name.to_s.snake_case.to_sym)
+      return if Merb::Slices.config[:merb_admin][:excluded_models].include?(name)
       model = lookup(name)
       @models << new(model) if model
     end
