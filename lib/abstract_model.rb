@@ -16,8 +16,6 @@ module MerbAdmin
         end
       when :datamapper
         DataMapper::Model.descendants.each do |model_name|
-          # Remove DataMapperSessionStore because it's included by default
-          next if m == Merb::DataMapperSessionStore if Merb.const_defined?(:DataMapperSessionStore)
           add_model(model_name.to_s.to_sym)
         end
       else
