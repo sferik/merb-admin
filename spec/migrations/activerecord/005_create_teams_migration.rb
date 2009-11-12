@@ -4,7 +4,7 @@ class CreateTeamsMigration < ActiveRecord::Migration
       t.timestamps
       t.integer(:league_id)
       t.integer(:division_id)
-      t.string(:name, :limit => 50, :null => false)
+      t.string(:name, :limit => 50)
       t.string(:logo_url, :limit => 255)
       t.string(:manager, :limit => 100, :null => false)
       t.string(:ballpark, :limit => 100)

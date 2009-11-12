@@ -10,15 +10,15 @@ end
 
 given "two players exist" do
   @players = []
-  2.times do |i|
-    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => i + 1, :name => "Player #{i + 1}")
+  (1..2).each do |number|
+    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => number, :name => "Player #{number}")
   end
 end
 
 given "three teams exist" do
   @teams = []
-  3.times do |i|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+  (1..3).each do |number|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
@@ -30,23 +30,31 @@ end
 given "a player exists and three teams exist" do
   @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
   @teams = []
-  3.times do |i|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+  (1..3).each do |number|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+  end
+end
+
+given "a player exists and three teams with no name exist" do
+  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
+  @teams = []
+  (1..3).each do |number|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
 given "a league exists and three teams exist" do
-  @league = League.create(:name => "League 1")
+  @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
   @teams = []
-  3.times do |i|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{i + 1}", :manager => "Manager #{i + 1}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+  (1..3).each do |number|
+    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
 given "twenty players exist" do
   @players = []
-  20.times do |i|
-    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => i + 1, :name => "Player #{i + 1}")
+  (1..20).each do |number|
+    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => number, :name => "Player #{number}")
   end
 end
 
@@ -347,6 +355,16 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "new with missing label", :given => "a player exists and three teams with no name exist" do
+    before(:each) do
+      @response = request(url(:merb_admin_new, :model_name => "player"))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+  end
+
   describe "edit", :given => "a player exists" do
     before(:each) do
       @response = request(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
@@ -402,7 +420,6 @@ describe "MerbAdmin" do
     end
   end
 
-
   describe "edit with missing object" do
     before(:each) do
       @response = request(url(:merb_admin_edit, :model_name => "player", :id => 1))
@@ -410,6 +427,16 @@ describe "MerbAdmin" do
 
     it "should raise NotFound" do
       @response.status.should == 404
+    end
+  end
+
+  describe "edit with missing label", :given => "a player exists and three teams with no name exist" do
+    before(:each) do
+      @response = request(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
     end
   end
 
@@ -630,6 +657,18 @@ describe "MerbAdmin" do
 
     it "should raise NotFound" do
       @response.status.should == 404
+    end
+  end
+
+  describe "delete with missing label" do
+    before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => rand(99999), :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @response = request(url(:merb_admin_delete, :model_name => "league", :id => @league.id))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
     end
   end
 

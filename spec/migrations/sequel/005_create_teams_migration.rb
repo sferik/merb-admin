@@ -6,7 +6,7 @@ class CreateTeams < Sequel::Migration
       DateTime(:updated_at)
       foreign_key(:league_id, :table => :leagues)
       foreign_key(:division_id, :table => :divisions)
-      String(:name, :limit => 50, :null => false)
+      String(:name, :limit => 50)
       String(:logo_url, :limit => 255)
       String(:manager, :limit => 100, :null => false)
       String(:ballpark, :limit => 100)

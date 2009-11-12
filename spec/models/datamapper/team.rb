@@ -6,7 +6,7 @@ class Team
   property(:updated_at, DateTime)
   property(:league_id, Integer, :nullable => false, :index => true)
   property(:division_id, Integer, :nullable => false, :index => true)
-  property(:name, String, :nullable => false, :index => true)
+  property(:name, String, :index => true)
   property(:logo_url, String, :length => 255)
   property(:manager, String, :length => 100, :nullable => false, :index => true)
   property(:ballpark, String, :length => 100, :index => true)

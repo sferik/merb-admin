@@ -12,7 +12,6 @@ class Team < Sequel::Model
   def validate
     validates_numeric(:league_id, :only_integer => true)
     validates_numeric(:division_id, :only_integer => true)
-    validates_presence(:name)
     validates_presence(:manager)
     validates_numeric(:founded, :only_integer => true)
     validates_numeric(:wins, :only_integer => true)
