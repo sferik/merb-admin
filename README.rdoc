@@ -21,6 +21,7 @@ If you're feeling crafty, you can set a couple configuration options in <tt>conf
   Merb::BootLoader.before_app_loads do
     Merb::Slices::config[:merb_admin][:app_name] = "My App"
     Merb::Slices::config[:merb_admin][:per_page] = 100
+    Merb::Slices::config[:merb_admin][:excluded_models] = [:Top, :Secret]
   end
 == Usage
 Start the server:
