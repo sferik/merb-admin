@@ -51,5 +51,6 @@ Many thanks to:
 * {Aaron Wheeler}[http://fightinjoe.com/] for contributing libraries from {Merb AutoScaffold}[http://github.com/fightinjoe/merb-autoscaffold]
 * {Lori Holden}[http://loriholden.com/] for contributing the merb-pagination[http://github.com/lholden/merb-pagination] helper
 * {Jacques Crocker}[http://merbjedi.com] for adding support for {namespaced models}[http://github.com/merbjedi/merb-admin/commit/8139e2241038baf9b72452056fcdc7c340d79275]
-* {Jeremy Evans}[http://code.jeremyevans.net] and {Pavel Kunc}[http://www.merboutpost.com] reviewing the {patch}[http://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef] to add Sequel[http://sequel.rubyforge.org/] support
+* {Jeremy Evans}[http://code.jeremyevans.net] and {Pavel Kunc}[http://www.merboutpost.com] for reviewing the {patch}[http://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef] to add Sequel[http://sequel.rubyforge.org/] support
+* {Jonah Honeyman}[http://twitter.com/jonuts] for fixing a bug[http://github.com/sferik/merb-admin/commit/9064d10382eadd1ed7a882ef40e2c6a65edfef2c] and adding the {:excluded_models option}[http://github.com/sferik/merb-admin/commit/f6157d1c471dd85162481d6926578164be1b9673]
 Also, thanks to beer[http://www.21st-amendment.com].
