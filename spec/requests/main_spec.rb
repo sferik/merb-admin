@@ -80,6 +80,25 @@ describe "MerbAdmin" do
     it "should show \"Site administration\"" do
       @response.body.should contain("Site administration")
     end
+
+    it "should be sorted correctly" do
+      @response.body.should contain(/Division.*Draft.*League.*Player.*Team/m)
+    end
+  end
+
+  describe "dashboard with excluded models" do
+    before(:each) do
+      MerbAdmin[:excluded_models] = [:Player]
+      @response = request(url(:merb_admin_dashboard))
+    end
+
+    it "should respond sucessfully" do
+      @response.should be_successful
+    end
+
+    it "should not contain excluded models" do
+      @response.body.should_not contain(/Player/)
+    end
   end
 
   describe "list" do

@@ -4,7 +4,6 @@ module MerbAdmin
   class AbstractModel
     # Returns all models for a given Merb app
     def self.all
-      return @models if @models
       @models = []
       orm = Merb.orm
       case orm
@@ -25,7 +24,8 @@ module MerbAdmin
     end
     
     def self.add_model(name)
-      return if Merb::Slices.config[:merb_admin][:excluded_models].include?(name)
+      puts MerbAdmin[:excluded_models].inspect
+      return if MerbAdmin[:excluded_models].include?(name)
       model = lookup(name)
       @models << new(model) if model
     end
