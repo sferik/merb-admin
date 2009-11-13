@@ -24,7 +24,6 @@ module MerbAdmin
     end
     
     def self.add_model(name)
-      puts MerbAdmin[:excluded_models].inspect
       return if MerbAdmin[:excluded_models].include?(name)
       model = lookup(name)
       @models << new(model) if model
