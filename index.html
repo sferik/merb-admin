@@ -43,10 +43,6 @@
         margin-top: 30px;
         font-style: italic;
       }
-      img.screenshot {
-        width: 700px;
-        height: 631px;
-      }
       pre {
         background: #000;
         color: #fff;
@@ -68,12 +64,12 @@
       <p>The status of the latest build is available <a href="http://runcoderun.com/sferik/merb-admin">here</a>.</p>
       <p>Various code metrics are available <a href="http://devver.net/caliper/project?repo=git://github.com/sferik/merb-admin.git">here</a>.</p>
       <h2>Screenshots</h2>
-      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/list.png" class="screenshot" />
-      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png" class="screenshot" />
+      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/list.png" />
+      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png" />
       <h2>Installation</h2>
       <pre><code>gem install merb-admin -s http://gemcutter.org</code></pre>
       <p>In your app, add the following dependency to <code>config/dependencies.rb</code>:</p>
-      <pre><code>dependency &quot;merb-admin&quot;, &quot;0.6.4&quot;</code></pre>
+      <pre><code>dependency &quot;merb-admin&quot;, &quot;0.6.6&quot;</code></pre>
       <p>Add the following route to <code>config/router.rb</code>:</p>
       <pre><code>add_slice(:merb_admin, :path_prefix =&gt; &quot;admin&quot;)</code></pre>
       <p>Then, run the following rake task:</p>
@@ -113,7 +109,8 @@ end</code></pre>
         <li><a href="http://fightinjoe.com/">Aaron Wheeler</a> for contributing libraries from <a href="http://github.com/fightinjoe/merb-autoscaffold">Merb AutoScaffold</a></li>
         <li><a href="http://loriholden.com/">Lori Holden</a> for contributing the <a href="http://github.com/lholden/merb-pagination">merb-pagination</a> helper</li>
         <li><a href="http://merbjedi.com/">Jacques Crocker</a> for adding support for <a href="http://github.com/merbjedi/merb-admin/commit/8139e2241038baf9b72452056fcdc7c340d79275">namespaced models</a></li>
-        <li><a href="http://code.jeremyevans.net/">Jeremy Evans</a> and <a href="http://merboutpost.com/">Pavel Kunc</a> reviewing the <a href="http://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef">patch</a> to add <a href="http://sequel.rubyforge.org/">Sequel</a> support</li>
+        <li><a href="http://code.jeremyevans.net/">Jeremy Evans</a> and <a href="http://merboutpost.com/">Pavel Kunc</a> for reviewing the <a href="http://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef">patch</a> to add <a href="http://sequel.rubyforge.org/">Sequel</a> support</li>
+        <li><a href="http://twitter.com/jonuts">Jonah Honeyman</a> for fixing a <a href="http://github.com/sferik/merb-admin/commit/9064d10382eadd1ed7a882ef40e2c6a65edfef2c">bug</a> and adding the <a href="http://github.com/sferik/merb-admin/commit/f6157d1c471dd85162481d6926578164be1b9673">:excluded_models option</a></li>
       </ul>
       <p>Also, thanks to <a href="http://www.21st-amendment.com">beer</a>.</p>
     </div>
