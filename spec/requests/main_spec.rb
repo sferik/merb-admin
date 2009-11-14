@@ -80,10 +80,6 @@ describe "MerbAdmin" do
     it "should show \"Site administration\"" do
       @response.body.should contain("Site administration")
     end
-
-    it "should be sorted correctly" do
-      @response.body.should contain(/Division.*Draft.*League.*Player.*Team/m)
-    end
   end
 
   describe "dashboard with excluded models" do
