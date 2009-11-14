@@ -76,7 +76,7 @@ module MerbAdmin
       end
 
       def create(params = {})
-        model.create(params)
+        model.create(params).extend(InstanceMethods)
       end
 
       def new(params = {})
