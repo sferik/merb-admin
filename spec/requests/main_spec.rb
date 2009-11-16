@@ -84,8 +84,9 @@ describe "MerbAdmin" do
 
   describe "dashboard with excluded models" do
     before(:each) do
-      MerbAdmin[:excluded_models] = [:Player]
+      MerbAdmin[:excluded_models] = ["Player"]
       @response = request(url(:merb_admin_dashboard))
+      MerbAdmin[:excluded_models] = []
     end
 
     it "should respond sucessfully" do
@@ -241,9 +242,9 @@ describe "MerbAdmin" do
 
   describe "list with 2 objects", :given => "two players exist" do
     before(:each) do
-      MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
       @response = request(url(:merb_admin_list, :model_name => "player"))
+      MerbAdmin[:per_page] = 100
     end
 
     it "should respond sucessfully" do
@@ -257,9 +258,9 @@ describe "MerbAdmin" do
 
   describe "list with 20 objects", :given => "twenty players exist" do
     before(:each) do
-      MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
       @response = request(url(:merb_admin_list, :model_name => "player"))
+      MerbAdmin[:per_page] = 100
     end
 
     it "should respond sucessfully" do
@@ -273,9 +274,9 @@ describe "MerbAdmin" do
 
   describe "list with 20 objects, page 8", :given => "twenty players exist" do
     before(:each) do
-      MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
       @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:page => 8})
+      MerbAdmin[:per_page] = 100
     end
 
     it "should respond sucessfully" do
@@ -289,9 +290,9 @@ describe "MerbAdmin" do
 
   describe "list with 20 objects, page 17", :given => "twenty players exist" do
     before(:each) do
-      MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
       @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:page => 17})
+      MerbAdmin[:per_page] = 100
     end
 
     it "should respond sucessfully" do
@@ -305,9 +306,9 @@ describe "MerbAdmin" do
 
   describe "list show all", :given => "two players exist" do
     before(:each) do
-      MerbAdmin[:paginate] = true
       MerbAdmin[:per_page] = 1
       @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:all => true})
+      MerbAdmin[:per_page] = 100
     end
 
     it "should respond sucessfully" do

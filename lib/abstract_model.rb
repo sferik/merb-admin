@@ -10,29 +10,29 @@ module MerbAdmin
       when :activerecord, :sequel
         Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
           File.read(filename).scan(/class ([\w\d_\-:]+)/).flatten.each do |model_name|
-            add_model(model_name.to_sym)
+            add_model(model_name)
           end
         end
       when :datamapper
-        DataMapper::Model.descendants.each do |model_name|
-          add_model(model_name.to_s.to_sym)
+        DataMapper::Model.descendants.each do |model|
+          add_model(model.to_s)
         end
       else
         raise "MerbAdmin does not support the #{orm} ORM"
       end
       @models.sort!{|x, y| x.model.to_s <=> y.model.to_s}
     end
-    
-    def self.add_model(name)
-      return if MerbAdmin[:excluded_models].include?(name)
-      model = lookup(name)
+
+    def self.add_model(model_name)
+      model = lookup(model_name)
       @models << new(model) if model
     end
 
-    # Given a symbol +model_name+, finds the corresponding model class
+    # Given a string +model_name+, finds the corresponding model class
     def self.lookup(model_name)
+      return nil if MerbAdmin[:excluded_models].include?(model_name)
       begin
-        model = Object.full_const_get(model_name.to_s)
+        model = Object.full_const_get(model_name)
       rescue NameError
         raise "MerbAdmin could not find model #{model_name}"
       end
