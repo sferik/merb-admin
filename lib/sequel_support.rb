@@ -268,11 +268,6 @@ module MerbAdmin
         def update_attributes(attributes)
           update(attributes)
         end
-
-        def clear_association(association)
-          # FIXME: This should be changed to use the remove_all_* association method.
-          association.clear
-        end
       end
 
     end

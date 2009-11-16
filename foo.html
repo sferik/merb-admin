@@ -1,0 +1,1239 @@
+(in /Users/erik/projects/merb-admin)
+ ~ You didn't create Bundler Gemfile manifest or you are not in a Merb application. If you are trying to create a new merb application, use merb-gen app.
+ ~ Found slice 'merb-admin' in search path at lib/merb-admin.rb
+ ~ Loaded slice 'MerbAdmin' ...
+ ~ Activating slice 'MerbAdmin' ...
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RSpec results</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-size: 80%;
+  }
+  </style>
+  <script type="text/javascript">
+    // <![CDATA[
+function moveProgressBar(percentDone) {
+  document.getElementById("rspec-header").style.width = percentDone +"%";
+}
+function makeRed(element_id) {
+  document.getElementById(element_id).style.background = '#C40D0D';
+  document.getElementById(element_id).style.color = '#FFFFFF';
+}
+
+function makeYellow(element_id) {
+  if (element_id == "rspec-header" && document.getElementById(element_id).style.background != '#C40D0D')
+  {
+    document.getElementById(element_id).style.background = '#FAF834';
+    document.getElementById(element_id).style.color = '#000000';
+  }
+  else
+  {
+    document.getElementById(element_id).style.background = '#FAF834';
+    document.getElementById(element_id).style.color = '#000000';
+  }
+}
+
+    // ]]>
+  </script>
+  <style type="text/css">
+#rspec-header {
+  background: #65C400; color: #fff; height: 4em;
+}
+
+.rspec-report h1 {
+  margin: 0px 10px 0px 10px;
+  padding: 10px;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+  font-size: 1.8em;
+  position: absolute;
+}
+
+#summary {
+  margin: 0; padding: 5px 10px;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+  text-align: right;
+  top: 0px;
+  right: 0px;
+  float:right;
+}
+
+#summary p {
+  margin: 0 0 0 2px;
+}
+
+#summary #totals {
+  font-size: 1.2em;
+}
+
+.example_group {
+  margin: 0 10px 5px;
+  background: #fff;
+}
+
+dl {
+  margin: 0; padding: 0 0 5px;
+  font: normal 11px "Lucida Grande", Helvetica, sans-serif;
+}
+
+dt {
+  padding: 3px;
+  background: #65C400;
+  color: #fff;
+  font-weight: bold;
+}
+
+dd {
+  margin: 5px 0 5px 5px;
+  padding: 3px 3px 3px 18px;
+}
+
+dd.spec.passed {
+  border-left: 5px solid #65C400;
+  border-bottom: 1px solid #65C400;
+  background: #DBFFB4; color: #3D7700;
+}
+
+dd.spec.failed {
+  border-left: 5px solid #C20000;
+  border-bottom: 1px solid #C20000;
+  color: #C20000; background: #FFFBD3;
+}
+
+dd.spec.not_implemented {
+  border-left: 5px solid #FAF834;
+  border-bottom: 1px solid #FAF834;
+  background: #FCFB98; color: #131313;
+}
+
+dd.spec.pending_fixed {
+  border-left: 5px solid #0000C2;
+  border-bottom: 1px solid #0000C2;
+  color: #0000C2; background: #D3FBFF;
+}
+
+.backtrace {
+  color: #000;
+  font-size: 12px;
+}
+
+a {
+  color: #BE5C00;
+}
+
+/* Ruby code, style similar to vibrant ink */
+.ruby {
+  font-size: 12px;
+  font-family: monospace;
+  color: white;
+  background-color: black;
+  padding: 0.1em 0 0.2em 0;
+}
+
+.ruby .keyword { color: #FF6600; }
+.ruby .constant { color: #339999; }
+.ruby .attribute { color: white; }
+.ruby .global { color: white; }
+.ruby .module { color: white; }
+.ruby .class { color: white; }
+.ruby .string { color: #66FF00; }
+.ruby .ident { color: white; }
+.ruby .method { color: #FFCC00; }
+.ruby .number { color: white; }
+.ruby .char { color: white; }
+.ruby .comment { color: #9933CC; }
+.ruby .symbol { color: white; }
+.ruby .regex { color: #44B4CC; }
+.ruby .punct { color: white; }
+.ruby .escape { color: white; }
+.ruby .interp { color: white; }
+.ruby .expr { color: white; }
+
+.ruby .offending { background-color: gray; }
+.ruby .linenum {
+  width: 75px;
+  padding: 0.1em 1em 0.2em 0;
+  color: #000000;
+  background-color: #FFFBD3;
+}
+
+  </style>
+</head>
+<body>
+<div class="rspec-report">
+
+<div id="rspec-header">
+  <div id="label">
+    <h1>RSpec Code Examples</h1>
+  </div>
+
+  <div id="summary">
+    <p id="totals">&nbsp;</p>
+    <p id="duration">&nbsp;</p>
+  </div>
+</div>
+
+<div class="results">
+<div class="example_group">
+  <dl>
+  <dt id="example_group_1">MerbAdmin::Main</dt>
+ ~ Params: {"action"=>"index", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001682, :action_time=>0.005271, :after_filters_time=>1.8e-05}
+    <script type="text/javascript">moveProgressBar('1.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should have helper methods for dealing with public paths</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_2">MerbAdmin dashboard</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"index", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000388, :action_time=>0.003529, :after_filters_time=>9.0e-06, :dispatch_time=>0.003785}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('2.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"index", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.00038, :action_time=>0.003399, :after_filters_time=>9.0e-06, :dispatch_time=>0.003626}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('3.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;Site administration&quot;</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_3">MerbAdmin dashboard with excluded models</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"index", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000318, :action_time=>0.003421, :after_filters_time=>9.0e-06, :dispatch_time=>0.003643}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('4.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"index", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000318, :action_time=>0.003185, :after_filters_time=>9.0e-06, :dispatch_time=>0.003404}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('5.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not contain excluded models</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_4">MerbAdmin list</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.0003, :action_time=>0.008541, :after_filters_time=>9.0e-06, :dispatch_time=>0.008781}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('6.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000302, :action_time=>0.008849, :after_filters_time=>9.0e-06, :dispatch_time=>0.009129}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('8.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;Select model to edit&quot;</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000312, :action_time=>0.008833, :after_filters_time=>9.0e-06, :dispatch_time=>0.009083}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('9.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show filters</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000309, :action_time=>0.008962, :after_filters_time=>1.0e-05, :dispatch_time=>0.0092}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('10.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show column headers</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_5">MerbAdmin list with sort</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "sort"=>"name"}
+ ~ {:before_filters_time=>0.000338, :action_time=>0.016947, :after_filters_time=>1.2e-05, :dispatch_time=>0.017241}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('11.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "sort"=>"name"}
+ ~ {:before_filters_time=>0.000335, :action_time=>0.015523, :after_filters_time=>1.1e-05, :dispatch_time=>0.0158}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('12.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be sorted correctly</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_6">MerbAdmin list with reverse sort</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"sort_reverse"=>"true", "action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "sort"=>"name"}
+ ~ {:before_filters_time=>0.000297, :action_time=>0.016757, :after_filters_time=>1.3e-05, :dispatch_time=>0.017033}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('13.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"sort_reverse"=>"true", "action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "sort"=>"name"}
+ ~ {:before_filters_time=>0.000348, :action_time=>0.019446, :after_filters_time=>1.3e-05, :dispatch_time=>0.019778}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('15.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be sorted correctly</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_7">MerbAdmin list with query</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "query"=>"Jackie Robinson"}
+ ~ {:before_filters_time=>0.00038, :action_time=>0.014827, :after_filters_time=>1.1e-05, :dispatch_time=>0.015131}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('16.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "query"=>"Jackie Robinson"}
+ ~ {:before_filters_time=>0.000299, :action_time=>0.014269, :after_filters_time=>1.1e-05, :dispatch_time=>0.014526}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('17.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show a correct result</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main", "query"=>"Jackie Robinson"}
+ ~ {:before_filters_time=>0.000315, :action_time=>0.117844, :after_filters_time=>1.3e-05, :dispatch_time=>0.118111}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('18.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not contain an incorrect result</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_8">MerbAdmin list with query and boolean filter</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main", "query"=>"Sandy Koufax"}
+ ~ {:before_filters_time=>0.000303, :action_time=>0.015125, :after_filters_time=>1.1e-05, :dispatch_time=>0.015444}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('19.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main", "query"=>"Sandy Koufax"}
+ ~ {:before_filters_time=>0.000299, :action_time=>0.014917, :after_filters_time=>1.2e-05, :dispatch_time=>0.015226}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('20.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show a correct result</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main", "query"=>"Sandy Koufax"}
+ ~ {:before_filters_time=>0.000303, :action_time=>0.014686, :after_filters_time=>1.1e-05, :dispatch_time=>0.014995}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('22.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not contain an incorrect result</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_9">MerbAdmin list with boolean filter</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000328, :action_time=>0.014416, :after_filters_time=>1.1e-05, :dispatch_time=>0.014714}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('23.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000363, :action_time=>0.014435, :after_filters_time=>1.1e-05, :dispatch_time=>0.014722}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('24.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show a correct result</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000335, :action_time=>0.077838, :after_filters_time=>1.3e-05, :dispatch_time=>0.078168}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('25.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not contain an incorrect result</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_10">MerbAdmin list with boolean filters</dt>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true", "retired"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.0003, :action_time=>0.015162, :after_filters_time=>1.1e-05, :dispatch_time=>0.015476}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('26.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:48 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true", "retired"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000297, :action_time=>0.014465, :after_filters_time=>1.1e-05, :dispatch_time=>0.014782}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('27.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show a correct result</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "filter"=>{"injured"=>"true", "retired"=>"true"}, "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000295, :action_time=>0.014436, :after_filters_time=>1.1e-05, :dispatch_time=>0.014739}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('29.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should not contain an incorrect result</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_11">MerbAdmin list with 2 objects</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000316, :action_time=>0.013939, :after_filters_time=>1.1e-05, :dispatch_time=>0.0142}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('30.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000306, :action_time=>0.013564, :after_filters_time=>1.1e-05, :dispatch_time=>0.013818}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('31.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;2 results&quot;</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_12">MerbAdmin list with 20 objects</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000311, :action_time=>0.115701, :after_filters_time=>1.3e-05, :dispatch_time=>0.115959}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('32.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000307, :action_time=>0.014002, :after_filters_time=>1.2e-05, :dispatch_time=>0.014277}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('33.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;20 results&quot;</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_13">MerbAdmin list with 20 objects, page 8</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "page"=>"8", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.00033, :action_time=>0.014519, :after_filters_time=>1.1e-05, :dispatch_time=>0.014798}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('34.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "page"=>"8", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000301, :action_time=>0.014125, :after_filters_time=>1.1e-05, :dispatch_time=>0.014406}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('36.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should paginate correctly</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_14">MerbAdmin list with 20 objects, page 17</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "page"=>"17", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000328, :action_time=>0.081471, :after_filters_time=>1.5e-05, :dispatch_time=>0.081774}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('37.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"list", "model_name"=>"player", "page"=>"17", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000302, :action_time=>0.014394, :after_filters_time=>1.2e-05, :dispatch_time=>0.014674}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('38.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should paginate correctly</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_15">MerbAdmin list show all</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"all"=>"true", "action"=>"list", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000298, :action_time=>0.014673, :after_filters_time=>1.1e-05, :dispatch_time=>0.014936}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('39.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_16">MerbAdmin new</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000298, :action_time=>0.015009, :after_filters_time=>1.0e-05, :dispatch_time=>0.015246}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('40.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000305, :action_time=>0.014564, :after_filters_time=>1.1e-05, :dispatch_time=>0.014807}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('41.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;New model&quot;</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000305, :action_time=>0.014596, :after_filters_time=>1.1e-05, :dispatch_time=>0.014841}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('43.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show required fields as &quot;Required&quot;</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000319, :action_time=>0.015232, :after_filters_time=>1.2e-05, :dispatch_time=>0.01549}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('44.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show non-required fields as &quot;Optional&quot;</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_17">MerbAdmin new with has-one association</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000305, :action_time=>0.014823, :after_filters_time=>1.1e-05, :dispatch_time=>0.015068}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('45.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000309, :action_time=>0.014925, :after_filters_time=>1.1e-05, :dispatch_time=>0.015167}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('46.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show associated objects</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_18">MerbAdmin new with has-many association</dt>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000305, :action_time=>0.015567, :after_filters_time=>1.1e-05, :dispatch_time=>0.015812}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('47.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:49 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000307, :action_time=>0.015275, :after_filters_time=>1.0e-05, :dispatch_time=>0.015534}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('48.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show associated objects</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_19">MerbAdmin new with missing label</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"new", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.00048, :action_time=>0.015794, :after_filters_time=>1.2e-05, :dispatch_time=>0.016113}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('50.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_20">MerbAdmin edit</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"172", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.00149, :action_time=>0.017935, :after_filters_time=>1.2e-05, :dispatch_time=>0.018194}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('51.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"173", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001485, :action_time=>0.017957, :after_filters_time=>1.1e-05, :dispatch_time=>0.018211}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('52.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;Edit model&quot;</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"174", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001478, :action_time=>0.018082, :after_filters_time=>1.1e-05, :dispatch_time=>0.018335}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('53.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show required fields as &quot;Required&quot;</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"175", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001638, :action_time=>0.018114, :after_filters_time=>1.1e-05, :dispatch_time=>0.018415}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('54.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show non-required fields as &quot;Optional&quot;</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_21">MerbAdmin edit with has-one association</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"176", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001489, :action_time=>0.07781, :after_filters_time=>1.3e-05, :dispatch_time=>0.078066}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('55.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"177", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001496, :action_time=>0.017928, :after_filters_time=>1.2e-05, :dispatch_time=>0.018186}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('56.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show associated objects</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_22">MerbAdmin edit with has-many association</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"178", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.00154, :action_time=>0.066842, :after_filters_time=>1.5e-05, :dispatch_time=>0.067106}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('58.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"179", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001531, :action_time=>0.018984, :after_filters_time=>1.0e-05, :dispatch_time=>0.019248}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('59.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show associated objects</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_23">MerbAdmin edit with missing object</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Merb::ControllerExceptions::NotFound - (Merb::ControllerExceptions::NotFound)
+/Users/erik/projects/merb-admin/app/controllers/main.rb:94:in `get_object'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `send'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:286:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `catch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:285:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:262:in `_call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:252:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `synchronize'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:76:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:36:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/application.rb:17:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/test/helpers/request_helper.rb:43:in `request'
+/opt/local/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/merb_adapter.rb:78:in `request'
+./spec/requests/main_spec.rb:441
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `instance_eval'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_hierarchy.rb:17:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:103:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:124:in `before_each_example'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:39:in `execute'
+/opt/local/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:37:in `execute'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:214:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:103:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:23:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/options.rb:151:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/command_line.rb:9:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/bin/spec:5
+ ~ Params: {"action"=>"edit", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>1.0e-05, :action_time=>0.041439, :after_filters_time=>1.6e-05, :dispatch_time=>0.04335}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('60.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should raise NotFound</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_24">MerbAdmin edit with missing label</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"edit", "id"=>"180", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001504, :action_time=>0.018625, :after_filters_time=>1.1e-05, :dispatch_time=>0.018891}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('61.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_25">MerbAdmin create</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000337, :action_time=>0.003516, :after_filters_time=>1.0e-05, :dispatch_time=>0.003865}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('62.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to list</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000332, :action_time=>0.003458, :after_filters_time=>1.1e-05, :dispatch_time=>0.003802}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('63.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_26">MerbAdmin create and edit</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main", "_continue"=>"true"}
+ ~ Redirecting to: /admin/player/183/edit?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000354, :action_time=>0.003582, :after_filters_time=>1.1e-05, :dispatch_time=>0.00397}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('65.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to edit</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main", "_continue"=>"true"}
+ ~ Redirecting to: /admin/player/184/edit?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000349, :action_time=>0.003532, :after_filters_time=>1.1e-05, :dispatch_time=>0.003876}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('66.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_27">MerbAdmin create and add another</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main", "_add_another"=>"true"}
+ ~ Redirecting to: /admin/player/new?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000354, :action_time=>0.003852, :after_filters_time=>1.3e-05, :dispatch_time=>0.004277}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('67.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to new</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main", "_add_another"=>"true"}
+ ~ Redirecting to: /admin/player/new?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000332, :action_time=>0.003422, :after_filters_time=>1.1e-05, :dispatch_time=>0.003779}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('68.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_28">MerbAdmin create with has-one association</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main", "associations"=>{"draft"=>"5"}}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000338, :action_time=>0.005497, :after_filters_time=>1.2e-05, :dispatch_time=>0.00587}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('69.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new object</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main", "associations"=>{"draft"=>"6"}}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.00035, :action_time=>0.005506, :after_filters_time=>1.2e-05, :dispatch_time=>0.005884}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('70.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be associated with the correct object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_29">MerbAdmin create with has-many association</dt>
+[]
+[]
+[]
+[]
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"create", "model_name"=>"league", "controller"=>"merb_admin/main", "league"=>{"name"=>"National League"}, "associations"=>{"teams"=>["19", "20"]}}
+ ~ Redirecting to: /admin/league?_message=BAh7BjoLbm90aWNlIiRMZWFndWUgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000262, :action_time=>0.007486, :after_filters_time=>1.3e-05, :dispatch_time=>0.007864}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('72.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should create a new object</span></dd>
+[]
+[]
+[]
+[]
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"create", "model_name"=>"league", "controller"=>"merb_admin/main", "league"=>{"name"=>"National League"}, "associations"=>{"teams"=>["22", "23"]}}
+ ~ Redirecting to: /admin/league?_message=BAh7BjoLbm90aWNlIiRMZWFndWUgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000273, :action_time=>0.008399, :after_filters_time=>1.8e-05, :dispatch_time=>0.008804}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('73.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be associated with the correct objects</span></dd>
+[]
+[]
+[]
+[]
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"create", "model_name"=>"league", "controller"=>"merb_admin/main", "league"=>{"name"=>"National League"}, "associations"=>{"teams"=>["25", "26"]}}
+ ~ Redirecting to: /admin/league?_message=BAh7BjoLbm90aWNlIiRMZWFndWUgd2FzIHN1Y2Nlc3NmdWxseSBjcmVhdGVk%0A (302)
+ ~ {:before_filters_time=>0.000249, :action_time=>0.007257, :after_filters_time=>1.4e-05, :dispatch_time=>0.007665}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('74.4');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be not associated with an incorrect object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_30">MerbAdmin create with uniqueness constraint violated</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"position"=>"", "name"=>"Player 1", "number"=>"1", "team_id"=>"98122"}, "action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000334, :action_time=>0.016869, :after_filters_time=>1.2e-05, :dispatch_time=>0.017229}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('75.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show an error message</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_31">MerbAdmin create with invalid object</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"action"=>"create", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.000332, :action_time=>0.079553, :after_filters_time=>1.3e-05, :dispatch_time=>0.079825}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('76.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show an error message</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_32">MerbAdmin update</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"190", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001683, :action_time=>0.005546, :after_filters_time=>1.3e-05, :dispatch_time=>0.005908}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('77.9');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to list</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"191", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001514, :action_time=>0.00512, :after_filters_time=>1.1e-05, :dispatch_time=>0.005447}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('79.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update an object that already exists</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_33">MerbAdmin update and edit</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"192", "model_name"=>"player", "controller"=>"merb_admin/main", "_continue"=>"true"}
+ ~ Redirecting to: /admin/player/192/edit?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001541, :action_time=>0.005179, :after_filters_time=>1.1e-05, :dispatch_time=>0.005535}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('80.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to edit</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"193", "model_name"=>"player", "controller"=>"merb_admin/main", "_continue"=>"true"}
+ ~ Redirecting to: /admin/player/193/edit?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001655, :action_time=>0.005323, :after_filters_time=>1.1e-05, :dispatch_time=>0.005698}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('81.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update an object that already exists</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_34">MerbAdmin update and add another</dt>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"194", "model_name"=>"player", "controller"=>"merb_admin/main", "_add_another"=>"true"}
+ ~ Redirecting to: /admin/player/new?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001521, :action_time=>0.005578, :after_filters_time=>1.2e-05, :dispatch_time=>0.005913}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('82.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to new</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:50 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"195", "model_name"=>"player", "controller"=>"merb_admin/main", "_add_another"=>"true"}
+ ~ Redirecting to: /admin/player/new?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001536, :action_time=>0.005361, :after_filters_time=>1.2e-05, :dispatch_time=>0.005704}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('83.7');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update an object that already exists</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_35">MerbAdmin update with has-one association</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"196", "model_name"=>"player", "controller"=>"merb_admin/main", "associations"=>{"draft"=>"7"}}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001535, :action_time=>0.007215, :after_filters_time=>1.1e-05, :dispatch_time=>0.007596}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('84.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update an object that already exists</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"player"=>{"position"=>"Second baseman", "name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"197", "model_name"=>"player", "controller"=>"merb_admin/main", "associations"=>{"draft"=>"8"}}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiRQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001637, :action_time=>0.00743, :after_filters_time=>1.2e-05, :dispatch_time=>0.007829}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('86.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be associated with the correct object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_36">MerbAdmin update with has-many association</dt>
+[#<Team @id=28 @created_at=nil @updated_at=nil @league_id=4 @division_id=80247 @name="Team 1" @logo_url=nil @manager="Manager 1" @ballpark=nil @mascot=nil @founded=1902 @wins=25 @losses=137 @win_percentage=0.154>]
+[#<Team @id=28 @created_at=nil @updated_at=nil @league_id=4 @division_id=80247 @name="Team 1" @logo_url=nil @manager="Manager 1" @ballpark=nil @mascot=nil @founded=1902 @wins=25 @losses=137 @win_percentage=0.154>]
+[]
+[]
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"update", "id"=>"4", "model_name"=>"league", "controller"=>"merb_admin/main", "league"=>{"name"=>"National League"}, "associations"=>{"teams"=>["29"]}}
+ ~ Redirecting to: /admin/league?_message=BAh7BjoLbm90aWNlIiRMZWFndWUgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001117, :action_time=>0.007105, :after_filters_time=>1.2e-05, :dispatch_time=>0.007441}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('87.2');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should update an object that already exists</span></dd>
+[#<Team @id=31 @created_at=nil @updated_at=nil @league_id=5 @division_id=98909 @name="Team 1" @logo_url=nil @manager="Manager 1" @ballpark=nil @mascot=nil @founded=1881 @wins=79 @losses=83 @win_percentage=0.488>]
+[#<Team @id=31 @created_at=nil @updated_at=nil @league_id=5 @division_id=98909 @name="Team 1" @logo_url=nil @manager="Manager 1" @ballpark=nil @mascot=nil @founded=1881 @wins=79 @losses=83 @win_percentage=0.488>]
+[]
+[]
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"update", "id"=>"5", "model_name"=>"league", "controller"=>"merb_admin/main", "league"=>{"name"=>"National League"}, "associations"=>{"teams"=>["32"]}}
+ ~ Redirecting to: /admin/league?_message=BAh7BjoLbm90aWNlIiRMZWFndWUgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001257, :action_time=>0.007467, :after_filters_time=>1.3e-05, :dispatch_time=>0.00779}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('88.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should be associated with the correct objects</span></dd>
+[#<Team @id=34 @created_at=nil @updated_at=nil @league_id=6 @division_id=71792 @name="Team 1" @logo_url=nil @manager="Manager 1" @ballpark=nil @mascot=nil @founded=1873 @wins=133 @losses=29 @win_percentage=0.821>]
+[#<Team @id=34 @created_at=nil @updated_at=nil @league_id=6 @division_id=71792 @name="Team 1" @logo_url=nil @manager="Manager 1" @ballpark=nil @mascot=nil @founded=1873 @wins=133 @losses=29 @win_percentage=0.821>]
+[]
+[]
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"update", "id"=>"6", "model_name"=>"league", "controller"=>"merb_admin/main", "league"=>{"name"=>"National League"}, "associations"=>{"teams"=>["35"]}}
+ ~ Redirecting to: /admin/league?_message=BAh7BjoLbm90aWNlIiRMZWFndWUgd2FzIHN1Y2Nlc3NmdWxseSB1cGRhdGVk%0A (302)
+ ~ {:before_filters_time=>0.001195, :action_time=>0.00713, :after_filters_time=>1.3e-05, :dispatch_time=>0.007567}
+ ~ 
+
+    <script type="text/javascript">makeRed('rspec-header');</script>
+    <script type="text/javascript">makeRed('example_group_36');</script>
+    <script type="text/javascript">moveProgressBar('89.5');</script>
+    <dd class="spec failed">
+      <span class="failed_spec_name">should not be associated with an incorrect object</span>
+      <div class="failure" id="failure_1">
+        <div class="message"><pre>expected [#&lt;Team @id=34 @created_at=nil @updated_at=nil @league_id=6 @division_id=71792 @name=&quot;Team 1&quot; @logo_url=nil @manager=&quot;Manager 1&quot; @ballpark=nil @mascot=nil @founded=1873 @wins=133 @losses=29 @win_percentage=0.821&gt;, #&lt;Team @id=35 @created_at=nil @updated_at=nil @league_id=6 @division_id=90498 @name=&quot;Team 2&quot; @logo_url=nil @manager=&quot;Manager 2&quot; @ballpark=nil @mascot=nil @founded=1985 @wins=138 @losses=24 @win_percentage=0.852&gt;] not to include #&lt;Team @id=34 @created_at=nil @updated_at=nil @league_id=6 @division_id=71792 @name=&quot;Team 1&quot; @logo_url=nil @manager=&quot;Manager 1&quot; @ballpark=nil @mascot=nil @founded=1873 @wins=133 @losses=29 @win_percentage=0.821&gt;</pre></div>
+        <div class="backtrace"><pre>./spec/requests/main_spec.rb:630:</pre></div>
+    <pre class="ruby"><code><span class="linenum">628</span>
+<span class="linenum">629</span>    <span class="ident">it</span> <span class="punct">&quot;</span><span class="string">should not be associated with an incorrect object</span><span class="punct">&quot;</span> <span class="keyword">do</span>
+<span class="offending"><span class="linenum">630</span>      <span class="constant">MerbAdmin</span><span class="punct">::</span><span class="constant">AbstractModel</span><span class="punct">.</span><span class="ident">new</span><span class="punct">(&quot;</span><span class="string">League</span><span class="punct">&quot;).</span><span class="ident">first</span><span class="punct">.</span><span class="ident">teams</span><span class="punct">.</span><span class="ident">should_not</span> <span class="ident">include</span><span class="punct">(</span><span class="attribute">@teams</span><span class="punct">[</span><span class="number">0</span><span class="punct">])</span></span>
+<span class="linenum">631</span>      <span class="constant">MerbAdmin</span><span class="punct">::</span><span class="constant">AbstractModel</span><span class="punct">.</span><span class="ident">new</span><span class="punct">(&quot;</span><span class="string">League</span><span class="punct">&quot;).</span><span class="ident">first</span><span class="punct">.</span><span class="ident">teams</span><span class="punct">.</span><span class="ident">should_not</span> <span class="ident">include</span><span class="punct">(</span><span class="attribute">@teams</span><span class="punct">[</span><span class="number">2</span><span class="punct">])</span>
+<span class="linenum">632</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_37">MerbAdmin update with missing object</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Merb::ControllerExceptions::NotFound - (Merb::ControllerExceptions::NotFound)
+/Users/erik/projects/merb-admin/app/controllers/main.rb:94:in `get_object'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `send'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:286:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `catch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:285:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:262:in `_call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:252:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `synchronize'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:76:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:36:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/application.rb:17:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/test/helpers/request_helper.rb:43:in `request'
+/opt/local/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/merb_adapter.rb:78:in `request'
+./spec/requests/main_spec.rb:637
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `instance_eval'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_hierarchy.rb:17:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:103:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:124:in `before_each_example'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:39:in `execute'
+/opt/local/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:37:in `execute'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:214:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:103:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:23:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/options.rb:151:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/command_line.rb:9:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/bin/spec:5
+ ~ Params: {"player"=>{"name"=>"Jackie Robinson", "number"=>"42", "team_id"=>"1"}, "action"=>"update", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>6.0e-06, :action_time=>0.042134, :after_filters_time=>1.1e-05, :dispatch_time=>0.044205}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('90.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should raise NotFound</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_38">MerbAdmin update with invalid object</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"player"=>{"number"=>"a"}, "action"=>"update", "id"=>"198", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001593, :action_time=>0.019885, :after_filters_time=>1.1e-05, :dispatch_time=>0.020196}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('91.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show an error message</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_39">MerbAdmin delete</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"delete", "id"=>"199", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001502, :action_time=>0.009053, :after_filters_time=>1.1e-05, :dispatch_time=>0.009322}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('93.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"delete", "id"=>"200", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.00158, :action_time=>0.009045, :after_filters_time=>1.0e-05, :dispatch_time=>0.009305}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('94.1');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should show &quot;Delete model&quot;</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_40">MerbAdmin delete with missing object</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"delete", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Merb::ControllerExceptions::NotFound - (Merb::ControllerExceptions::NotFound)
+/Users/erik/projects/merb-admin/app/controllers/main.rb:94:in `get_object'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `send'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:286:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `catch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:285:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:262:in `_call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:252:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `synchronize'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:76:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:36:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/application.rb:17:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/test/helpers/request_helper.rb:43:in `request'
+/opt/local/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/merb_adapter.rb:78:in `request'
+./spec/requests/main_spec.rb:671
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `instance_eval'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_hierarchy.rb:17:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:103:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:124:in `before_each_example'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:39:in `execute'
+/opt/local/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:37:in `execute'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:214:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:103:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:23:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/options.rb:151:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/command_line.rb:9:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/bin/spec:5
+ ~ Params: {"action"=>"delete", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>7.0e-06, :action_time=>0.138209, :after_filters_time=>1.1e-05, :dispatch_time=>0.140238}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('95.3');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should raise NotFound</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_41">MerbAdmin delete with missing label</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"action"=>"delete", "id"=>"7", "model_name"=>"league", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>0.001085, :action_time=>0.009025, :after_filters_time=>1.2e-05, :dispatch_time=>0.009303}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('96.5');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should respond sucessfully</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_42">MerbAdmin destroy</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"format"=>nil, "action"=>"destroy", "id"=>"201", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiZQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBkZXN0cm95%0AZWQ%3D%0A (302)
+ ~ {:before_filters_time=>0.001509, :action_time=>0.004947, :after_filters_time=>1.0e-05, :dispatch_time=>0.00523}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('97.6');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should redirect to list</span></dd>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"format"=>nil, "action"=>"destroy", "id"=>"202", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Redirecting to: /admin/player?_message=BAh7BjoLbm90aWNlIiZQbGF5ZXIgd2FzIHN1Y2Nlc3NmdWxseSBkZXN0cm95%0AZWQ%3D%0A (302)
+ ~ {:before_filters_time=>0.001489, :action_time=>0.004891, :after_filters_time=>1.0e-05, :dispatch_time=>0.005167}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('98.8');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should destroy an object</span></dd>
+  </dl>
+</div>
+<div class="example_group">
+  <dl>
+  <dt id="example_group_43">MerbAdmin destroy with missing object</dt>
+ ~ Started request handling: Mon Nov 16 15:00:51 -0800 2009
+ ~ Params: {"format"=>nil, "action"=>"destroy", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ Merb::ControllerExceptions::NotFound - (Merb::ControllerExceptions::NotFound)
+/Users/erik/projects/merb-admin/app/controllers/main.rb:94:in `get_object'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `send'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:352:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:344:in `_call_filters'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:286:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `catch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/abstract_controller.rb:284:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:285:in `_dispatch'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:262:in `_call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/controller/merb_controller.rb:252:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `synchronize'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:98:in `dispatch_action'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:76:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/dispatch/dispatcher.rb:36:in `handle'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/application.rb:17:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/rack/middleware/static.rb:28:in `call'
+/opt/local/lib/ruby/gems/1.8/gems/merb-core-1.1.0.pre/lib/merb-core/test/helpers/request_helper.rb:43:in `request'
+/opt/local/lib/ruby/gems/1.8/gems/webrat-0.5.3/lib/webrat/merb_adapter.rb:78:in `request'
+./spec/requests/main_spec.rb:707
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `instance_eval'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:70:in `eval_each_fail_fast'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_hierarchy.rb:17:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:103:in `run_before_each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:124:in `before_each_example'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:39:in `execute'
+/opt/local/lib/ruby/1.8/timeout.rb:53:in `timeout'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_methods.rb:37:in `execute'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:214:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:212:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/example/example_group_methods.rb:103:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:23:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `each'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/example_group_runner.rb:22:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/options.rb:151:in `run_examples'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/lib/spec/runner/command_line.rb:9:in `run'
+/opt/local/lib/ruby/gems/1.8/gems/rspec-1.2.9/bin/spec:5
+ ~ Params: {"format"=>nil, "action"=>"destroy", "id"=>"1", "model_name"=>"player", "controller"=>"merb_admin/main"}
+ ~ {:before_filters_time=>6.0e-06, :action_time=>0.098923, :after_filters_time=>1.0e-05, :dispatch_time=>0.100794}
+ ~ 
+
+    <script type="text/javascript">moveProgressBar('100.0');</script>
+    <dd class="spec passed"><span class="passed_spec_name">should raise NotFound</span></dd>
+  </dl>
+</div>
+<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>3.849158 seconds</strong>";</script>
+<script type="text/javascript">document.getElementById('totals').innerHTML = "86 examples, 1 failure";</script>
+</div>
+</div>
+</body>
+</html>

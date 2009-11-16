@@ -143,9 +143,6 @@ module MerbAdmin
       end
 
       module InstanceMethods
-        def clear_association(association)
-          association.clear
-        end
       end
 
     end
