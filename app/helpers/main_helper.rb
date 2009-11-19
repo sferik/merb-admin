@@ -2,6 +2,10 @@ require 'builder'
 module Merb
   module MerbAdmin
     module MainHelper
+      def to_model_name(param)
+        param.split("__").map{|x| x.camel_case}.join("::")
+      end
+
       def object_label(object)
         if object.nil?
           nil

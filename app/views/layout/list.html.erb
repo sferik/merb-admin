@@ -27,7 +27,7 @@
       </div>
       <div class="breadcrumbs">
         <%= link_to("Home", url(:merb_admin_dashboard)) %> &rsaquo;
-        <%= @abstract_model.plural_name.to_s.capitalize %>
+        <%= @abstract_model.pretty_name %>
       </div>
 <%= partial('layout/message', :message => message) unless message.blank? -%>
       <div id="content" class="flex">

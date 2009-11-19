@@ -67,7 +67,7 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   def destroy
     if @object.destroy
-      redirect(url(:merb_admin_list, :model_name => @abstract_model.singular_name), :message => {:notice => "#{@abstract_model.pretty_name} was successfully destroyed"})
+      redirect(url(:merb_admin_list, :model_name => @abstract_model.to_param), :message => {:notice => "#{@abstract_model.pretty_name} was successfully destroyed"})
     else
       raise BadRequest
     end
@@ -80,7 +80,7 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def get_model
-    model_name = params[:model_name].camel_case
+    model_name = to_model_name(params[:model_name])
     @abstract_model = MerbAdmin::AbstractModel.new(model_name)
     get_properties
   end
@@ -143,7 +143,7 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def get_attributes
-    @attributes = params[@abstract_model.singular_name] || {}
+    @attributes = params[@abstract_model.to_param] || {}
     # Delete fields that are blank
     @attributes.each do |key, value|
       @attributes[key] = nil if value.blank?
@@ -176,15 +176,15 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def redirect_on_success
-    singular_name = @abstract_model.singular_name
+    param = @abstract_model.to_param
     pretty_name = @abstract_model.pretty_name
     action = params[:action]
     if params[:_continue]
-      redirect(url(:merb_admin_edit, :model_name => singular_name, :id => @object.id), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
+      redirect(url(:merb_admin_edit, :model_name => param, :id => @object.id), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
     elsif params[:_add_another]
-      redirect(url(:merb_admin_new, :model_name => singular_name), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
+      redirect(url(:merb_admin_new, :model_name => param), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
     else
-      redirect(url(:merb_admin_list, :model_name => singular_name), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
+      redirect(url(:merb_admin_list, :model_name => param), :message => {:notice => "#{pretty_name} was successfully #{action}d"})
     end
   end
 

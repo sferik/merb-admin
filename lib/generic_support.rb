@@ -1,12 +1,8 @@
 module MerbAdmin
   class AbstractModel
     module GenericSupport
-      def singular_name
-        model.to_s.snake_case.to_sym
-      end
-
-      def plural_name
-        model.to_s.snake_case.pluralize.to_sym
+      def to_param
+        model.to_s.snake_case.gsub("::", "__")
       end
 
       def pretty_name

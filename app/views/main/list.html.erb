@@ -9,7 +9,7 @@
         <div id="content-main">
           <ul class="object-tools">
             <li>
-              <%= link_to("Add #{@abstract_model.pretty_name.downcase}", url(:merb_admin_new, :model_name => @abstract_model.singular_name), :class => "addlink") %>
+              <%= link_to("Add #{@abstract_model.pretty_name.downcase}", url(:merb_admin_new, :model_name => @abstract_model.to_param), :class => "addlink") %>
             </li>
           </ul>
           <div class="<%= filters_exist ? "module filtered" : "module" %>" id="changelist">
@@ -72,7 +72,7 @@
                 <tr class="row<%= index % 2 == 0 ? "1" : "2" %>">
                   <% @properties.each do |property| %>
                   <td>
-                    <%= link_to(object_property(object, property), url(:merb_admin_edit, :model_name => @abstract_model.singular_name, :id => object.id)) %>
+                    <%= link_to(object_property(object, property), url(:merb_admin_edit, :model_name => @abstract_model.to_param, :id => object.id)) %>
                   </td>
                   <% end %>
                 </tr>

@@ -1,5 +1,5 @@
         <div id="content-main">
-        <%= form_for(@object, :action => url(:merb_admin_create, :model_name => @abstract_model.singular_name)) do %>
+        <%= form_for(@object, :action => url(:merb_admin_create, :model_name => @abstract_model.to_param)) do %>
           <div>
 <%= partial('properties', :properties => @properties) -%>
 <%= partial('belongs_to', :with => @abstract_model.belongs_to_associations, :as => :association) -%>
