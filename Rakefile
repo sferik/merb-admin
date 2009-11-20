@@ -13,20 +13,17 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = GEM_NAME
-    gemspec.platform = Gem::Platform::RUBY
-    gemspec.has_rdoc = true
-    gemspec.extra_rdoc_files = ["README.rdoc", "LICENSE"]
     gemspec.summary = SUMMARY
     gemspec.description = gemspec.summary
     gemspec.author = AUTHOR
     gemspec.email = EMAIL
     gemspec.homepage = HOMEPAGE
+    gemspec.files.exclude("config/*", "screenshots/*")
     gemspec.add_dependency("merb-slices", ">= #{MERB_GEM_VERSION}")
     gemspec.add_dependency("merb-assets", ">= #{MERB_GEM_VERSION}")
     gemspec.add_dependency("merb-helpers", ">= #{MERB_GEM_VERSION}")
     gemspec.add_dependency("builder", ">= 2.1.2")
-    gemspec.require_path = "lib"
-    gemspec.files = %w(Gemfile LICENSE README.rdoc Rakefile) + Dir.glob("{app,lib,public,schema,spec,stubs}/**/*")
+    gemspec.add_development_dependency("rspec", ">= 1.2.9")
     gemspec.post_install_message = <<-POST_INSTALL_MESSAGE
 #{"*" * 80}
 
