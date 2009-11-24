@@ -170,9 +170,11 @@ class MerbAdmin::Main < MerbAdmin::Application
   end
 
   def update_associations(association, ids = [])
+    @object.send(association[:name]).clear
     ids.each do |id|
       update_association(association, id)
     end
+    @object.save
   end
 
   def redirect_on_success
