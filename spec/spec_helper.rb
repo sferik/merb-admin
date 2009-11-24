@@ -83,7 +83,7 @@ module Merb
       end
 
       def set_orm(orm = nil)
-        orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :datamapper
+        orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :activerecord
       end
 
     end
