@@ -613,7 +613,8 @@ describe "MerbAdmin" do
 
   describe "update with has-many association", :given => "a league exists and three teams exist" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "league", :id => @league.id), :method => "put", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[0].id, @teams[1].id]}})
+      @teams[0].update_attributes(:league_id => @league.id)
+      @response = request(url(:merb_admin_update, :model_name => "league", :id => @league.id), :method => "put", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[1].id]}})
     end
 
     it "should update an object that already exists" do
@@ -621,13 +622,13 @@ describe "MerbAdmin" do
     end
 
     it "should be associated with the correct objects" do
-      @teams[0].reload
-      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[0])
       @teams[1].reload
       MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
     end
 
     it "should not be associated with an incorrect object" do
+      @teams[0].reload
+      MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[0])
       MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[2])
     end
   end
