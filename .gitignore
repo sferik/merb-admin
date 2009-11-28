@@ -9,8 +9,11 @@
 .svn/*
 TAGS
 TODO
-gems/gems/*
-gems/specifications/*
+bin/*
+coverage/*
+doc/*
+gems/
+!gems/cache/
 log/*
 merb_profile_results
 pkg/*
@@ -21,3 +24,4 @@ schema/*_structure.sql
 schema/schema.rb
 src/*
 tmp/*
+*.sw[p|o]
