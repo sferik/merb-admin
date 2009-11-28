@@ -70,7 +70,7 @@ describe "MerbAdmin" do
 
   describe "dashboard" do
     before(:each) do
-      @response = request(url(:merb_admin_dashboard))
+      @response = visit(url(:merb_admin_dashboard))
     end
 
     it "should respond sucessfully" do
@@ -85,7 +85,7 @@ describe "MerbAdmin" do
   describe "dashboard with excluded models" do
     before(:each) do
       MerbAdmin[:excluded_models] = ["Player"]
-      @response = request(url(:merb_admin_dashboard))
+      @response = visit(url(:merb_admin_dashboard))
       MerbAdmin[:excluded_models] = []
     end
 
@@ -100,7 +100,7 @@ describe "MerbAdmin" do
 
   describe "list" do
     before(:each) do
-      @response = request(url(:merb_admin_list, :model_name => "player"))
+      @response = visit(url(:merb_admin_list, :model_name => "player"))
     end
 
     it "should respond sucessfully" do
@@ -124,7 +124,7 @@ describe "MerbAdmin" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher")
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:sort => "name"})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :sort => "name")
     end
 
     it "should respond sucessfully" do
@@ -140,7 +140,7 @@ describe "MerbAdmin" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher")
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:sort => "name", :sort_reverse => "true"})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :sort => "name", :sort_reverse => "true")
     end
 
     it "should respond sucessfully" do
@@ -156,7 +156,7 @@ describe "MerbAdmin" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher")
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:query => "Jackie Robinson"})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :query => "Jackie Robinson")
     end
 
     it "should respond sucessfully" do
@@ -178,7 +178,7 @@ describe "MerbAdmin" do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman", :retired => true, :injured => false)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "Left fielder", :retired => false, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:query => "Sandy Koufax", :filter => {:injured => "true"}})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :query => "Sandy Koufax", :filter => {:injured => "true"})
     end
 
     it "should respond sucessfully" do
@@ -201,7 +201,7 @@ describe "MerbAdmin" do
     before(:each) do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "Left fielder", :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "Third baseman", :injured => false)
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:filter => {:injured => "true"}})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :filter => {:injured => "true"})
     end
 
     it "should respond sucessfully" do
@@ -223,7 +223,7 @@ describe "MerbAdmin" do
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman", :retired => true, :injured => false)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "Left fielder", :retired => false, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:filter => {:retired => "true", :injured => "true"}})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :filter => {:retired => "true", :injured => "true"})
     end
 
     it "should respond sucessfully" do
@@ -243,7 +243,7 @@ describe "MerbAdmin" do
   describe "list with 2 objects", :given => "two players exist" do
     before(:each) do
       MerbAdmin[:per_page] = 1
-      @response = request(url(:merb_admin_list, :model_name => "player"))
+      @response = visit(url(:merb_admin_list, :model_name => "player"))
       MerbAdmin[:per_page] = 100
     end
 
@@ -259,7 +259,7 @@ describe "MerbAdmin" do
   describe "list with 20 objects", :given => "twenty players exist" do
     before(:each) do
       MerbAdmin[:per_page] = 1
-      @response = request(url(:merb_admin_list, :model_name => "player"))
+      @response = visit(url(:merb_admin_list, :model_name => "player"))
       MerbAdmin[:per_page] = 100
     end
 
@@ -275,7 +275,7 @@ describe "MerbAdmin" do
   describe "list with 20 objects, page 8", :given => "twenty players exist" do
     before(:each) do
       MerbAdmin[:per_page] = 1
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:page => 8})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :page => 8)
       MerbAdmin[:per_page] = 100
     end
 
@@ -291,7 +291,7 @@ describe "MerbAdmin" do
   describe "list with 20 objects, page 17", :given => "twenty players exist" do
     before(:each) do
       MerbAdmin[:per_page] = 1
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:page => 17})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :page => 17)
       MerbAdmin[:per_page] = 100
     end
 
@@ -307,7 +307,7 @@ describe "MerbAdmin" do
   describe "list show all", :given => "two players exist" do
     before(:each) do
       MerbAdmin[:per_page] = 1
-      @response = request(url(:merb_admin_list, :model_name => "player"), :params => {:all => true})
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :all => true)
       MerbAdmin[:per_page] = 100
     end
 
@@ -318,7 +318,7 @@ describe "MerbAdmin" do
 
   describe "new" do
     before(:each) do
-      @response = request(url(:merb_admin_new, :model_name => "player"))
+      @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
     it "should respond sucessfully" do
@@ -345,7 +345,7 @@ describe "MerbAdmin" do
 
   describe "new with has-one association", :given => "a draft exists" do
     before(:each) do
-      @response = request(url(:merb_admin_new, :model_name => "player"))
+      @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
     it "should respond sucessfully" do
@@ -359,7 +359,7 @@ describe "MerbAdmin" do
 
   describe "new with has-many association", :given => "three teams exist" do
     before(:each) do
-      @response = request(url(:merb_admin_new, :model_name => "player"))
+      @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
     it "should respond sucessfully" do
@@ -373,7 +373,7 @@ describe "MerbAdmin" do
 
   describe "new with missing label", :given => "a player exists and three teams with no name exist" do
     before(:each) do
-      @response = request(url(:merb_admin_new, :model_name => "player"))
+      @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
     it "should respond sucessfully" do
@@ -381,9 +381,134 @@ describe "MerbAdmin" do
     end
   end
 
+  describe "create" do
+    before(:each) do
+      visit(url(:merb_admin_new, :model_name => "player"))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save"
+      @player = MerbAdmin::AbstractModel.new("Player").first
+    end
+
+    it "should be successful" do
+      @response.should be_successful
+    end
+
+    it "should create an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
+    end
+  end
+
+  describe "create and edit" do
+    before(:each) do
+      visit(url(:merb_admin_new, :model_name => "player"))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save and continue editing"
+      @player = MerbAdmin::AbstractModel.new("Player").first
+    end
+
+    it "should be successful" do
+      @response.should be_successful
+    end
+
+    it "should create an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
+    end
+  end
+
+  describe "create and add another" do
+    before(:each) do
+      visit(url(:merb_admin_new, :model_name => "player"))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save and add another"
+      @player = MerbAdmin::AbstractModel.new("Player").first
+    end
+
+    it "should be successful" do
+      @response.should be_successful
+    end
+
+    it "should create an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
+    end
+  end
+
+  describe "create with has-one association", :given => "a draft exists" do
+    before(:each) do
+      visit(url(:merb_admin_new, :model_name => "player"))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => 42
+      fill_in "Position", :with => "Second baseman"
+      fill_in "Draft", :with => @draft.id.to_s
+      @response = click_button "Save"
+      @player = MerbAdmin::AbstractModel.new("Player").first
+    end
+
+    it "should create an object with correct associations" do
+      @draft.reload
+      @player.draft.should eql(@draft)
+    end
+  end
+
+  describe "create with has-many association", :given => "three teams exist" do
+    before(:each) do
+      visit(url(:merb_admin_new, :model_name => "league"))
+      fill_in "Name", :with => "National League"
+      fill_in "Teams", :with => @teams[0].id.to_s
+      @response = click_button "Save"
+      @league = MerbAdmin::AbstractModel.new("League").first
+    end
+
+    it "should create an object with correct associations" do
+      @teams[0].reload
+      @league.teams.should include(@teams[0])
+    end
+
+    it "should not create an object with incorrect associations" do
+      @league.teams.should_not include(@teams[1])
+      @league.teams.should_not include(@teams[2])
+    end
+  end
+
+  describe "create with uniqueness constraint violated", :given => "a player exists" do
+    before(:each) do
+      visit(url(:merb_admin_new, :model_name => "player"))
+      fill_in "Name", :with => @player.name
+      fill_in "Number", :with => @player.number.to_s
+      fill_in "Position", :with => @player.position
+      fill_in "Team", :with => @player.team_id.to_s
+      @response = click_button "Save"
+    end
+
+    it "should show an error message" do
+      @response.body.should contain("There is already a player with that number on this team")
+    end
+  end
+
+  describe "create with invalid object" do
+    before(:each) do
+      @response = visit(url(:merb_admin_create, :model_name => "player"), :post, :params => {:player => {}})
+    end
+
+    it "should show an error message" do
+      @response.body.should contain("Player failed to be created")
+    end
+  end
+
   describe "edit", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
     it "should respond sucessfully" do
@@ -410,7 +535,7 @@ describe "MerbAdmin" do
 
   describe "edit with has-one association", :given => "a player exists and a draft exists" do
     before(:each) do
-      @response = request(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
     it "should respond sucessfully" do
@@ -424,7 +549,7 @@ describe "MerbAdmin" do
 
   describe "edit with has-many association", :given => "a player exists and three teams exist" do
     before(:each) do
-      @response = request(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
     it "should respond sucessfully" do
@@ -438,17 +563,17 @@ describe "MerbAdmin" do
 
   describe "edit with missing object" do
     before(:each) do
-      @response = request(url(:merb_admin_edit, :model_name => "player", :id => 1))
+      @response = visit(url(:merb_admin_edit, :model_name => "player", :id => 1))
     end
 
     it "should raise NotFound" do
-      @response.status.should == 404
+      @response.status.should equal(404)
     end
   end
 
   describe "edit with missing label", :given => "a player exists and three teams with no name exist" do
     before(:each) do
-      @response = request(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
     it "should respond sucessfully" do
@@ -456,196 +581,135 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "create" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}})
-    end
-
-    it "should redirect to list" do
-      @response.should redirect_to(url(:merb_admin_list, :model_name => "player"))
-    end
-
-    it "should create a new object" do
-      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
-    end
-  end
-
-  describe "create and edit" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}, :_continue => true})
-    end
-
-    it "should redirect to edit" do
-      @response.should redirect_to(url(:merb_admin_edit, :model_name => "player", :id => MerbAdmin::AbstractModel.new("Player").first.id))
-    end
-
-    it "should create a new object" do
-      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
-    end
-  end
-
-  describe "create and add another" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}, :_add_another => true})
-    end
-
-    it "should redirect to new" do
-      @response.should redirect_to(url(:merb_admin_new, :model_name => "player"))
-    end
-
-    it "should create a new object" do
-      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
-    end
-  end
-
-  describe "create with has-one association", :given => "a draft exists" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}, :associations => {:draft => @draft.id}})
-    end
-
-    it "should create a new object" do
-      MerbAdmin::AbstractModel.new("Player").first.should_not be_nil
-    end
-
-    it "should be associated with the correct object" do
-      @draft.reload
-      MerbAdmin::AbstractModel.new("Player").first.draft.should == @draft
-    end
-  end
-
-  describe "create with has-many association", :given => "three teams exist" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "league"), :method => "post", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[0].id, @teams[1].id]}})
-    end
-
-    it "should create a new object" do
-      MerbAdmin::AbstractModel.new("League").first.should_not be_nil
-    end
-
-    it "should be associated with the correct objects" do
-      @teams[0].reload
-      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[0])
-      @teams[1].reload
-      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
-    end
-
-    it "should be not associated with an incorrect object" do
-      MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[2])
-    end
-  end
-
-  describe "create with uniqueness constraint violated", :given => "a player exists" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "player"), :method => "post", :params => {:player => {:name => @player.name, :number => @player.number, :team_id => @player.team_id, :position => @player.position}})
-    end
-
-    it "should show an error message" do
-      @response.body.should contain("There is already a player with that number on this team")
-    end
-  end
-
-  describe "create with invalid object" do
-    before(:each) do
-      @response = request(url(:merb_admin_create, :model_name => "player"), :method => "post", :params => {:player => {}})
-    end
-
-    it "should show an error message" do
-      @response.body.should contain("Player failed to be created")
-    end
-  end
-
   describe "update", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}})
+      visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save"
+      @player = MerbAdmin::AbstractModel.new("Player").first
     end
 
-    it "should redirect to list" do
-      @response.should redirect_to(url(:merb_admin_list, :model_name => "player"))
+    it "should be successful" do
+      @response.should be_successful
     end
 
-    it "should update an object that already exists" do
-      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
+    it "should update an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
     end
   end
 
   describe "update and edit", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}, :_continue => true})
+      visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save and continue"
+      @player = MerbAdmin::AbstractModel.new("Player").first
     end
 
-    it "should redirect to edit" do
-      @response.should redirect_to(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+    it "should be successful" do
+      @response.should be_successful
     end
 
-    it "should update an object that already exists" do
-      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
+    it "should update an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
     end
   end
 
   describe "update and add another", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}, :_add_another => true})
+      visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save and add another"
+      @player = MerbAdmin::AbstractModel.new("Player").first
     end
 
-    it "should redirect to new" do
-      @response.should redirect_to(url(:merb_admin_new, :model_name => "player"))
+    it "should be successful" do
+      @response.should be_successful
     end
 
-    it "should update an object that already exists" do
-      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
+    it "should update an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
     end
   end
 
   describe "update with has-one association", :given => "a player exists and a draft exists" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}, :associations => {:draft => @draft.id}})
+      visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "42"
+      fill_in "Position", :with => "Second baseman"
+      fill_in "Draft", :with => @draft.id.to_s
+      @response = click_button "Save"
+      @player = MerbAdmin::AbstractModel.new("Player").first
+      # @response = visit(url(:merb_admin_update, :model_name => "player", :id => @player.id), :put, :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}, :associations => {:draft => @draft.id}})
     end
 
-    it "should update an object that already exists" do
-      MerbAdmin::AbstractModel.new("Player").first.name.should eql("Jackie Robinson")
+    it "should update an object with correct attributes" do
+      @player.name.should eql("Jackie Robinson")
+      @player.number.should eql(42)
+      @player.position.should eql("Second baseman")
     end
 
-    it "should be associated with the correct object" do
+    it "should update an object with correct associations" do
       @draft.reload
-      MerbAdmin::AbstractModel.new("Player").first.draft.should == @draft
+      @player.draft.should eql(@draft)
     end
   end
 
   describe "update with has-many association", :given => "a league exists and three teams exist" do
     before(:each) do
-      @teams[0].update_attributes(:league_id => @league.id)
-      @response = request(url(:merb_admin_update, :model_name => "league", :id => @league.id), :method => "put", :params => {:league => {:name => "National League"}, :associations => {:teams => [@teams[1].id]}})
+      visit(url(:merb_admin_edit, :model_name => "league", :id => @league.id))
+      fill_in "Name", :with => "National League"
+      fill_in "Teams", :with => @teams[0].id.to_s
+      @response = click_button "Save"
+      @league = MerbAdmin::AbstractModel.new("League").first
     end
 
-    it "should update an object that already exists" do
-      MerbAdmin::AbstractModel.new("League").first.name.should eql("National League")
+    it "should update an object with correct attributes" do
+      @league.name.should eql("National League")
     end
 
-    it "should be associated with the correct objects" do
-      @teams[1].reload
-      MerbAdmin::AbstractModel.new("League").first.teams.should include(@teams[1])
-    end
-
-    it "should not be associated with an incorrect object" do
+    it "should update an object with correct associations" do
       @teams[0].reload
-      MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[0])
-      MerbAdmin::AbstractModel.new("League").first.teams.should_not include(@teams[2])
+      @league.teams.should include(@teams[0])
+    end
+
+    it "should not update an object with incorrect associations" do
+      @league.teams.should_not include(@teams[1])
+      @league.teams.should_not include(@teams[2])
     end
   end
 
   describe "update with missing object" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "player", :id => 1), :method => "put", :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1}})
+      @response = visit(url(:merb_admin_update, :model_name => "player", :id => 1), :put, {:player => {:name => "Jackie Robinson", :number => 42, :position => "Second baseman"}})
     end
 
     it "should raise NotFound" do
-      @response.status.should == 404
+      @response.status.should equal(404)
     end
   end
 
   describe "update with invalid object", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_update, :model_name => "player", :id => @player.id), :method => "put", :params => {:player => {:number => "a"}})
+      visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
+      fill_in "Name", :with => "Jackie Robinson"
+      fill_in "Number", :with => "a"
+      fill_in "Position", :with => "Second baseman"
+      @response = click_button "Save"
+      @player = MerbAdmin::AbstractModel.new("Player").first
     end
 
     it "should show an error message" do
@@ -655,7 +719,7 @@ describe "MerbAdmin" do
 
   describe "delete", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_delete, :model_name => "player", :id => @player.id))
+      @response = visit(url(:merb_admin_delete, :model_name => "player", :id => @player.id))
     end
 
     it "should respond sucessfully" do
@@ -669,11 +733,11 @@ describe "MerbAdmin" do
 
   describe "delete with missing object" do
     before(:each) do
-      @response = request(url(:merb_admin_delete, :model_name => "player", :id => 1))
+      @response = visit(url(:merb_admin_delete, :model_name => "player", :id => 1))
     end
 
     it "should raise NotFound" do
-      @response.status.should == 404
+      @response.status.should equal(404)
     end
   end
 
@@ -681,7 +745,7 @@ describe "MerbAdmin" do
     before(:each) do
       @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
       @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => rand(99999), :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
-      @response = request(url(:merb_admin_delete, :model_name => "league", :id => @league.id))
+      @response = visit(url(:merb_admin_delete, :model_name => "league", :id => @league.id))
     end
 
     it "should respond sucessfully" do
@@ -691,25 +755,27 @@ describe "MerbAdmin" do
 
   describe "destroy", :given => "a player exists" do
     before(:each) do
-      @response = request(url(:merb_admin_destroy, :model_name => "player", :id => @player.id), :method => "delete")
+      visit(url(:merb_admin_delete, :model_name => "player", :id => @player.id))
+      @response = click_button "Yes, I'm sure"
+      @player = MerbAdmin::AbstractModel.new("Player").first
     end
 
-    it "should redirect to list" do
-      @response.should redirect_to(url(:merb_admin_list, :model_name => "player"))
+    it "should be successful" do
+      @response.should be_successful
     end
 
     it "should destroy an object" do
-      MerbAdmin::AbstractModel.new("Player").first.should be_nil
+      @player.should be_nil
     end
   end
 
   describe "destroy with missing object" do
     before(:each) do
-      @response = request(url(:merb_admin_destroy, :model_name => "player", :id => 1), :method => "delete")
+      @response = visit(url(:merb_admin_destroy, :model_name => "player", :id => 1), :delete)
     end
 
     it "should raise NotFound" do
-      @response.status.should == 404
+      @response.status.should equal(404)
     end
   end
 end
