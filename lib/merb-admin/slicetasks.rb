@@ -91,6 +91,8 @@ def load_data
     return
   end
 
+  require_models
+
   puts "Loading current MLB leagues, divisions, teams, and players"
   MLB::Team.all.each do |mlb_team|
     unless league = MerbAdmin::AbstractModel.new("League").first(:conditions => ["name = ?", mlb_team.league])
@@ -136,9 +138,8 @@ def copy_migrations(orm = nil)
   duplicated.each { |f| puts "! duplicated override as #{f}" }
 end
 
-def require_models(orm = nil)
-  orm ||= set_orm
-  Dir.glob(File.dirname(__FILE__) / "models" / orm.to_s.downcase / Merb.glob_for(:model)).each do |model_filename|
+def require_models
+  Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |model_filename|
     require model_filename
   end
 end
