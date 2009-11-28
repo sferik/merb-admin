@@ -4,7 +4,7 @@ module MerbAdmin
   class AbstractModel
     module ActiverecordSupport
       def get(id)
-        model.find(id).extend(InstanceMethods)
+        model.find_by_id(id).extend(InstanceMethods)
       rescue ActiveRecord::RecordNotFound
         nil
       end
