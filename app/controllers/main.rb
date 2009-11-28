@@ -40,10 +40,6 @@ class MerbAdmin::Main < MerbAdmin::Application
     render(:layout => 'form')
   end
 
-  def edit
-    render(:layout => 'form')
-  end
-
   def create
     @object = @abstract_model.new(@attributes)
     if @object.save && update_all_associations
@@ -51,6 +47,10 @@ class MerbAdmin::Main < MerbAdmin::Application
     else
       render_error
     end
+  end
+
+  def edit
+    render(:layout => 'form')
   end
 
   def update
