@@ -14,13 +14,11 @@ module MerbAdmin
       end
 
       def first(options = {})
-        merge_order!(options)
-        model.first(options).extend(InstanceMethods)
+        model.first(merge_order(options)).extend(InstanceMethods)
       end
 
       def all(options = {})
-        merge_order!(options)
-        model.all(options)
+        model.all(merge_order(options))
       end
 
       def paginated(options = {})
@@ -98,10 +96,10 @@ module MerbAdmin
 
       private
 
-      def merge_order!(options)
+      def merge_order(options)
         @sort ||= options.delete(:sort) || "id"
         @sort_order ||= options.delete(:sort_reverse) ? "desc" : "asc"
-        options.merge!(:order => ["#{@sort} #{@sort_order}"])
+        options.merge(:order => ["#{@sort} #{@sort_order}"])
       end
 
       def association_parent_model_lookup(association)
