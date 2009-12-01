@@ -10,8 +10,7 @@ module MerbAdmin
       end
 
       def count(options = {})
-        merge_order!(options)
-        model.count(options)
+        model.count(options.reject{|key, value| [:sort, :sort_reverse].include?(key)})
       end
 
       def first(options = {})
