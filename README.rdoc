@@ -2,6 +2,8 @@
 ==== MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
 It currently offers the features listed here[http://sferik.tadalist.com/lists/1352791/public].
 
+Take it for a test drive with sample data here[http://merb-admin.heroku.com/].
+
 The status of the latest build is available here[http://runcoderun.com/sferik/merb-admin].
 
 Various code metrics are available here[http://devver.net/caliper/project?repo=git://github.com/sferik/merb-admin.git].
