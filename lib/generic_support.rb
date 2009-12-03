@@ -2,7 +2,7 @@ module MerbAdmin
   class AbstractModel
     module GenericSupport
       def to_param
-        model.to_s.snake_case.gsub("::", "__")
+        model.to_s.snake_case
       end
 
       def pretty_name
