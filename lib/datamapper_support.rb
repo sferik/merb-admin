@@ -86,7 +86,7 @@ module MerbAdmin
             :pretty_name => property.name.to_s.gsub(/_id$/, "").gsub("_", " ").capitalize,
             :type => type_lookup(property),
             :length => property.length,
-            :nullable? => property.nullable?,
+            :nullable? => property.allow_nil?,
             :serial? => property.serial?,
           }
         end

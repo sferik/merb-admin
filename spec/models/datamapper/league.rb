@@ -4,7 +4,7 @@ class League
   property(:id, Serial)
   property(:created_at, DateTime)
   property(:updated_at, DateTime)
-  property(:name, String, :nullable => false, :index => true)
+  property(:name, String, :required => true, :index => true)
 
   has(n, :divisions)
   has(n, :teams)
