@@ -7,7 +7,7 @@ module MerbAdmin
       @models = []
       orm = Merb.orm
       case orm
-      when :activerecord, :sequel
+      when :active_record, :sequel
         Dir.glob(Merb.dir_for(:model) / Merb.glob_for(:model)).each do |filename|
           File.read(filename).scan(/class ([\w\d_\-:]+)/).flatten.each do |model_name|
             add_model(model_name)
@@ -38,7 +38,7 @@ module MerbAdmin
       end
 
       case Merb.orm
-      when :activerecord
+      when :active_record
         model if superclasses(model).include?(ActiveRecord::Base)
       when :datamapper
         model if model.include?(DataMapper::Resource)
@@ -57,8 +57,8 @@ module MerbAdmin
       @model = model
       self.extend(GenericSupport)
       case orm
-      when :activerecord
-        require 'activerecord_support'
+      when :active_record
+        require 'active_record_support'
         self.extend(ActiverecordSupport)
       when :datamapper
         require 'datamapper_support'

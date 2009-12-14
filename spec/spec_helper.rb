@@ -41,17 +41,17 @@ module Merb
         orm = set_orm(orm)
         orm = orm.to_s.downcase.to_sym
         case orm
-        when :activerecord
-          require 'activerecord'
+        when :active_record
+          require 'active_record'
           require_models(orm)
           unless ActiveRecord::Base.connected?
             ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
             ActiveRecord::Migration.verbose = false
-            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "activerecord"), 1)
-            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "activerecord"), 2)
-            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "activerecord"), 3)
-            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "activerecord"), 4)
-            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "activerecord"), 5)
+            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "active_record"), 1)
+            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "active_record"), 2)
+            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "active_record"), 3)
+            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "active_record"), 4)
+            ActiveRecord::Migrator.run(:up, File.join(File.dirname(__FILE__), "migrations", "active_record"), 5)
           end
         when :datamapper
           require 'dm-core'
@@ -83,7 +83,7 @@ module Merb
       end
 
       def set_orm(orm = nil)
-        orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :activerecord
+        orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :active_record
       end
 
     end
