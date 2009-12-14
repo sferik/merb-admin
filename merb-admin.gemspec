@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{merb-admin}
-  s.version = "0.7.4"
+  s.version = "0.7.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Erik Michaels-Ober"]
-  s.date = %q{2009-12-12}
+  s.date = %q{2009-12-14}
   s.description = %q{MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.}
   s.email = %q{sferik@gmail.com}
   s.extra_rdoc_files = [
@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
      "app/views/main/list.html.erb",
      "app/views/main/new.html.erb",
      "lib/abstract_model.rb",
-     "lib/activerecord_support.rb",
+     "lib/active_record_support.rb",
      "lib/datamapper_support.rb",
      "lib/generic_support.rb",
      "lib/merb-admin.rb",
@@ -132,21 +132,21 @@ Gem::Specification.new do |s|
      "public/stylesheets/rtl.css",
      "public/stylesheets/widgets.css",
      "spec/controllers/main_spec.rb",
-     "spec/migrations/activerecord/001_create_divisions_migration.rb",
-     "spec/migrations/activerecord/002_create_drafts_migration.rb",
-     "spec/migrations/activerecord/003_create_leagues_migration.rb",
-     "spec/migrations/activerecord/004_create_players_migration.rb",
-     "spec/migrations/activerecord/005_create_teams_migration.rb",
+     "spec/migrations/active_record/001_create_divisions_migration.rb",
+     "spec/migrations/active_record/002_create_drafts_migration.rb",
+     "spec/migrations/active_record/003_create_leagues_migration.rb",
+     "spec/migrations/active_record/004_create_players_migration.rb",
+     "spec/migrations/active_record/005_create_teams_migration.rb",
      "spec/migrations/sequel/001_create_divisions_migration.rb",
      "spec/migrations/sequel/002_create_drafts_migration.rb",
      "spec/migrations/sequel/003_create_leagues_migration.rb",
      "spec/migrations/sequel/004_create_players_migration.rb",
      "spec/migrations/sequel/005_create_teams_migration.rb",
-     "spec/models/activerecord/division.rb",
-     "spec/models/activerecord/draft.rb",
-     "spec/models/activerecord/league.rb",
-     "spec/models/activerecord/player.rb",
-     "spec/models/activerecord/team.rb",
+     "spec/models/active_record/division.rb",
+     "spec/models/active_record/draft.rb",
+     "spec/models/active_record/league.rb",
+     "spec/models/active_record/player.rb",
+     "spec/models/active_record/team.rb",
      "spec/models/datamapper/division.rb",
      "spec/models/datamapper/draft.rb",
      "spec/models/datamapper/league.rb",
@@ -174,21 +174,21 @@ Gem::Specification.new do |s|
   s.summary = %q{MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.}
   s.test_files = [
     "spec/controllers/main_spec.rb",
-     "spec/migrations/activerecord/001_create_divisions_migration.rb",
-     "spec/migrations/activerecord/002_create_drafts_migration.rb",
-     "spec/migrations/activerecord/003_create_leagues_migration.rb",
-     "spec/migrations/activerecord/004_create_players_migration.rb",
-     "spec/migrations/activerecord/005_create_teams_migration.rb",
+     "spec/migrations/active_record/001_create_divisions_migration.rb",
+     "spec/migrations/active_record/002_create_drafts_migration.rb",
+     "spec/migrations/active_record/003_create_leagues_migration.rb",
+     "spec/migrations/active_record/004_create_players_migration.rb",
+     "spec/migrations/active_record/005_create_teams_migration.rb",
      "spec/migrations/sequel/001_create_divisions_migration.rb",
      "spec/migrations/sequel/002_create_drafts_migration.rb",
      "spec/migrations/sequel/003_create_leagues_migration.rb",
      "spec/migrations/sequel/004_create_players_migration.rb",
      "spec/migrations/sequel/005_create_teams_migration.rb",
-     "spec/models/activerecord/division.rb",
-     "spec/models/activerecord/draft.rb",
-     "spec/models/activerecord/league.rb",
-     "spec/models/activerecord/player.rb",
-     "spec/models/activerecord/team.rb",
+     "spec/models/active_record/division.rb",
+     "spec/models/active_record/draft.rb",
+     "spec/models/active_record/league.rb",
+     "spec/models/active_record/player.rb",
+     "spec/models/active_record/team.rb",
      "spec/models/datamapper/division.rb",
      "spec/models/datamapper/draft.rb",
      "spec/models/datamapper/league.rb",
