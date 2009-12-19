@@ -17,16 +17,16 @@ namespace :slices do
     # end
 
     desc "Copies sample models, copies and runs sample migrations, and loads sample data into your app"
-    task :active_record => ["active_record:copy_sample_models", "active_record:copy_sample_migrations", "active_record:migrate", "load_sample_data"]
-    namespace :active_record do
+    task :activerecord => ["activerecord:copy_sample_models", "activerecord:copy_sample_migrations", "activerecord:migrate", "load_sample_data"]
+    namespace :activerecord do
       desc "Copies sample models into your app"
       task :copy_sample_models do
-        copy_models(:active_record)
+        copy_models(:activerecord)
       end
 
       desc "Copies sample migrations into your app"
       task :copy_sample_migrations do
-        copy_migrations(:active_record)
+        copy_migrations(:activerecord)
       end
 
       desc "Migrate the database to the latest version"
@@ -145,7 +145,7 @@ def require_models
 end
 
 def set_orm(orm = nil)
-  orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :datamapper
+  orm || ENV['MERB_ORM'] || (Merb.orm != :none ? Merb.orm : nil) || :activerecord
 end
 
 def mirror_file(source, dest, copied = [], duplicated = [], postfix = '_override')
