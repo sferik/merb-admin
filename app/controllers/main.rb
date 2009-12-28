@@ -3,12 +3,12 @@ require File.join( File.dirname(__FILE__), '..', '..', 'lib', 'abstract_model' )
 class MerbAdmin::Main < MerbAdmin::Application
   include Merb::MerbAdmin::MainHelper
 
-  before :get_models, :only => ['index']
   before :get_model, :exclude => ['index']
   before :get_object, :only => ['edit', 'update', 'delete', 'destroy']
   before :get_attributes, :only => ['create', 'update']
 
   def index
+    @abstract_models = MerbAdmin::AbstractModel.all
     render(:layout => 'dashboard')
   end
 
@@ -75,17 +75,9 @@ class MerbAdmin::Main < MerbAdmin::Application
 
   private
 
-  def get_models
-    @abstract_models = MerbAdmin::AbstractModel.all
-  end
-
   def get_model
     model_name = to_model_name(params[:model_name])
     @abstract_model = MerbAdmin::AbstractModel.new(model_name)
-    get_properties
-  end
-
-  def get_properties
     @properties = @abstract_model.properties
   end
 
