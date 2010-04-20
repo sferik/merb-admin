@@ -19,11 +19,11 @@ begin
     gemspec.email = EMAIL
     gemspec.homepage = HOMEPAGE
     gemspec.files.exclude("config/*", "screenshots/*")
-    gemspec.add_dependency("merb-slices", ">= #{MERB_GEM_VERSION}")
-    gemspec.add_dependency("merb-assets", ">= #{MERB_GEM_VERSION}")
-    gemspec.add_dependency("merb-helpers", ">= #{MERB_GEM_VERSION}")
-    gemspec.add_dependency("builder", ">= 2.1.2")
-    gemspec.add_development_dependency("rspec", ">= 1.2.9")
+    gemspec.add_dependency("merb-slices", "~> #{MERB_GEM_VERSION}")
+    gemspec.add_dependency("merb-assets", "~> #{MERB_GEM_VERSION}")
+    gemspec.add_dependency("merb-helpers", "~> #{MERB_GEM_VERSION}")
+    gemspec.add_dependency("builder", "~> 2.1")
+    gemspec.add_development_dependency("rspec", "~> 1.3")
     gemspec.post_install_message = <<-POST_INSTALL_MESSAGE
 #{"*" * 80}
 
