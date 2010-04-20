@@ -208,22 +208,22 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<merb-slices>, [">= 1.0.15"])
-      s.add_runtime_dependency(%q<merb-assets>, [">= 1.0.15"])
-      s.add_runtime_dependency(%q<merb-helpers>, [">= 1.0.15"])
+      s.add_runtime_dependency(%q<merb-slices>, [">= 1.1"])
+      s.add_runtime_dependency(%q<merb-assets>, [">= 1.1"])
+      s.add_runtime_dependency(%q<merb-helpers>, [">= 1.1"])
       s.add_runtime_dependency(%q<builder>, [">= 2.1.2"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
-      s.add_dependency(%q<merb-slices>, [">= 1.0.15"])
-      s.add_dependency(%q<merb-assets>, [">= 1.0.15"])
-      s.add_dependency(%q<merb-helpers>, [">= 1.0.15"])
+      s.add_dependency(%q<merb-slices>, [">= 1.1"])
+      s.add_dependency(%q<merb-assets>, [">= 1.1"])
+      s.add_dependency(%q<merb-helpers>, [">= 1.1"])
       s.add_dependency(%q<builder>, [">= 2.1.2"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
-    s.add_dependency(%q<merb-slices>, [">= 1.0.15"])
-    s.add_dependency(%q<merb-assets>, [">= 1.0.15"])
-    s.add_dependency(%q<merb-helpers>, [">= 1.0.15"])
+    s.add_dependency(%q<merb-slices>, [">= 1.1"])
+    s.add_dependency(%q<merb-assets>, [">= 1.1"])
+    s.add_dependency(%q<merb-helpers>, [">= 1.1"])
     s.add_dependency(%q<builder>, [">= 2.1.2"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end

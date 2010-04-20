@@ -7,7 +7,7 @@ AUTHOR = "Erik Michaels-Ober"
 EMAIL = "sferik@gmail.com"
 HOMEPAGE = "http://github.com/sferik/merb-admin"
 SUMMARY = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
-MERB_GEM_VERSION = "1.0.15"
+MERB_GEM_VERSION = "1.1"
 
 begin
   require 'jeweler'

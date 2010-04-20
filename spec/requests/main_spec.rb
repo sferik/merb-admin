@@ -8,6 +8,10 @@ given "a draft exists" do
   @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => rand(99999), :team_id => rand(99999), :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
 end
 
+given "a league exists" do
+  @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+end
+
 given "two players exist" do
   @players = []
   (1..2).each do |number|
@@ -22,32 +26,10 @@ given "three teams exist" do
   end
 end
 
-given "a player exists and a draft exists" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
-  @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => rand(99999), :team_id => rand(99999), :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
-end
-
-given "a player exists and three teams exist" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
-  @teams = []
-  (1..3).each do |number|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
-  end
-end
-
-given "a player exists and three teams with no name exist" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
+given "three teams with no name exist" do
   @teams = []
   (1..3).each do |number|
     @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
-  end
-end
-
-given "a league exists and three teams exist" do
-  @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
-  @teams = []
-  (1..3).each do |number|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
   end
 end
 
@@ -371,7 +353,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "new with missing label", :given => "a player exists and three teams with no name exist" do
+  describe "new with missing label", :given => ["a player exists", "three teams with no name exist"] do
     before(:each) do
       @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
@@ -533,7 +515,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit with has-one association", :given => "a player exists and a draft exists" do
+  describe "edit with has-one association", :given => ["a player exists", "a draft exists"] do
     before(:each) do
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
@@ -547,7 +529,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit with has-many association", :given => "a player exists and three teams exist" do
+  describe "edit with has-many association", :given => ["a player exists", "three teams exist"] do
     before(:each) do
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
@@ -571,7 +553,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit with missing label", :given => "a player exists and three teams with no name exist" do
+  describe "edit with missing label", :given => ["a player exists", "three teams with no name exist"] do
     before(:each) do
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
@@ -644,7 +626,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update with has-one association", :given => "a player exists and a draft exists" do
+  describe "update with has-one association", :given => ["a player exists", "a draft exists"] do
     before(:each) do
       visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
       fill_in "Name", :with => "Jackie Robinson"
@@ -668,7 +650,7 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update with has-many association", :given => "a league exists and three teams exist" do
+  describe "update with has-many association", :given => ["a league exists", "three teams exist"] do
     before(:each) do
       visit(url(:merb_admin_edit, :model_name => "league", :id => @league.id))
       fill_in "Name", :with => "National League"
