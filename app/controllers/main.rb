@@ -45,7 +45,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     if @object.save && update_all_associations
       redirect_on_success
     else
-      render_error
+      render_error(:new)
     end
   end
 
@@ -57,7 +57,7 @@ class MerbAdmin::Main < MerbAdmin::Application
     if @object.update_attributes(@attributes) && update_all_associations
       redirect_on_success
     else
-      render_error
+      render_error(:edit)
     end
   end
 
@@ -182,10 +182,10 @@ class MerbAdmin::Main < MerbAdmin::Application
     end
   end
 
-  def render_error
+  def render_error(template)
     action = params[:action]
     message[:error] = "#{@abstract_model.pretty_name} failed to be #{action}d"
-    render(:new, :layout => 'form')
+    render(template, :layout => 'form')
   end
 
 end
