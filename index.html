@@ -1,11 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!doctype html>
+<html lang="en">
   <head>
-	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	  <title>MerbAdmin</title>
-	  <style type="text/css">
+    <meta charset="utf-8">
+    <title>MerbAdmin</title>
+    <meta name="description" content="MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.">
+    <meta name="author" content="Erik Michaels-Ober">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+    <link rel="shortcut icon" href="http://github.com/favicon.ico">
+    <link rel="apple-touch-icon" href="http://github.com/apple-touch-icon.png">
+    <style type="text/css">
       body {
         margin-top: 1.0em;
         background-color: #fff;
@@ -51,22 +54,24 @@
     </style>
   </head>
   <body>
-    <a href="http://github.com/sferik/merb-admin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <a href="http://github.com/sferik/merb-admin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
     <div id="container">
-      <h1>
-        <a href="http://github.com/sferik/merb-admin">MerbAdmin</a>
-        <span class="small">by <a href="http://github.com/sferik">Erik Michaels-Ober</a></span>
-      </h1>
-      <div class="description">
-        MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
-      </div>
+      <header>
+        <h1>
+          <a href="http://github.com/sferik/merb-admin">MerbAdmin</a>
+          <span class="small">by <a href="http://github.com/sferik">Erik Michaels-Ober</a></span>
+        </h1>
+        <div class="description">
+          MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data.
+        </div>
+      </header>
       <p>It currently offers the features listed <a href="http://sferik.tadalist.com/lists/1352791/public">here</a>.</p>
       <p>Take it for a test drive with sample data <a href="http://merb-admin.heroku.com/">here</a>.</p>
       <h2>Screencast</h2>
-      <iframe src="http://player.vimeo.com/video/7872559?color=3e7691" width="699" height="437" frameborder="0" />
+      <iframe src="http://player.vimeo.com/video/7872559?color=3e7691" width="699" height="437"></iframe>
       <h2>Screenshots</h2>
-      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/list.png" />
-      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png" />
+      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/list.png">
+      <img src="http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png">
       <h2>Installation</h2>
       <pre><code>gem install merb-admin -s http://gemcutter.org</code></pre>
       <p>In your app, add the following dependency to <code>config/dependencies.rb</code>:</p>
@@ -117,14 +122,11 @@ end</code></pre>
       <p>Also, thanks to <a href="http://www.21st-amendment.com">beer</a>.</p>
     </div>
     <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-      try {
-        var pageTracker = _gat._getTracker("UA-10631189-1");
-        pageTracker._trackPageview();
-      } catch(err) {}
+     var _gaq = [['_setAccount', 'UA-10631189-1'], ['_trackPageview']]; 
+     (function(d, t) {
+      var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      g.async = true; g.src = '//www.google-analytics.com/ga.js'; s.parentNode.insertBefore(g, s);
+     })(document, 'script');
     </script>
   </body>
 </html>
