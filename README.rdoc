@@ -1,1 +1,1 @@
-http://sferik.github.com/merb-admin/
+http://sferik.github.com/merb-admin
