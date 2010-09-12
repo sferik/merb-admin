@@ -119,11 +119,13 @@ module MerbAdmin
           DataMapper::Types::Text => :text,
           Date => :date,
           DateTime => :datetime,
+          FalseClass => :boolean,
           Fixnum => :integer,
           Float => :float,
           Integer => :integer,
           String => :string,
           Time => :time,
+          TrueClass => :boolean,
         }
         type[property.type] || type[property.primitive]
       end

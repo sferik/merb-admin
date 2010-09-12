@@ -13,7 +13,7 @@ class Player
   property(:born_on, Date)
   property(:notes, Text)
 
-  validates_is_unique(:number, :scope => :team_id, :message => "There is already a player with that number on this team")
+  validates_uniqueness_of(:number, :scope => :team_id, :message => "There is already a player with that number on this team")
 
   belongs_to(:team)
   has(1, :draft)
