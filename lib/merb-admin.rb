@@ -2,6 +2,7 @@ if defined?(Merb::Plugins)
 
   $:.unshift File.dirname(__FILE__)
 
+  require 'merb-slices'
   Merb::Plugins.add_rakefiles "merb-admin/merbtasks", "merb-admin/slicetasks", "merb-admin/spectasks"
 
   # Register the Slice for the current host application
