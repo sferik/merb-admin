@@ -1,9 +1,13 @@
+!gems/cache/
 *.db
+*.gem
 *.sqlite
 *.sqlite3
+*.sw[p|o]
 *~
 .#*
 .DS_Store
+.bundle
 .hg/*
 .hgignore
 .svn/*
@@ -13,7 +17,6 @@ bin/*
 coverage/*
 doc/*
 gems/
-!gems/cache/
 log/*
 merb_profile_results
 pkg/*
@@ -24,4 +27,3 @@ schema/*_structure.sql
 schema/schema.rb
 src/*
 tmp/*
-*.sw[p|o]
