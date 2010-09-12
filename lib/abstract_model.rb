@@ -40,12 +40,10 @@ module MerbAdmin
       case Merb.orm
       when :activerecord
         model if superclasses(model).include?(ActiveRecord::Base)
-      when :datamapper
-        model if model.include?(DataMapper::Resource)
       when :sequel
         model if superclasses(model).include?(Sequel::Model)
       else
-        nil
+        model
       end
     end
 

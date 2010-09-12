@@ -1,6 +1,6 @@
 <%
   property_name = property[:name]
-  length = property[:length]
+  length = property[:length].to_i
   label = property[:pretty_name]
   required = !property[:nullable?] || property[:serial?]
 %>

@@ -1,6 +1,7 @@
 require 'dm-core'
-require 'dm-validations'
 require 'dm-aggregates'
+require 'dm-types'
+require 'dm-validations'
 
 module MerbAdmin
   class AbstractModel
@@ -85,7 +86,7 @@ module MerbAdmin
             :name => property.name,
             :pretty_name => property.name.to_s.gsub(/_id$/, "").gsub("_", " ").capitalize,
             :type => type_lookup(property),
-            :length => property.length,
+            :length => property.respond_to?(:length) ? property.length : nil,
             :nullable? => property.allow_nil?,
             :serial? => property.serial?,
           }
@@ -114,8 +115,6 @@ module MerbAdmin
         type = {
           BigDecimal => :big_decimal,
           DataMapper::Types::Boolean => :boolean,
-          DataMapper::Types::ParanoidBoolean => :boolean,
-          DataMapper::Types::ParanoidDateTime => :datetime,
           DataMapper::Types::Serial => :integer,
           DataMapper::Types::Text => :text,
           Date => :date,

@@ -11,7 +11,7 @@ class CreateDrafts < Sequel::Migration
       Integer(:pick)
       Integer(:overall)
       String(:college, :limit => 100)
-      String(:notes, :text=>true)
+      String(:notes, :text => true)
     end
   end
 

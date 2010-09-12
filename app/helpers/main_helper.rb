@@ -63,7 +63,7 @@ module Merb
       # * We use an inner and outer window into a list of links. For a set of
       # 20 pages with the current page being 10:
       # outer_window:
-      #   1 2  ..... 19 20
+      #   1 2 ..... 19 20
       # inner_window
       #   5 6 7 8 9 10 11 12 13 14
       #

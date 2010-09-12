@@ -4,7 +4,6 @@ class Player
   property(:id, Serial)
   property(:created_at, DateTime)
   property(:updated_at, DateTime)
-  property(:deleted_at, ParanoidDateTime)
   property(:team_id, Integer, :index => true)
   property(:name, String, :length => 100, :required => true, :index => true)
   property(:position, String, :index => true)

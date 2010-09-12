@@ -56,6 +56,7 @@ module Merb
         when :datamapper
           require 'dm-core'
           require 'dm-aggregates'
+          require 'dm-migrations'
           require 'dm-validations'
           require_models(orm)
           unless DataMapper::Repository.adapters.key?(:default)

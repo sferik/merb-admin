@@ -98,7 +98,7 @@ describe "MerbAdmin" do
     end
 
     it "should show column headers" do
-      @response.body.should contain(/Id\n\s*Created at\n\s*Updated at\n\s*Deleted at\n\s*Team\n\s*Name\n\s*Position\n\s*Number\n\s*Retired\n\s*Injured\n\s*Born on\n\s*Notes/)
+      @response.body.should contain(/Id\n\s*Created at\n\s*Updated at\n\s*Team\n\s*Name\n\s*Position\n\s*Number\n\s*Retired\n\s*Injured\n\s*Born on\n\s*Notes/)
     end
   end
 
