@@ -4,7 +4,7 @@ class Player < Sequel::Model
   plugin(:validation_helpers)
 
   many_to_one(:team)
-  one_to_many(:drafts, :one_to_one => true)
+  one_to_one(:draft)
 
   self.raise_on_save_failure = false
   self.raise_on_typecast_failure = false

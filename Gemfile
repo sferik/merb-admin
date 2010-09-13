@@ -14,7 +14,7 @@ group :test do
   gem 'dm-sqlite-adapter', '~> 1.0'
   gem 'dm-validations', '~> 1.0'
   gem 'rspec', '~> 1.3'
-  gem 'sequel', '~> 3.6.0'
+  gem 'sequel', '~> 3.15'
   gem 'sqlite3-ruby', '~> 1.3', :require => 'sqlite3'
   gem 'webrat', '~> 0.7'
 end

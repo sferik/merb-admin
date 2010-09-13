@@ -196,11 +196,10 @@ module MerbAdmin
       def association_name_lookup(association)
         case association[:type]
         when :one_to_many
-          if association[:one_to_one]
-            association[:name].to_s.singularize.to_sym
-          else
-            association[:name]
-          end
+          association[:name]
+        when :one_to_one
+          # association[:name].to_s.singularize.to_sym
+          association[:name].to_s.to_sym
         when :many_to_one
           association[:name]
         else
@@ -211,11 +210,9 @@ module MerbAdmin
       def association_pretty_name_lookup(association)
         case association[:type]
         when :one_to_many
-          if association[:one_to_one]
-            association[:name].to_s.singularize.gsub('_', ' ').capitalize
-          else
-            association[:name].to_s.gsub('_', ' ').capitalize
-          end
+          association[:name].to_s.gsub('_', ' ').capitalize
+        when :one_to_one
+          association[:name].to_s.singularize.gsub('_', ' ').capitalize
         when :many_to_one
           association[:name].to_s.gsub('_', ' ').capitalize
         else
@@ -226,11 +223,9 @@ module MerbAdmin
       def association_type_lookup(association)
         case association[:type]
         when :one_to_many
-          if association[:one_to_one]
-            :has_one
-          else
-            :has_many
-          end
+          :has_many
+        when :one_to_one
+          :has_one
         when :many_to_one
           :belongs_to
         else
@@ -240,7 +235,7 @@ module MerbAdmin
 
       def association_parent_model_lookup(association)
         case association[:type]
-        when :one_to_many
+        when :one_to_many, :one_to_one
           association[:model]
         when :many_to_one
           Object.const_get(association[:class_name])
@@ -255,7 +250,7 @@ module MerbAdmin
 
       def association_child_model_lookup(association)
         case association[:type]
-        when :one_to_many
+        when :one_to_many, :one_to_one
           Object.const_get(association[:class_name])
         when :many_to_one
           association[:model]
@@ -266,7 +261,7 @@ module MerbAdmin
 
       def association_child_key_lookup(association)
         case association[:type]
-        when :one_to_many
+        when :one_to_many, :one_to_one
           association[:keys]
         when :many_to_one
           ["#{association[:class_name].snake_case}_id".to_sym]
@@ -278,6 +273,7 @@ module MerbAdmin
       module InstanceMethods
         def update_attributes(attributes)
           update(attributes)
+          true
         end
       end
 

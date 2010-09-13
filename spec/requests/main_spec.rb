@@ -1,53 +1,13 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
-given "a player exists" do
-  @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 1, :name => "Player 1")
-end
-
-given "a draft exists" do
-  @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => rand(99999), :team_id => rand(99999), :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
-end
-
-given "a league exists" do
-  @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
-end
-
-given "two players exist" do
-  @players = []
-  (1..2).each do |number|
-    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => number, :name => "Player #{number}")
-  end
-end
-
-given "three teams exist" do
-  @teams = []
-  (1..3).each do |number|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
-  end
-end
-
-given "three teams with no name exist" do
-  @teams = []
-  (1..3).each do |number|
-    @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => rand(99999), :division_id => rand(99999), :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
-  end
-end
-
-given "twenty players exist" do
-  @players = []
-  (1..20).each do |number|
-    @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => number, :name => "Player #{number}")
-  end
-end
-
 describe "MerbAdmin" do
   before(:each) do
     mount_slice
-    MerbAdmin::AbstractModel.new("Division").destroy_all!
     MerbAdmin::AbstractModel.new("Draft").destroy_all!
-    MerbAdmin::AbstractModel.new("League").destroy_all!
     MerbAdmin::AbstractModel.new("Player").destroy_all!
     MerbAdmin::AbstractModel.new("Team").destroy_all!
+    MerbAdmin::AbstractModel.new("Division").destroy_all!
+    MerbAdmin::AbstractModel.new("League").destroy_all!
   end
 
   describe "dashboard" do
@@ -104,8 +64,11 @@ describe "MerbAdmin" do
 
   describe "list with sort" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher")
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Brooklyn Dodgers", :manager => "Walter Alston", :founded => 1883, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 32, :name => "Sandy Koufax", :position => "Starting pitcher")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :sort => "name")
     end
 
@@ -120,8 +83,11 @@ describe "MerbAdmin" do
 
   describe "list with reverse sort" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher")
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Brooklyn Dodgers", :manager => "Walter Alston", :founded => 1883, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 32, :name => "Sandy Koufax", :position => "Starting pitcher")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :sort => "name", :sort_reverse => "true")
     end
 
@@ -136,8 +102,11 @@ describe "MerbAdmin" do
 
   describe "list with query" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher")
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Brooklyn Dodgers", :manager => "Walter Alston", :founded => 1883, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 32, :name => "Sandy Koufax", :position => "Starting pitcher")
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 42, :name => "Jackie Robinson", :position => "Second baseman")
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :query => "Jackie Robinson")
     end
 
@@ -156,11 +125,14 @@ describe "MerbAdmin" do
 
   describe "list with query and boolean filter" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher", :retired => true, :injured => true)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman", :retired => true, :injured => false)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "Left fielder", :retired => false, :injured => true)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
-      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :query => "Sandy Koufax", :filter => {:injured => "true"})
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "New York Mets", :manager => "Jerry Manuel", :founded => 1962, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 41, :name => "Tom Seaver", :position => "Starting pitcher", :retired => true, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 14, :name => "Gil Hodges", :position => "First baseman", :retired => true, :injured => false)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "Jose Reyes", :position => "Shortstop", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
+      @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :query => "Tom Seaver", :filter => {:injured => "true"})
     end
 
     it "should respond sucessfully" do
@@ -168,12 +140,12 @@ describe "MerbAdmin" do
     end
 
     it "should show a correct result" do
-      @response.body.should contain("Sandy Koufax")
+      @response.body.should contain("Tom Seaver")
     end
 
     it "should not contain an incorrect result" do
-      @response.body.should_not contain("Jackie Robinson")
-      @response.body.should_not contain("Moises Alou")
+      @response.body.should_not contain("Gil Hodges")
+      @response.body.should_not contain("Jose Reyes")
       @response.body.should_not contain("David Wright")
     end
   end
@@ -181,8 +153,11 @@ describe "MerbAdmin" do
 
   describe "list with boolean filter" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "Left fielder", :injured => true)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "Third baseman", :injured => false)
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "New York Mets", :manager => "Jerry Manuel", :founded => 1962, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "Jose Reyes", :position => "Shortstop", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :filter => {:injured => "true"})
     end
 
@@ -191,7 +166,7 @@ describe "MerbAdmin" do
     end
 
     it "should show a correct result" do
-      @response.body.should contain("Moises Alou")
+      @response.body.should contain("Jose Reyes")
     end
 
     it "should not contain an incorrect result" do
@@ -201,10 +176,13 @@ describe "MerbAdmin" do
 
   describe "list with boolean filters" do
     before(:each) do
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 32, :name => "Sandy Koufax", :position => "Starting patcher", :retired => true, :injured => true)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 42, :name => "Jackie Robinson", :position => "Second baseman", :retired => true, :injured => false)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 18, :name => "Moises Alou", :position => "Left fielder", :retired => false, :injured => true)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => rand(99999), :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "New York Mets", :manager => "Jerry Manuel", :founded => 1962, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 41, :name => "Tom Seaver", :position => "Starting pitcher", :retired => true, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 14, :name => "Gil Hodges", :position => "First baseman", :retired => true, :injured => false)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "Jose Reyes", :position => "Shortstop", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :filter => {:retired => "true", :injured => "true"})
     end
 
@@ -213,17 +191,25 @@ describe "MerbAdmin" do
     end
 
     it "should show a correct result" do
+      @response.body.should contain("Tom Seaver")
     end
 
     it "should not contain an incorrect result" do
-      @response.body.should_not contain("Jackie Robinson")
-      @response.body.should_not contain("Moises Alou")
+      @response.body.should_not contain("Gil Hodges")
+      @response.body.should_not contain("Jose Reyes")
       @response.body.should_not contain("David Wright")
     end
   end
 
-  describe "list with 2 objects", :given => "two players exist" do
+  describe "list with 2 objects" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @players = []
+      (1..2).each do |number|
+        @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => number, :name => "Player #{number}")
+      end
       MerbAdmin[:per_page] = 1
       @response = visit(url(:merb_admin_list, :model_name => "player"))
       MerbAdmin[:per_page] = 100
@@ -238,8 +224,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 20 objects", :given => "twenty players exist" do
+  describe "list with 20 objects" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @players = []
+      (1..20).each do |number|
+        @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => number, :name => "Player #{number}")
+      end
       MerbAdmin[:per_page] = 1
       @response = visit(url(:merb_admin_list, :model_name => "player"))
       MerbAdmin[:per_page] = 100
@@ -254,8 +247,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 20 objects, page 8", :given => "twenty players exist" do
+  describe "list with 20 objects, page 8" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @players = []
+      (1..20).each do |number|
+        @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => number, :name => "Player #{number}")
+      end
       MerbAdmin[:per_page] = 1
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :page => 8)
       MerbAdmin[:per_page] = 100
@@ -270,8 +270,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list with 20 objects, page 17", :given => "twenty players exist" do
+  describe "list with 20 objects, page 17" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @players = []
+      (1..20).each do |number|
+        @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => number, :name => "Player #{number}")
+      end
       MerbAdmin[:per_page] = 1
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :page => 17)
       MerbAdmin[:per_page] = 100
@@ -286,8 +293,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "list show all", :given => "two players exist" do
+  describe "list show all" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @players = []
+      (1..2).each do |number|
+        @players << MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => number, :name => "Player #{number}")
+      end
       MerbAdmin[:per_page] = 1
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :all => true)
       MerbAdmin[:per_page] = 100
@@ -325,8 +339,13 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "new with has-one association", :given => "a draft exists" do
+  describe "new with has-one association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
+      @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => @player.id, :team_id => @team.id, :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
       @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
@@ -339,8 +358,14 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "new with has-many association", :given => "three teams exist" do
+  describe "new with has-many association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @teams = []
+      (1..3).each do |number|
+        @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      end
       @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
@@ -353,8 +378,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "new with missing label", :given => ["a player exists", "three teams with no name exist"] do
+  describe "new with missing label" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @teams = []
+      (1..3).each do |number|
+        @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      end
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @teams[0].id, :number => 1, :name => "Player 1")
       @response = visit(url(:merb_admin_new, :model_name => "player"))
     end
 
@@ -370,7 +402,7 @@ describe "MerbAdmin" do
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player = MerbAdmin::AbstractModel.new("Player").last
     end
 
     it "should be successful" do
@@ -391,7 +423,7 @@ describe "MerbAdmin" do
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save and continue editing"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player = MerbAdmin::AbstractModel.new("Player").last
     end
 
     it "should be successful" do
@@ -412,7 +444,7 @@ describe "MerbAdmin" do
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save and add another"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player = MerbAdmin::AbstractModel.new("Player").last
     end
 
     it "should be successful" do
@@ -426,34 +458,47 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "create with has-one association", :given => "a draft exists" do
+  describe "create with has-one association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
+      @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => @player.id, :team_id => @team.id, :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
       visit(url(:merb_admin_new, :model_name => "player"))
       fill_in "Name", :with => "Jackie Robinson"
       fill_in "Number", :with => 42
       fill_in "Position", :with => "Second baseman"
       fill_in "Draft", :with => @draft.id.to_s
       @response = click_button "Save"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player = MerbAdmin::AbstractModel.new("Player").last
+      @draft.reload
     end
 
     it "should create an object with correct associations" do
-      @draft.reload
       @player.draft.should eql(@draft)
     end
   end
 
-  describe "create with has-many association", :given => "three teams exist" do
+  describe "create with has-many association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @teams = []
+      (1..3).each do |number|
+        @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      end
       visit(url(:merb_admin_new, :model_name => "league"))
       fill_in "Name", :with => "National League"
       fill_in "Teams", :with => @teams[0].id.to_s
       @response = click_button "Save"
-      @league = MerbAdmin::AbstractModel.new("League").first
+      @league = MerbAdmin::AbstractModel.new("League").last
+      @teams.each do |team|
+        team.reload
+      end
     end
 
     it "should create an object with correct associations" do
-      @teams[0].reload
       @league.teams.should include(@teams[0])
     end
 
@@ -463,8 +508,12 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "create with uniqueness constraint violated", :given => "a player exists" do
+  describe "create with uniqueness constraint violated" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       visit(url(:merb_admin_new, :model_name => "player"))
       fill_in "Name", :with => @player.name
       fill_in "Number", :with => @player.number.to_s
@@ -488,8 +537,12 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit", :given => "a player exists" do
+  describe "edit" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
@@ -510,13 +563,18 @@ describe "MerbAdmin" do
       @response.body.should contain(/Position\n\s*Optional/)
       @response.body.should contain(/Born on\n\s*Optional/)
       @response.body.should contain(/Notes\n\s*Optional/)
+      @response.body.should contain(/TeamTeam 1\n\s*Optional/)
       @response.body.should contain(/Draft\n\s*Optional/)
-      @response.body.should contain(/Team\n\s*Optional/)
     end
   end
 
-  describe "edit with has-one association", :given => ["a player exists", "a draft exists"] do
+  describe "edit with has-one association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
+      @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => @player.id, :team_id => @team.id, :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
@@ -529,8 +587,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit with has-many association", :given => ["a player exists", "three teams exist"] do
+  describe "edit with has-many association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @teams = []
+      (1..3).each do |number|
+        @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      end
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @teams[0].id, :number => 1, :name => "Player 1")
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
@@ -553,8 +618,15 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "edit with missing label", :given => ["a player exists", "three teams with no name exist"] do
+  describe "edit with missing label" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @teams = []
+      (1..3).each do |number|
+        @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      end
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @teams[0].id, :number => 1, :name => "Player 1")
       @response = visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
     end
 
@@ -563,14 +635,18 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update", :given => "a player exists" do
+  describe "update" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
       fill_in "Name", :with => "Jackie Robinson"
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player.reload
     end
 
     it "should be successful" do
@@ -584,14 +660,18 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update and edit", :given => "a player exists" do
+  describe "update and edit" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
       fill_in "Name", :with => "Jackie Robinson"
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save and continue"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player.reload
     end
 
     it "should be successful" do
@@ -605,14 +685,18 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update and add another", :given => "a player exists" do
+  describe "update and add another" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
       fill_in "Name", :with => "Jackie Robinson"
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save and add another"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player.reload
     end
 
     it "should be successful" do
@@ -626,16 +710,21 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update with has-one association", :given => ["a player exists", "a draft exists"] do
+  describe "update with has-one association" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
+      @draft = MerbAdmin::AbstractModel.new("Draft").create(:player_id => @player.id, :team_id => @team.id, :date => Date.today, :round => rand(50), :pick => rand(30), :overall => rand(1500))
       visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
       fill_in "Name", :with => "Jackie Robinson"
       fill_in "Number", :with => "42"
       fill_in "Position", :with => "Second baseman"
       fill_in "Draft", :with => @draft.id.to_s
       @response = click_button "Save"
-      @player = MerbAdmin::AbstractModel.new("Player").first
-      # @response = visit(url(:merb_admin_update, :model_name => "player", :id => @player.id), :put, :params => {:player => {:name => "Jackie Robinson", :number => 42, :team_id => 1, :position => "Second baseman"}, :associations => {:draft => @draft.id}})
+      @player.reload
+      @draft.reload
     end
 
     it "should update an object with correct attributes" do
@@ -645,32 +734,39 @@ describe "MerbAdmin" do
     end
 
     it "should update an object with correct associations" do
-      @draft.reload
       @player.draft.should eql(@draft)
     end
   end
 
-  describe "update with has-many association", :given => ["a league exists", "three teams exist"] do
+  describe "update with has-many association" do
     before(:each) do
-      visit(url(:merb_admin_edit, :model_name => "league", :id => @league.id))
+      @leagues = []
+      (1..2).each do |number|
+        @leagues << MerbAdmin::AbstractModel.new("League").create(:name => "League #{number}")
+      end
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @leagues[1].id, :name => "Division 1")
+      @teams = []
+      (1..3).each do |number|
+        @teams << MerbAdmin::AbstractModel.new("Team").create(:league_id => @leagues[1].id, :division_id => @division.id, :name => "Team #{number}", :manager => "Manager #{number}", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      end
+      visit(url(:merb_admin_edit, :model_name => "league", :id => @leagues[0].id))
       fill_in "Name", :with => "National League"
       fill_in "Teams", :with => @teams[0].id.to_s
       @response = click_button "Save"
-      @league = MerbAdmin::AbstractModel.new("League").first
+      @leagues[0].reload
     end
 
     it "should update an object with correct attributes" do
-      @league.name.should eql("National League")
+      @leagues[0].name.should eql("National League")
     end
 
     it "should update an object with correct associations" do
-      @teams[0].reload
-      @league.teams.should include(@teams[0])
+      @leagues[0].teams.should include(@teams[0])
     end
 
     it "should not update an object with incorrect associations" do
-      @league.teams.should_not include(@teams[1])
-      @league.teams.should_not include(@teams[2])
+      @leagues[0].teams.should_not include(@teams[1])
+      @leagues[0].teams.should_not include(@teams[2])
     end
   end
 
@@ -684,14 +780,18 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "update with invalid object", :given => "a player exists" do
+  describe "update with invalid object" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       visit(url(:merb_admin_edit, :model_name => "player", :id => @player.id))
       fill_in "Name", :with => "Jackie Robinson"
       fill_in "Number", :with => "a"
       fill_in "Position", :with => "Second baseman"
       @response = click_button "Save"
-      @player = MerbAdmin::AbstractModel.new("Player").first
+      @player.reload
     end
 
     it "should show an error message" do
@@ -699,8 +799,12 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "delete", :given => "a player exists" do
+  describe "delete" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       @response = visit(url(:merb_admin_delete, :model_name => "player", :id => @player.id))
     end
 
@@ -726,7 +830,8 @@ describe "MerbAdmin" do
   describe "delete with missing label" do
     before(:each) do
       @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
-      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => rand(99999), :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
       @response = visit(url(:merb_admin_delete, :model_name => "league", :id => @league.id))
     end
 
@@ -735,8 +840,12 @@ describe "MerbAdmin" do
     end
   end
 
-  describe "destroy", :given => "a player exists" do
+  describe "destroy" do
     before(:each) do
+      @league = MerbAdmin::AbstractModel.new("League").create(:name => "League 1")
+      @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "Division 1")
+      @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "Team 1", :manager => "Manager 1", :founded => 1869 + rand(130), :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
+      @player = MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 1, :name => "Player 1")
       visit(url(:merb_admin_delete, :model_name => "player", :id => @player.id))
       @response = click_button "Yes, I'm sure"
       @player = MerbAdmin::AbstractModel.new("Player").first
