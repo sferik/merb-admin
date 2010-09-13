@@ -83,13 +83,7 @@ end
 private
 
 def load_data
-  begin
-    require "mlb"
-  rescue LoadError => e
-    puts "LoadError: #{e}"
-    puts "gem install mlb -s http://gemcutter.org"
-    return
-  end
+  require "mlb"
 
   require_models
 
