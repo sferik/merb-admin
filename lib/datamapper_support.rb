@@ -18,6 +18,10 @@ module MerbAdmin
         model.first(merge_order(options)).extend(InstanceMethods)
       end
 
+      def last(options = {})
+        model.last(merge_order(options)).extend(InstanceMethods)
+      end
+
       def all(options = {})
         model.all(merge_order(options))
       end

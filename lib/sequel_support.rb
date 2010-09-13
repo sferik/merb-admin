@@ -46,6 +46,17 @@ module MerbAdmin
         end
       end
 
+      def last(options = {})
+        sort = options.delete(:sort) || :id
+        sort_order = options.delete(:sort_reverse) ? :desc : :asc
+
+        if options[:conditions] && !options[:conditions].empty?
+          model.order(sort.to_sym.send(sort_order)).last(options[:conditions]).extend(InstanceMethods)
+        else
+          model.order(sort.to_sym.send(sort_order)).last.extend(InstanceMethods)
+        end
+      end
+
       def all(options = {})
         offset = options.delete(:offset)
         limit = options.delete(:limit)
