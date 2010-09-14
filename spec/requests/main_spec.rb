@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 describe "MerbAdmin" do
@@ -130,7 +131,7 @@ describe "MerbAdmin" do
       @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "New York Mets", :manager => "Jerry Manuel", :founded => 1962, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 41, :name => "Tom Seaver", :position => "Starting pitcher", :retired => true, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 14, :name => "Gil Hodges", :position => "First baseman", :retired => true, :injured => false)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "Jose Reyes", :position => "Shortstop", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "José Reyes", :position => "Shortstop", :retired => false, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :query => "Tom Seaver", :filter => {:injured => "true"})
     end
@@ -145,7 +146,7 @@ describe "MerbAdmin" do
 
     it "should not contain an incorrect result" do
       @response.body.should_not contain("Gil Hodges")
-      @response.body.should_not contain("Jose Reyes")
+      @response.body.should_not contain("José Reyes")
       @response.body.should_not contain("David Wright")
     end
   end
@@ -156,7 +157,7 @@ describe "MerbAdmin" do
       @league = MerbAdmin::AbstractModel.new("League").create(:name => "National League")
       @division = MerbAdmin::AbstractModel.new("Division").create(:league_id => @league.id, :name => "National League East")
       @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "New York Mets", :manager => "Jerry Manuel", :founded => 1962, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "Jose Reyes", :position => "Shortstop", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "José Reyes", :position => "Shortstop", :retired => false, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :filter => {:injured => "true"})
     end
@@ -166,7 +167,7 @@ describe "MerbAdmin" do
     end
 
     it "should show a correct result" do
-      @response.body.should contain("Jose Reyes")
+      @response.body.should contain("José Reyes")
     end
 
     it "should not contain an incorrect result" do
@@ -181,7 +182,7 @@ describe "MerbAdmin" do
       @team = MerbAdmin::AbstractModel.new("Team").create(:league_id => @league.id, :division_id => @division.id, :name => "New York Mets", :manager => "Jerry Manuel", :founded => 1962, :wins => (wins = rand(163)), :losses => 162 - wins, :win_percentage => ("%.3f" % (wins.to_f / 162)).to_f)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 41, :name => "Tom Seaver", :position => "Starting pitcher", :retired => true, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 14, :name => "Gil Hodges", :position => "First baseman", :retired => true, :injured => false)
-      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "Jose Reyes", :position => "Shortstop", :retired => false, :injured => true)
+      MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 7, :name => "José Reyes", :position => "Shortstop", :retired => false, :injured => true)
       MerbAdmin::AbstractModel.new("Player").create(:team_id => @team.id, :number => 5, :name => "David Wright", :position => "Third baseman", :retired => false, :injured => false)
       @response = visit(url(:merb_admin_list, :model_name => "player"), :get, :filter => {:retired => "true", :injured => "true"})
     end
@@ -196,7 +197,7 @@ describe "MerbAdmin" do
 
     it "should not contain an incorrect result" do
       @response.body.should_not contain("Gil Hodges")
-      @response.body.should_not contain("Jose Reyes")
+      @response.body.should_not contain("José Reyes")
       @response.body.should_not contain("David Wright")
     end
   end
