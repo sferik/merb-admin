@@ -20,6 +20,7 @@
 # application, which in turn can override or finetune the slice implementation
 # code and views.
 
+use_orm :activerecord
 use_test :rspec
 use_template_engine :erb
 
