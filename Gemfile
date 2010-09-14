@@ -13,6 +13,7 @@ group :test do
   gem 'dm-migrations', '~> 1.0'
   gem 'dm-sqlite-adapter', '~> 1.0'
   gem 'dm-validations', '~> 1.0'
+  gem 'mongrel', '~> 1.1'
   gem 'rspec', '~> 1.3'
   gem 'sequel', '~> 3.15'
   gem 'sqlite3-ruby', '~> 1.3', :require => 'sqlite3'
