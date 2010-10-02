@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency("sqlite3-ruby", ["~> 1.3"])
   s.add_development_dependency("webrat", ["~> 0.7"])
   s.add_runtime_dependency("builder", ["~> 2.1"])
-  s.add_runtime_dependency("json", ["~> 1.4"])
   s.add_runtime_dependency("merb-assets", ["~> 1.1"])
   s.add_runtime_dependency("merb-helpers", ["~> 1.1"])
   s.add_runtime_dependency("merb-slices", ["~> 1.1"])
