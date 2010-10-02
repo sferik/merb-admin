@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    merb-admin (0.8.5)
+    merb-admin (0.8.6)
       builder (~> 2.1)
       json (~> 1.4)
       merb-assets (~> 1.1)
