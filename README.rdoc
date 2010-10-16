@@ -9,7 +9,7 @@ http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png
 == Installation
   $ gem install merb-admin
 In your app, add the following dependency to <tt>Gemfile</tt>:
-  gem "merb-admin"
+  gem "merb-admin", "~> 0.8.7"
 Add the following route to <tt>config/router.rb</tt>:
   add_slice(:merb_admin, :path_prefix => "admin")
 Then, run the following rake task:
