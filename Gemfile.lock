@@ -76,7 +76,7 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     uuidtools (2.1.1)
-    webrat (0.7.1)
+    webrat (0.7.2)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
