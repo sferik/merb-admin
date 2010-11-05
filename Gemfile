@@ -15,7 +15,7 @@ group :test do
   gem 'dm-validations', '~> 1.0'
   gem 'thin', '~> 1.2'
   gem 'rspec', '~> 1.3'
-  gem 'sequel', '~> 3.16'
+  gem 'sequel', '~> 3.17'
   gem 'sqlite3-ruby', '~> 1.3', :require => 'sqlite3'
   gem 'webrat', '~> 0.7'
 end
