@@ -4,8 +4,8 @@ It currently offers the features listed here[http://sferik.tadalist.com/lists/13
 
 Take it for a test drive with sample data here[http://merb-admin.heroku.com/].
 == Screenshots
-http://github.com/sferik/merb-admin/raw/master/screenshots/list.png
-http://github.com/sferik/merb-admin/raw/master/screenshots/edit.png
+https://github.com/sferik/merb-admin/raw/master/screenshots/list.png
+https://github.com/sferik/merb-admin/raw/master/screenshots/edit.png
 == Installation
   $ gem install merb-admin
 In your app, add the following dependency to <tt>Gemfile</tt>:
