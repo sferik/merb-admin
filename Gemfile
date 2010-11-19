@@ -13,9 +13,13 @@ group :test do
   gem 'dm-migrations', '~> 1.0'
   gem 'dm-sqlite-adapter', '~> 1.0'
   gem 'dm-validations', '~> 1.0'
-  gem 'thin', '~> 1.2'
   gem 'rspec', '~> 1.3'
   gem 'sequel', '~> 3.17'
-  gem 'sqlite3-ruby', '~> 1.3', :require => 'sqlite3'
+  if 'java' == RUBY_PLATFORM
+    gem 'jdbc-sqlite3', '~> 3.6'
+    gem 'activerecord-jdbcsqlite3-adapter', '~> 0.9'
+  else
+    gem 'sqlite3-ruby', '~> 1.3'
+  end
   gem 'webrat', '~> 0.7'
 end
