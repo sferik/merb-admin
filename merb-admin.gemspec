@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('dm-sqlite-adapter', '~> 1.0')
   s.add_development_dependency('dm-validations', '~> 1.0')
   s.add_development_dependency('rspec', '~> 1.3')
-  s.add_development_dependency('sequel', '~> 3.17')
+  s.add_development_dependency('sequel', '~> 3.18')
   if 'java' == RUBY_PLATFORM
     s.add_development_dependency('jdbc-sqlite3', '~> 3.6')
     s.add_development_dependency('activerecord-jdbcsqlite3-adapter', '~> 0.9')

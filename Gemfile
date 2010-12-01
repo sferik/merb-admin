@@ -14,7 +14,7 @@ group :test do
   gem 'dm-sqlite-adapter', '~> 1.0'
   gem 'dm-validations', '~> 1.0'
   gem 'rspec', '~> 1.3'
-  gem 'sequel', '~> 3.17'
+  gem 'sequel', '~> 3.18'
   if 'java' == RUBY_PLATFORM
     gem 'jdbc-sqlite3', '~> 3.6'
     gem 'activerecord-jdbcsqlite3-adapter', '~> 0.9'
