@@ -16,8 +16,8 @@ group :test do
   gem 'rspec', '~> 1.3'
   gem 'sequel', '~> 3.18'
   if 'java' == RUBY_PLATFORM
-    gem 'jdbc-sqlite3', '~> 3.6'
-    gem 'activerecord-jdbcsqlite3-adapter', '~> 0.9'
+    gem 'activerecord-jdbcsqlite3-adapter', '~> 1.0', :platform => :jruby
+    gem 'jdbc-sqlite3', '~> 3.6', :platform => :jruby
   else
     gem 'sqlite3-ruby', '~> 1.3'
   end
