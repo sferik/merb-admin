@@ -1,7 +1,5 @@
 if defined?(Merb::Plugins)
 
-  $:.unshift File.dirname(__FILE__)
-
   require 'merb-slices'
   Merb::Plugins.add_rakefiles "merb-admin/merbtasks", "merb-admin/slicetasks", "merb-admin/spectasks"
 
@@ -24,6 +22,7 @@ if defined?(Merb::Plugins)
 
     # Slice metadata
     self.description = "MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data."
+    require File.expand_path('../merb-admin/version', __FILE__)
     self.version = VERSION
     self.author = "Erik Michaels-Ober"
 
