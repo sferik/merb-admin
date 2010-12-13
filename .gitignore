@@ -1,6 +1,7 @@
 !gems/cache/
 *.db
 *.gem
+*.rbc
 *.sqlite
 *.sqlite3
 *.sw[p|o]
