@@ -70,8 +70,8 @@ Contact
 -------
 If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via [email](mailto:sferik@gmail.com), [GitHub](http://github.com/sferik/), or [Twitter](http://twitter.com/sferik).
 
-Acknowledgements
-----------------
+Acknowledgments
+---------------
 Many thanks to:
 
 * [Wilson Miner](http://www.wilsonminer.com/) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com/)
