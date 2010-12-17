@@ -12,6 +12,7 @@
 .hg/*
 .hgignore
 .svn/*
+Gemfile.lock
 TAGS
 TODO
 bin/*
