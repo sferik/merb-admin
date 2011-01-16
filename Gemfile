@@ -19,7 +19,7 @@ group :test do
     gem 'activerecord-jdbcsqlite3-adapter', '~> 1.0', :platform => :jruby
     gem 'jdbc-sqlite3', '~> 3.6', :platform => :jruby
   else
-    gem 'sqlite3-ruby', '~> 1.3'
+    gem 'sqlite3', '~> 1.3'
   end
   gem 'webrat', '~> 0.7'
 end
