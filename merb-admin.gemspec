@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.authors = ["Erik Michaels-Ober"]
   s.description = %q{MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing your data}
   s.email = ['sferik@gmail.com']
-  s.extra_rdoc_files = ['LICENSE', 'README.rdoc']
+  s.extra_rdoc_files = ['LICENSE.md', 'README.md']
   s.files = `git ls-files`.split("\n")
   s.homepage = 'http://rubygems.org/gems/merb-admin'
   s.name = 'merb-admin'
