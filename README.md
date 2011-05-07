@@ -60,7 +60,7 @@ Here are some ways *you* can contribute:
 * by writing specifications
 * by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
 * by refactoring code
-* by closing [issues](http://github.com/jnunemaker/twitter/issues)
+* by closing [issues](https://github.com/jnunemaker/twitter/issues)
 * by reviewing patches
 * [financially](http://pledgie.com/campaigns/5428)
 
@@ -68,15 +68,15 @@ All contributors will be added to the acknowledgements below and will receive th
 
 Contact
 -------
-If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via [email](mailto:sferik@gmail.com), [GitHub](http://github.com/sferik/), or [Twitter](http://twitter.com/sferik).
+If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via [email](mailto:sferik@gmail.com), [GitHub](https://github.com/sferik/), or [Twitter](http://twitter.com/sferik).
 
 Acknowledgments
 ---------------
 Many thanks to:
 
 * [Wilson Miner](http://www.wilsonminer.com/) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com/)
-* [Aaron Wheeler](http://fightinjoe.com/) for contributing libraries from [Merb AutoScaffold](http://github.com/fightinjoe/merb-autoscaffold)
-* [Lori Holden](http://loriholden.com/) for contributing the [merb-pagination](http://github.com/lholden/merb-pagination) helper
-* [Jacques Crocker](http://merbjedi.com/) for adding support for [namespaced models](http://github.com/merbjedi/merb-admin/commit/8139e2241038baf9b72452056fcdc7c340d79275)
-* [Jeremy Evans](http://code.jeremyevans.net/) and [Pavel Kunc](http://www.merboutpost.com) for reviewing the [patch](http://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef) to add [Sequel](http://sequel.rubyforge.org/) support
-* [Jonah Honeyman](http://github.com/jonuts) for fixing a [bug](http://github.com/sferik/merb-admin/commit/9064d10382eadd1ed7a882ef40e2c6a65edfef2c) and adding the [:excluded_models option](http://github.com/sferik/merb-admin/commit/f6157d1c471dd85162481d6926578164be1b9673)
+* [Aaron Wheeler](http://fightinjoe.com/) for contributing libraries from [Merb AutoScaffold](https://github.com/fightinjoe/merb-autoscaffold)
+* [Lori Holden](http://loriholden.com/) for contributing the [merb-pagination](https://github.com/lholden/merb-pagination) helper
+* [Jacques Crocker](http://merbjedi.com/) for adding support for [namespaced models](https://github.com/merbjedi/merb-admin/commit/8139e2241038baf9b72452056fcdc7c340d79275)
+* [Jeremy Evans](http://code.jeremyevans.net/) and [Pavel Kunc](http://www.merboutpost.com) for reviewing the [patch](https://github.com/sferik/merb-admin/commit/061fa28f652fc9214e9cf480d66870140181edef) to add [Sequel](http://sequel.rubyforge.org/) support
+* [Jonah Honeyman](https://github.com/jonuts) for fixing a [bug](https://github.com/sferik/merb-admin/commit/9064d10382eadd1ed7a882ef40e2c6a65edfef2c) and adding the [:excluded_models option](https://github.com/sferik/merb-admin/commit/f6157d1c471dd85162481d6926578164be1b9673)
