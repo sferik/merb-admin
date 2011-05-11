@@ -41,7 +41,8 @@ Usage
 Start the server:
 
     merb
-You should now be able to administer your site at <http://localhost:4000/admin>.
+You should now be able to administer your site at
+[http://localhost:4000/admin](http://localhost:4000/admin).
 
 WARNING
 -------
