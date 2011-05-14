@@ -1,3 +1,5 @@
+#!/usr/bin/env rake
+
 require 'merb-core'
 require 'merb-core/tasks/merb'
 require 'spec/rake/spectask'
