@@ -7,7 +7,6 @@
 *.sw[p|o]
 *~
 .#*
-.DS_Store
 .bundle
 .hg/*
 .hgignore
