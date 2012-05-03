@@ -5,11 +5,11 @@ MerbAdmin is a Merb plugin that provides an easy-to-use interface for managing y
 
 [Take it for a test drive with sample data.](http://merb-admin.heroku.com/)
 
-## <a name="screenshots"></a>Screenshots
+## Screenshots
 ![List view](https://github.com/sferik/merb-admin/raw/master/screenshots/list.png "List view")
 ![Edit view](https://github.com/sferik/merb-admin/raw/master/screenshots/edit.png "Edit view")
 
-## <a name="installation"></a>Installation
+## Installation
 In your app, add the following dependency to <tt>Gemfile</tt>:
 
     gem "merb-admin", "~> 0.8.8"
@@ -23,7 +23,7 @@ Then, run the following rake task:
 
     rake slices:merb-admin:install
 
-## <a name="configuration"></a>Configuration (optional)
+## Configuration (optional)
 If you're feeling crafty, you can set a couple configuration options in <tt>config/init.rb</tt>:
 
     Merb::BootLoader.before_app_loads do
@@ -32,17 +32,17 @@ If you're feeling crafty, you can set a couple configuration options in <tt>conf
       Merb::Slices::config[:merb_admin][:excluded_models] = ["Top", "Secret"]
     end
 
-## <a name="usage"></a>Usage
+## Usage
 Start the server:
 
     merb
 You should now be able to administer your site at
 [http://localhost:4000/admin](http://localhost:4000/admin).
 
-## <a name="warning"></a>WARNING
+## WARNING
 MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!
 
-## <a name="contributing"></a>Contributing
+## Contributing
 In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
 
 Here are some ways *you* can contribute:
@@ -60,10 +60,10 @@ Here are some ways *you* can contribute:
 
 All contributors will be added to the acknowledgements below and will receive the respect and gratitude of the author.
 
-## <a name="contact"></a>Contact
+## Contact
 If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via [email](mailto:sferik@gmail.com), [GitHub](https://github.com/sferik/), or [Twitter](http://twitter.com/sferik).
 
-## <a name="acknowledgments"></a>Acknowledgments
+## Acknowledgments
 Many thanks to:
 
 * [Wilson Miner](http://www.wilsonminer.com/) for contributing the stylesheets and javascripts from [Django](http://www.djangoproject.com/)
