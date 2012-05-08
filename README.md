@@ -40,10 +40,14 @@ You should now be able to administer your site at
 [http://localhost:4000/admin](http://localhost:4000/admin).
 
 ## WARNING
-MerbAdmin does not implement any authorization scheme. Make sure to apply authorization logic before deploying to production!
+MerbAdmin does not implement any authorization scheme. Make sure to apply
+authorization logic before deploying to production!
 
 ## Contributing
-In the spirit of [free software](http://www.fsf.org/licensing/essays/free-sw.html), **everyone** is encouraged to help improve this project.
+In the spirit of [free software][free-sw], **everyone** is encouraged to help
+improve this project.
+
+[free-sw]: http://www.fsf.org/licensing/essays/free-sw.html
 
 Here are some ways *you* can contribute:
 
@@ -52,16 +56,13 @@ Here are some ways *you* can contribute:
 * by suggesting new features
 * by writing or editing documentation
 * by writing specifications
-* by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
+* by writing code (**no patch is too small**: fix typos, add comments, clean up
+  inconsistent whitespace)
 * by refactoring code
-* by closing [issues](https://github.com/jnunemaker/twitter/issues)
+* by fixing [issues][]
 * by reviewing patches
-* [financially](http://pledgie.com/campaigns/5428)
 
-All contributors will be added to the acknowledgements below and will receive the respect and gratitude of the author.
-
-## Contact
-If you are interested in contributing to MerbAdmin, please contact Erik Michaels-Ober via [email](mailto:sferik@gmail.com), [GitHub](https://github.com/sferik/), or [Twitter](http://twitter.com/sferik).
+[issues]: https://github.com/sferik/merb-admin/issues
 
 ## Acknowledgments
 Many thanks to:
